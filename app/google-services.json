@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "648292503369",
+    "firebase_url": "https://pharmate-c568f.firebaseio.com",
+    "project_id": "pharmate-c568f",
+    "storage_bucket": "pharmate-c568f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648292503369:android:df85742076e7a2d9f11498",
+        "android_client_info": {
+          "package_name": "com.example.pharmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648292503369-c6qg31l8s14dmdocd4oebcp8notq80c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB65USDwVER3FspIGv8Kwmoat_SsrUPhtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648292503369-c6qg31l8s14dmdocd4oebcp8notq80c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

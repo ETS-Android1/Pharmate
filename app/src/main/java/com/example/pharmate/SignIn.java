@@ -40,9 +40,11 @@ public class SignIn extends AppCompatActivity {
             Intent _intent = new Intent(SignIn.this, HomePage.class);
             startActivity(_intent);
             finish();
+            System.out.println(firebaseUser.getUid());
 
         }
-        System.out.println(firebaseUser.getUid());
+
+
     }
 
     public void signInClick(View v) {
@@ -54,7 +56,6 @@ public class SignIn extends AppCompatActivity {
                 Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 Intent _intent = new Intent(SignIn.this, HomePage.class);
                 startActivity(_intent);
-                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

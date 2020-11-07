@@ -1,11 +1,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity" android:background="@drawable/arkaplan">
-    <EditText android:id="@+id/signUpEmailText" android:layout_width="320dp" android:layout_height="65dp" android:ems="10" android:fontFamily="@font/allan" android:inputType="textPersonName" android:text="Medicine Information" android:textColor="#0099cc" android:textSize="36sp" android:textStyle="bold|italic" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.37" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.051"/>
+
+    <EditText
+        android:id="@+id/signInEmailText"
+        android:layout_width="320dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:inputType="textPersonName"
+        android:text="Medicine Information"
+        android:textColor="#0099cc"
+        android:textSize="36sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="278dp"
         android:layout_height="44dp"
-        android:fontFamily="@font/allan"
+
         android:text="Name of Medicine"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -14,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.255"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEmailText"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:layout_constraintVertical_bias="0.042" />
 
     <EditText
@@ -22,7 +39,7 @@
         android:layout_width="276dp"
         android:layout_height="52dp"
         android:ems="10"
-        android:fontFamily="@font/allan"
+
         android:inputType="textPersonName"
         android:text="Barcode Number"
         android:textColor="#FFFFFF"
@@ -40,7 +57,7 @@
         android:layout_width="280dp"
         android:layout_height="57dp"
         android:ems="10"
-        android:fontFamily="@font/allan"
+
         android:inputType="textPersonName"
         android:text="Amount"
         android:textColor="#FFFFFF"
@@ -58,7 +75,7 @@
         android:layout_width="276dp"
         android:layout_height="64dp"
         android:ems="10"
-        android:fontFamily="@font/allan"
+
         android:inputType="textPersonName"
         android:text="Expriy Date"
         android:textColor="#FFFFFF"
@@ -73,10 +90,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="64dp"
+        android:layout_width="185dp"
+        android:layout_height="67dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/mvibtn"
-        android:fontFamily="@font/allan"
+
         android:text="Receive"
         android:textAllCaps="false"
         android:textColor="#0099cc"
@@ -84,5 +102,6 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

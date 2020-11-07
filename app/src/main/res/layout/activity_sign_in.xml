@@ -6,7 +6,6 @@
         android:layout_height="72dp"
         android:layout_marginBottom="128dp"
         android:background="@drawable/mvibtn"
-        android:fontFamily="@font/allan"
         android:onClick="signInClick"
         android:text="Sign In"
         android:textColor="@android:color/background_light"
@@ -18,13 +17,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/signUpEmailText"
+        android:id="@+id/signInEmailText"
         android:layout_width="230dp"
         android:layout_height="60dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/beyaztext"
         android:ems="10"
-        android:fontFamily="@font/allan"
         android:hint="Username"
         android:inputType="textPersonName"
         android:text="Username"
@@ -34,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-    <EditText android:id="@+id/signUpPasswordText" android:layout_width="234dp" android:layout_height="62dp" android:layout_marginStart="88dp" android:background="@drawable/beyaztext" android:ems="10" android:inputType="textPassword" android:text="Password" android:textColor="@android:color/darker_gray" android:textStyle="italic" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/signUpEmailText" app:layout_constraintVertical_bias="0.078"/>
-    <TextView android:id="@+id/textView" android:layout_width="197dp" android:layout_height="55dp" android:layout_marginTop="72dp" android:fontFamily="@font/allan" android:text="SIGN IN" android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textColor="@android:color/holo_blue_dark" android:textSize="36sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.457" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
-    <TextView android:id="@+id/textView3" android:layout_width="172dp" android:layout_height="27dp" android:layout_marginTop="36dp" android:fontFamily="@font/allan" android:text="Forgot Password?" android:textAllCaps="false" android:textColor="@android:color/holo_blue_dark" android:textSize="24sp" android:textStyle="bold|italic" app:layout_constraintBottom_toTopOf="@+id/button2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.368" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/signUpPasswordText" app:layout_constraintVertical_bias="0.0"/>
+    <EditText android:id="@+id/signInPasswordText" android:layout_width="234dp" android:layout_height="62dp" android:layout_marginStart="88dp" android:background="@drawable/beyaztext" android:ems="10" android:inputType="textPassword" android:text="Password" android:textColor="@android:color/darker_gray" android:textStyle="italic" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/signInEmailText" app:layout_constraintVertical_bias="0.078"/>
+    <TextView android:id="@+id/textView" android:layout_width="197dp" android:layout_height="55dp" android:layout_marginTop="72dp" android:text="SIGN IN" android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textColor="@android:color/holo_blue_dark" android:textSize="36sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.457" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+    <TextView android:id="@+id/textView3" android:layout_width="172dp" android:layout_height="27dp" android:layout_marginTop="36dp" android:text="Forgot Password?" android:textAllCaps="false" android:textColor="@android:color/holo_blue_dark" android:textSize="24sp" android:textStyle="bold|italic" app:layout_constraintBottom_toTopOf="@+id/button2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.368" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/signInPasswordText" app:layout_constraintVertical_bias="0.0"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

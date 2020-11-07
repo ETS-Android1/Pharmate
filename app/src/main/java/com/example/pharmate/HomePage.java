@@ -11,11 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-
 
 public class HomePage extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -26,38 +23,8 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-
-
-
     }
+   public void goPersonalInformationPageClick(View v){Intent _intent = new Intent(this, PersonalInformation.class);
+       startActivity(_intent);}
 
-     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.signOutOption) {
-
-                firebaseAuth.signOut();
-                Intent goToSignIn = new Intent(HomePage.this, SignIn.class);
-                startActivity(goToSignIn);
-                finish();
-        }
-
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void goPersonalInformationPageClick(View v){
-        Intent goPersonalInformationPageIntent = new Intent(HomePage.this, PersonalInformation.class);
-        startActivity(goPersonalInformationPageIntent);
-
-    }
 }

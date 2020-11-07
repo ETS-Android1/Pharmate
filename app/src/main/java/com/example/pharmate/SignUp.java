@@ -33,6 +33,7 @@ public class SignUp extends AppCompatActivity {
         emailText = findViewById(R.id.signUpEmailText);
         passwordText = findViewById(R.id.signUpPasswordText);
 
+        // girilen inputları kontrol edicez.
     }
     public void signUpClick (View view) {
 
@@ -55,7 +56,7 @@ public class SignUp extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SignUp.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUp.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
             }
         });
 

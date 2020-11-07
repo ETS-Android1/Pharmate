@@ -14,8 +14,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.sql.SQLOutput;
-
 public class SignIn extends AppCompatActivity {
     // Defining Firebase Instance Variables
     private FirebaseAuth firebaseAuth;
@@ -29,8 +27,8 @@ public class SignIn extends AppCompatActivity {
         // defining firebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance();
         // defining email and password text
-        emailText = findViewById(R.id.signInEmailText);
-        passwordText = findViewById(R.id.signPasswordText);
+        emailText = findViewById(R.id.signUpEmailText);
+        passwordText = findViewById(R.id.signUpPasswordText);
 
         // Getting current user
         // if exists user will directly access for homepage

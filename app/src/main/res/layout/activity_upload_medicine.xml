@@ -1,116 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/amo"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UploadMedicine">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity">
+    <RadioButton android:id="@+id/radioButton" android:layout_width="84dp" android:layout_height="50dp" android:layout_marginEnd="128dp" android:fontFamily="@font/allan" android:text="No" android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:textColor="@android:color/holo_blue_dark" android:textSize="24sp" android:textStyle="bold|italic" app:layout_constraintBottom_toTopOf="@+id/imageView2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView2" app:layout_constraintVertical_bias="0.109"/>
+    <ImageView android:id="@+id/imageView" android:layout_width="173dp" android:layout_height="138dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.009" app:srcCompat="@drawable/el"/>
+    <ImageView android:id="@+id/imageView2" android:layout_width="193dp" android:layout_height="116dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.027" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.992" app:srcCompat="@drawable/altel"/>
+    <TextView android:id="@+id/textView" android:layout_width="224dp" android:layout_height="87dp" android:fontFamily="@font/allan" android:text="Donate Medicine" android:textAlignment="center" android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:textColor="@android:color/holo_blue_dark" android:textSize="30sp" android:textStyle="bold" app:layout_constraintBottom_toTopOf="@+id/signUpEmailText" app:layout_constraintEnd_toStartOf="@+id/imageView" app:layout_constraintHorizontal_bias="0.071" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.546"/>
+    <EditText android:id="@+id/signUpEmailText" android:layout_width="193dp" android:layout_height="47dp" android:layout_marginBottom="12dp" android:ems="10" android:fontFamily="@font/allan" android:inputType="textPersonName" android:text="Barcode Number" android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:textColor="@android:color/darker_gray" app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+    <EditText android:id="@+id/editTextTextPersonName2" android:layout_width="197dp" android:layout_height="38dp" android:layout_marginBottom="8dp" android:ems="10" android:fontFamily="@font/allan" android:inputType="textPersonName" android:text="Name of Medicine" android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:textColor="@android:color/darker_gray" android:textStyle="bold|italic" app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
-        android:id="@+id/barcodeNumberText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="79dp"
-        android:layout_marginBottom="28dp"
+        android:id="@+id/editTextTextPersonName3"
+        android:layout_width="162dp"
+        android:layout_height="30dp"
         android:ems="10"
-        android:hint="Barcode Number"
+        android:fontFamily="@font/allan"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/medicineNameText"
+        android:text="Amount"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/medicineNameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:ems="10"
-        android:hint="Name of Medicine"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/amountText"
-        app:layout_constraintStart_toStartOf="@+id/barcodeNumberText"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeNumberText" />
-
-    <EditText
-        android:id="@+id/amountText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="44dp"
-        android:ems="10"
-        android:hint="Amount"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/dateTimeText"
-        app:layout_constraintStart_toStartOf="@+id/medicineNameText"
-        app:layout_constraintTop_toBottomOf="@+id/medicineNameText" />
-
-    <EditText
-        android:id="@+id/dateTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="52dp"
-        android:ems="10"
-        android:hint="Expiration Date"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/amountText"
-        app:layout_constraintTop_toBottomOf="@+id/amountText" />
-
-    <Button
-        android:id="@+id/uploadMedicineButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginBottom="67dp"
-        android:onClick="uploadMedicineClick"
-        android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/radioButton"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/radioButton" />
-
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="24dp"
-        android:text="Yes"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="15dp"
-        android:text="No"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="152dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="149dp"
-        android:text="Special Prescription"
-        app:layout_constraintBottom_toTopOf="@+id/uploadMedicineButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.409"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTimeText" />
+    <TextView android:id="@+id/textView2" android:layout_width="195dp" android:layout_height="41dp" android:layout_marginBottom="8dp" android:fontFamily="@font/allan" android:text="Special Prescription" android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:textColor="@android:color/holo_blue_dark" android:textSize="24sp" android:textStyle="bold" app:layout_constraintBottom_toTopOf="@+id/radioButton2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.439" app:layout_constraintStart_toStartOf="parent"/>
+    <RadioButton android:id="@+id/radioButton2" android:layout_width="94dp" android:layout_height="55dp" android:layout_marginBottom="60dp" android:fontFamily="@font/allan" android:text="Yes" android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:textColor="@android:color/holo_blue_dark" android:textSize="24sp" android:textStyle="bold|italic" app:layout_constraintBottom_toTopOf="@+id/imageView2" app:layout_constraintEnd_toStartOf="@+id/radioButton" app:layout_constraintHorizontal_bias="0.792" app:layout_constraintStart_toStartOf="parent"/>
+    <Button android:id="@+id/button" android:layout_width="146dp" android:layout_height="73dp" android:background="@drawable/mvibtn" android:fontFamily="@font/allan" android:text="Donate" android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold|italic" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.395" app:layout_constraintStart_toEndOf="@+id/imageView2" app:layout_constraintTop_toBottomOf="@+id/radioButton" app:layout_constraintVertical_bias="0.534"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

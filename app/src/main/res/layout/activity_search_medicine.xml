@@ -1,26 +1,79 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity" android:background="@drawable/back">
-    <Button android:id="@+id/button2" android:layout_width="132dp" android:layout_height="47dp"  android:text="Search" android:textAlignment="center" android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textColor="@android:color/holo_blue_dark" android:textStyle="bold|italic" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.336" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" app:layout_constraintVertical_bias="0.259"/>
-    <TextView android:id="@+id/textView" android:layout_width="240dp" android:layout_height="42dp"  android:text="Search Target Medicine" android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:textColor="@android:color/holo_blue_dark" android:textSize="30sp" android:textStyle="bold|italic" android:typeface="normal" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.549" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.119"/>
-    <EditText android:id="@+id/signInEmailText" android:layout_width="222dp" android:layout_height="62dp" android:layout_marginTop="76dp" android:background="@drawable/beyaztext" android:ems="10" android:inputType="textPersonName" android:text="Search with Barcode Number" android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:textColor="@android:color/tab_indicator_text" android:textSize="18sp" android:textStyle="bold|italic" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.248" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView"/>
-    <EditText android:id="@+id/editTextTextPersonName2" android:layout_width="317dp" android:layout_height="68dp" android:layout_marginTop="52dp" android:background="@drawable/beyaztext" android:ems="10" android:inputType="textPersonName" android:text="Search with Name of Medicine" android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:textColor="@android:color/tab_indicator_text" android:textSize="18sp" android:textStyle="bold|italic" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/signInEmailText"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="151dp"
-        android:layout_height="68dp"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/grey">
 
 
-        android:text="Search"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textStyle="bold|italic"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="240sp"
+        android:layout_height="42sp"
+        android:fontFamily="@font/open_sans"
+        android:text="Search Medicine"
+        android:textColor="@color/cyan"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
+        app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintVertical_bias="0.259" />
-    <ImageView android:id="@+id/imageView" android:layout_width="59dp" android:layout_height="44dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.166" app:layout_constraintStart_toEndOf="@+id/button" app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" app:layout_constraintVertical_bias="0.267" app:srcCompat="@drawable/aramasembolu"/>
-    <Button android:id="@+id/button3" android:layout_width="71dp" android:layout_height="51dp" android:background="@drawable/kamera" app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.295" app:layout_constraintStart_toEndOf="@+id/signInEmailText" app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintVertical_bias="0.546"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="176dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/open_sans"
+        android:onClick="goToSignInClick"
+        android:paddingTop="5sp"
+        android:text="Search"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.191" />
+
+    <EditText
+        android:id="@+id/signInEmailText"
+        android:layout_width="317sp"
+        android:layout_height="68sp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/beyaztext"
+        android:ems="10"
+        android:hint="Barcode Number"
+        android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText android:id="@+id/editTextTextPersonName2"
+        android:layout_width="317sp"
+        android:layout_height="68sp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/beyaztext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Name Of Medicine"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textSize="18sp" android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

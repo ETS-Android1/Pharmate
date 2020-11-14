@@ -1,16 +1,22 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity" android:background="@drawable/arkaplan">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/grey">
 
     <EditText
         android:id="@+id/signInEmailText"
         android:layout_width="320dp"
         android:layout_height="65dp"
         android:ems="10"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
         android:text="Medicine Information"
-        android:textColor="#0099cc"
-        android:textSize="36sp"
-        android:textStyle="bold|italic"
+        android:textColor="@color/cyan"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.37"
@@ -22,86 +28,80 @@
         android:id="@+id/textView"
         android:layout_width="278dp"
         android:layout_height="44dp"
-
-        android:text="Name of Medicine"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:hint="Name of Medicine"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintVertical_bias="0.112" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="276dp"
         android:layout_height="52dp"
         android:ems="10"
-
+        android:hint="Barcode Number"
         android:inputType="textPersonName"
-        android:text="Barcode Number"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintHorizontal_bias="0.237"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.127" />
+        app:layout_constraintVertical_bias="0.104" />
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
         android:layout_width="280dp"
         android:layout_height="57dp"
         android:ems="10"
-
+        android:hint="Amount"
         android:inputType="textPersonName"
-        android:text="Amount"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.115" />
 
     <EditText
         android:id="@+id/editTextTextPersonName4"
         android:layout_width="276dp"
         android:layout_height="64dp"
         android:ems="10"
-
+        android:hint="Expriy Date"
         android:inputType="textPersonName"
-        android:text="Expriy Date"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintHorizontal_bias="0.237"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintVertical_bias="0.127" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="185dp"
-        android:layout_height="67dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/mvibtn"
-
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/open_sans"
+        android:onClick="goToSignInClick"
+        android:paddingTop="5sp"
         android:text="Receive"
-        android:textAllCaps="false"
-        android:textColor="#0099cc"
-        android:textSize="36sp"
-        android:textStyle="bold|italic"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.191" />
 </androidx.constraintlayout.widget.ConstraintLayout>

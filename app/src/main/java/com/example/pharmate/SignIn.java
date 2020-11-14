@@ -27,7 +27,7 @@ public class SignIn extends AppCompatActivity {
         // defining firebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance();
         // defining email and password text
-        emailText = findViewById(R.id.signInEmailText);
+        emailText = findViewById(R.id.editTextTextPersonName15);
         passwordText = findViewById(R.id.signInPasswordText);
 
         // Getting current user

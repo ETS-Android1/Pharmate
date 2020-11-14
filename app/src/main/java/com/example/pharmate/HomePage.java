@@ -26,5 +26,16 @@ public class HomePage extends AppCompatActivity {
     }
    public void goPersonalInformationPageClick(View v){Intent _intent = new Intent(this, PersonalInformation.class);
        startActivity(_intent);}
+    public void goDonateMedicinePageClick(View v){Intent _intent = new Intent(this, UploadMedicine.class);
+        startActivity(_intent);}
+    public void goSearchMedicinePageClick(View v){Intent _intent = new Intent(this, SearchMedicine.class);
+        startActivity(_intent);}
+    public void goOrganizationPageClick(View v){Intent _intent = new Intent(this, OrganizatonListPage.class);
+        startActivity(_intent);}
+
+
+
+
+
 
 }

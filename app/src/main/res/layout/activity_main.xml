@@ -5,53 +5,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@drawable/gradientbackground"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button"
-        android:paddingTop="5sp"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/paytone_one"
         android:onClick="goToSignInClick"
+        android:paddingTop="5sp"
         android:text="Sign In"
         android:textAlignment="center"
-        android:textSize="30sp"
         android:textColor="@color/grey"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.191"
-       />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.812" />
 
     <Button
         android:id="@+id/button3"
-        android:paddingTop="5sp"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/open_sans"
-        android:onClick="goToSignInClick"
+        android:fontFamily="@font/paytone_one"
+        android:onClick="goToSignUpClick"
+        android:paddingTop="5sp"
         android:text="Sign Up"
         android:textAlignment="center"
-        android:textSize="30sp"
         android:textColor="@color/grey"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.491" />
-    <ImageView android:id="@+id/imageView3"
-        android:layout_width="271dp"
-        android:layout_height="239dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058"
-        app:srcCompat="@drawable/pharmate"/>
+        app:layout_constraintVertical_bias="0.928" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_pharmatelogovector2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="408dp"
+        android:layout_height="241dp"
+        android:fontFamily="@font/fugaz_one"
+        android:gravity="center"
+        android:text="Welcome To Pharmate. To get started please login or register."
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

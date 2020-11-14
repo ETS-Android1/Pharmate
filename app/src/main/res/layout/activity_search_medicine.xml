@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".SearchMedicine"
     android:background="@drawable/gradientbackground">
 
 
@@ -16,6 +16,7 @@
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
+        android:focusable="true"
         android:hint="Barcode Number - #9781654"
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
@@ -38,6 +39,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

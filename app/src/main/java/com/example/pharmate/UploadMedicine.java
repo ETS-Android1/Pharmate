@@ -3,6 +3,7 @@ package com.example.pharmate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,6 +21,10 @@ public class UploadMedicine extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
+    EditText barcodeNo, name, amount, expirationDate, specialPrescription;
+    HashMap<String, Object> postMedicineData = new HashMap<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,35 +37,41 @@ public class UploadMedicine extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-
-        EditText barcodeNo, name, amount, expirationDate, specialPrescription;
-        Button submitButton;
-
-//
 //        //defining textFields
-//        userType = (EditText) findViewById(R.id.userTypeText);
-//        name = (EditText) findViewById(R.id.personNameText);
-//        userSurname = (EditText) findViewById(R.id.personSurnameText);
-//        userTurkishID = (EditText) findViewById(R.id.personTurkishIDText);
-//        userContact = (EditText) findViewById(R.id.personContactText);
-//        userAddress = (EditText) findViewById(R.id.personAddressText);
-//        submitButton = (Button) findViewById(R.id.personInfoSubmitButton);
-//
-//        if (firebaseUser  != null) {
-//            String userEmail = firebaseUser.getEmail();
-//            String userID = firebaseUser.getUid();
-//
-//            HashMap<String, Object> postData = new HashMap<>();
-//            postData.put("type", userType);
-//            postData.put("userEmail", userEmail);
-//            postData.put("name", name);
-//            postData.put("surname", userSurname);
-//            postData.put("turkishId", userTurkishID);
-//            postData.put("contact", userContact);
-//            postData.put("address", userAddress);
-//            firebaseFirestore.collection("userType").document(userID).set(postData);
-//        }
+
+        name = (EditText) findViewById(R.id.nameOfMedicineText);
+        barcodeNo = (EditText) findViewById(R.id.barcodeNumberText);
+        amount = (EditText) findViewById(R.id.amountText);
+        expirationDate = (EditText) findViewById(R.id.expirationDateText);
+        specialPrescription = (EditText) findViewById(R.id.prescriptionNoText);
     }
-}
+
+        public void uploadMedicineClick(View view){
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+            String userID = firebaseUser.getUid();
+            String displayName = firebaseUser.getDisplayName();
+            String nameText = name.getText().toString();
+            String barcodeNoText = barcodeNo.getText().toString();
+            String amountText = amount.getText().toString();
+            String expirationDateText = expirationDate.getText().toString();
+            String specialPrescriptionText = specialPrescription.getText().toString();
+            System.out.println("button pressed");
+            System.out.println(displayName);
+            String medicineName = name.getText().toString();
+
+            postMedicineData.put("nameOfMedicine", nameText);
+            postMedicineData.put("barcodeNumber", barcodeNoText);
+            postMedicineData.put("amount", amountText);
+            postMedicineData.put("expirationDate", expirationDateText);
+            postMedicineData.put("specialPrescription", specialPrescriptionText);
+            postMedicineData.put("donatedBy", userID);
+            postMedicineData.put("donatedTo", "organizationName");
+
+            firebaseFirestore.collection("medicine").
+                    document(medicineName).
+                    collection(barcodeNoText).document(displayName).set(postMedicineData);
+
+
+        }
+    }

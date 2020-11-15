@@ -11,7 +11,6 @@
         android:theme="@style/Theme.Pharmate">
         <activity android:name=".OtpVerification"></activity>
         <activity android:name=".OrganizatonListPage" />
-        <activity android:name=".PersonalInformationPage" />
         <activity android:name=".ReceiveMedicine" />
         <activity android:name=".ListMedicine" />
         <activity android:name=".PersonalInformation" />

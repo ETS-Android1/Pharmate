@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradientbackground"
-    tools:context=".MainActivity">
+    tools:context=".UploadMedicine">
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName12"
+        android:id="@+id/amountText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.300" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName11"
+        android:id="@+id/nameOfMedicineText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.200" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/barcodeNumberText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -80,13 +80,13 @@
         app:layout_constraintVertical_bias="0" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/uploadMedicineButton"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/paytone_one"
-        android:onClick="goToSignInClick"
+        android:onClick="uploadMedicineClick"
         android:paddingTop="5sp"
         android:text="Donate"
         android:textAlignment="center"
@@ -99,7 +99,7 @@
         app:layout_constraintVertical_bias="0.900" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/expirationDateText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -117,7 +117,7 @@
         app:layout_constraintVertical_bias="0.400" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/prescriptionNoText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"

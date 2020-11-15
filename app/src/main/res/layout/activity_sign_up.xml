@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".SignUp"
     android:background="@drawable/gradientbackground">
     <TextView
         android:id="@+id/signInEmailText4"
@@ -80,7 +80,7 @@
         app:layout_constraintVertical_bias="0.255" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/signUpClickButton"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginBottom="96dp"

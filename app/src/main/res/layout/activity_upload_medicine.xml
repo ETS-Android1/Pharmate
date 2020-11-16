@@ -70,7 +70,7 @@
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
         android:text="Donate Medicine"
-        android:textColor="@color/blue"
+        android:textColor="@color/grey"
         android:textSize="30sp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"

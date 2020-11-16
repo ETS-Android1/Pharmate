@@ -62,4 +62,11 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
-    }}
+    }
+
+    public void clickforget(View view) {
+        Intent _intent = new Intent(SignIn.this, forgetPassword.class);
+        startActivity(_intent);
+    }
+}
+

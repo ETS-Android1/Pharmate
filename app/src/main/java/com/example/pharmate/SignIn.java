@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,18 +51,15 @@ public class SignIn extends AppCompatActivity {
     public void signInClick(View v) {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                if(firebaseAuth.getCurrentUser().isEmailVerified()){
-                    Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent _intent = new Intent(SignIn.this, HomePage.class);
-                    startActivity(_intent);
-                }else{
-                    Toast.makeText(SignIn.this, "please verify your email address", Toast.LENGTH_SHORT).show();
-                }
-
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+            if(firebaseAuth.getCurrentUser().isEmailVerified()){
+                Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                Intent _intent = new Intent(SignIn.this, HomePage.class);
+                startActivity(_intent);
+            }else{
+                Toast.makeText(SignIn.this, "please verify your email address", Toast.LENGTH_SHORT).show();
             }
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -69,5 +68,6 @@ public class SignIn extends AppCompatActivity {
         });
 
     }
+
 
 }

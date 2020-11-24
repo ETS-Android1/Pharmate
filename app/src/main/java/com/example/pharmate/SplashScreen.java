@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.google.android.material.animation.AnimationUtils;
 
 public class SplashScreen extends AppCompatActivity {
-public static int TIME_OUT=4000;
+public static int TIME_OUT=4500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -6,4 +6,9 @@
         android:id="@+id/signOutOption"
         android:onClick="signOutClick"
         android:title="Sign Out" />
+    <item
+        android:id="@+id/close"
+        android:onClick="close"
+        android:title="close"/>
+
 </menu>

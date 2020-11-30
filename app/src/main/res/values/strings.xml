@@ -5,4 +5,9 @@
         <item>individual</item>
         <item>organization</item>
     </string-array>
+    <string name="err_name">Enter valid name(Can not contain number or special characters)</string>
+    <string name="err_tel">Enter valid phone no.</string>
+    <string name="err_email">Enter valid email</string>
+    <string name="err_year">Enter valid year</string>
+
 </resources>

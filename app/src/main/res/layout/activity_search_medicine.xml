@@ -50,7 +50,7 @@
         android:id="@+id/textView"
         android:layout_width="240sp"
         android:layout_height="42sp"
-        android:fontFamily="@font/paytone_one"
+        android:fontFamily="@font/fugaz_one"
         android:text="Search Medicine"
         android:textAlignment="center"
         android:textColor="@color/grey"
@@ -81,6 +81,7 @@
         app:layout_constraintVertical_bias="0.900" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medicine_recycler_view"
         android:layout_width="410dp"
         android:layout_height="442dp"
         android:layout_marginBottom="7dp"

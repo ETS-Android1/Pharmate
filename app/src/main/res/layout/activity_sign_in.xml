@@ -60,7 +60,25 @@
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.152" />
+
+        app:layout_constraintVertical_bias="0.069" />
+    <Button
+        android:id="@+id/btnForgetPass"
+        android:layout_width="155dp"
+        android:layout_height="41dp"
+        android:background="@drawable/mybluebutton"
+        android:onClick="clickforget"
+        android:text="Forget Password"
+        android:textAlignment="center"
+        android:textColor="#E32D2D"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.588" />
+
 
     <Button
         android:id="@+id/button2"

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp"
+    tools:context=".SignUpOrg"
     android:background="@drawable/gradientbackground">
     <TextView
-        android:id="@+id/signInEmailText4"
+        android:id="@+id/signInEmail"
         android:layout_width="322dp"
         android:layout_height="54dp"
         android:ems="10"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.069" />
 
     <EditText
-        android:id="@+id/signUpPasswordText2"
+        android:id="@+id/signUpPassword"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -43,7 +43,7 @@
         app:layout_constraintVertical_bias="0.523" />
 
     <EditText
-        android:id="@+id/signUpPasswordText"
+        android:id="@+id/signUpPasswrd"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.389" />
 
     <EditText
-        android:id="@+id/signUpEmailText"
+        android:id="@+id/signUpEmail"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
@@ -80,13 +80,13 @@
         app:layout_constraintVertical_bias="0.255" />
 
     <Button
-        android:id="@+id/signUpClickButton"
+        android:id="@+id/signUpClickBtn"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginBottom="204dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/paytone_one"
-        android:onClick="signUpClick"
+        android:onClick="signUp"
         android:paddingTop="5sp"
         android:text="Sign Up"
         android:textAlignment="center"
@@ -103,9 +103,10 @@
         android:id="@+id/verifySign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="After verify Sign"
-        android:onClick="verifySign"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/mybluebutton"
+        android:onClick="VerifySign"
+        android:text="After verify Sign"
         android:textColor="@color/grey"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"

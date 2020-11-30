@@ -58,9 +58,10 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100" />
+        app:layout_constraintVertical_bias="0.105" />
 
     <TextView
         android:id="@+id/signInEmailText2"
@@ -70,14 +71,15 @@
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
         android:text="Donate Medicine"
-        android:textColor="@color/grey"
         android:textSize="30sp"
+        android:textColor="@color/grey"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0.005" />
 
     <Button
         android:id="@+id/uploadMedicineButton"

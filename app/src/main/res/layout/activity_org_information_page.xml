@@ -4,114 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp"
+    tools:context=".OrgInformationPage"
     android:background="@drawable/gradientbackground">
+
+
     <TextView
-        android:id="@+id/signInEmailText4"
-        android:layout_width="322dp"
-        android:layout_height="54dp"
+        android:id="@+id/signInEmailText"
+        android:layout_width="342dp"
+        android:layout_height="111dp"
         android:ems="10"
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
-        android:text="Sign Up"
+        android:text="Organization Information"
         android:textColor="@color/grey"
-        android:textSize="40sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <EditText
-        android:id="@+id/signUpPasswordText2"
+        android:id="@+id/OrgNameText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:textColor="@color/cyan"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523" />
-
-    <EditText
-        android:id="@+id/signUpPasswordText"
-        android:layout_width="325sp"
-        android:layout_height="55sp"
-        android:background="@drawable/edittextstyle"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="@color/cyan"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
-
-    <EditText
-        android:id="@+id/signUpEmailText"
-        android:layout_width="325sp"
-        android:layout_height="55sp"
-        android:background="@drawable/edittextstyle"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:hint="E-Mail"
+        android:hint="Organization Name"
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255" />
+        app:layout_constraintVertical_bias="0.281" />
+
+    <EditText
+        android:id="@+id/OrgContactText"
+        android:layout_width="325dp"
+        android:layout_height="55dp"
+        android:background="@drawable/edittextstyle"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Contact"
+        android:inputType="phone"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.445" />
+
+    <EditText
+        android:id="@+id/OrgAddressText"
+        android:layout_width="325dp"
+        android:layout_height="55dp"
+        android:background="@drawable/edittextstyle"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:hint="Address"
+        android:inputType="textMultiLine"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.606" />
 
     <Button
-        android:id="@+id/signUpClickButton"
+        android:id="@+id/OrgSubmit"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/paytone_one"
-        android:onClick="signUpClick"
+        android:onClick="submitOrgInfoClick"
         android:paddingTop="5sp"
-        android:text="Sign Up"
+        android:text="Submit"
         android:textAlignment="center"
         android:textColor="@color/grey"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.191" />
-
-    <Button
-        android:id="@+id/verifySign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="After verify Sign"
-        android:onClick="verifySign"
-        android:background="@drawable/mybluebutton"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpClickButton" />
-
-
+        app:layout_constraintVertical_bias="0.950" />
 </androidx.constraintlayout.widget.ConstraintLayout>

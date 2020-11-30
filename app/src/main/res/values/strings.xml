@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Pharmate</string>
+    <string-array name="usertype">
+        <item> Choose</item>
+        <item>individual</item>
+        <item>organization</item>
+    </string-array>
 </resources>

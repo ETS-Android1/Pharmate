@@ -10,10 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pharmate">
 
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-
+        <activity android:name=".OrganizationLocation"/>
         <activity android:name=".OtpVerification" />
         <activity android:name=".OrganizatonListPage" />
         <activity android:name=".ReceiveMedicine" />
@@ -24,9 +32,8 @@
         <activity android:name=".SignUp" />
         <activity android:name=".HomePage" />
         <activity android:name=".SignIn" />
-        <activity android:name=".MainActivity">
 
-        </activity>
+
 
         <meta-data
             android:name="preloaded_fonts"

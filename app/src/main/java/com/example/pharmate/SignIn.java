@@ -2,8 +2,6 @@ package com.example.pharmate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,10 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SignIn extends AppCompatActivity {
     // Defining Firebase Instance Variables
@@ -30,7 +25,7 @@ public class SignIn extends AppCompatActivity {
         // defining firebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance();
         // defining email and password text
-        emailText = findViewById(R.id.editTextTextPersonName15);
+        emailText = findViewById(R.id.signInEmailText);
         passwordText = findViewById(R.id.signInPasswordText);
 
         // Getting current user
@@ -52,7 +47,8 @@ public class SignIn extends AppCompatActivity {
     public void signInClick(View v) {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(authResult -> {
             if(firebaseAuth.getCurrentUser().isEmailVerified()){
                 Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 Intent _intent = new Intent(SignIn.this, HomePage.class);

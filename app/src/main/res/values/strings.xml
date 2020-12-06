@@ -9,5 +9,7 @@
     <string name="err_tel">Enter valid phone no.</string>
     <string name="err_email">Enter valid email</string>
     <string name="err_year">Enter valid year</string>
+    <string name="enter_full_name">Name
+    </string>
 
 </resources>

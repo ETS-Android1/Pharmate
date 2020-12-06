@@ -25,7 +25,7 @@ Button Btnperson,Btnorganization;
     }
 
     public void personCreate(View view) {
-        Intent intent=new Intent(OrganizationOrPerson.this,SignUp.class);
+        Intent intent=new Intent(OrganizationOrPerson.this,RegisterPage.class);
         startActivity(intent);
     }
 }

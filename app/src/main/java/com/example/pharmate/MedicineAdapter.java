@@ -11,26 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class MedicineAdapter extends FirestoreRecyclerAdapter<Medicine,MedicineAdapter.MedicineHolder>{
+import models.MedicineClass;
+
+public class MedicineAdapter extends FirestoreRecyclerAdapter<MedicineClass,MedicineAdapter.MedicineHolder>{
 
 
-    public MedicineAdapter(@NonNull FirestoreRecyclerOptions<Medicine> options) {
+    public MedicineAdapter(@NonNull FirestoreRecyclerOptions<MedicineClass> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull MedicineHolder holder, int position, @NonNull Medicine model) {
-        holder.textViewName.setText(model.getName());
+    protected void onBindViewHolder(@NonNull MedicineHolder holder, int position, @NonNull MedicineClass model) {
+
+        holder.textViewName.setText(model.getNameOfMedicine());
         holder.textViewBarcodeNumber.setText(model.getBarcodeNumber());
-        holder.textViewAmount.setText(model.getAmount());
+        holder.textViewAmount.setText(String.valueOf(model.getQuantity()));
+
     }
 
     @NonNull
     @Override
     public MedicineHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.medicineitem,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medicineitem,
                 parent,false);
-        return new MedicineHolder(v);
+        return new MedicineHolder(view);
     }
 
     class MedicineHolder extends RecyclerView.ViewHolder{

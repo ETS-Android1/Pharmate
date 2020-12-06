@@ -17,7 +17,7 @@
         android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:hint="Amount"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textColor="@color/cyan"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"

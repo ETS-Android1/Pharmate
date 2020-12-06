@@ -12,26 +12,24 @@
         <activity
             android:name=".Choose"
             android:label="@string/title_activity_choose"
-            android:theme="@style/Theme.Pharmate.NoActionBar"></activity>
-        <activity android:name=".SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.Pharmate.NoActionBar">
 
-       <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity android:name=".OrgInformationPage" />
+        <activity android:name=".OrgInformationPage" />
         <activity android:name=".SignUpOrg" />
         <activity android:name=".OrganizationOrPerson" />
         <activity android:name=".HomePageOrg" />
         <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-        <activity android:name=".OrganizationLocation"/>
+        <activity android:name=".OrganizationLocation" />
         <activity android:name=".OtpVerification" />
         <activity android:name=".OrganizatonListPage" />
         <activity android:name=".ReceiveMedicine" />
@@ -41,7 +39,6 @@
         <activity android:name=".UploadMedicine" />
         <activity android:name=".SignUp" />
         <activity android:name=".HomePage" />
-        <activity android:name=".MainActivity" />
 
 
         <meta-data

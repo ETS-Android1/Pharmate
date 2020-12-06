@@ -55,11 +55,12 @@ public class UploadMedicine extends AppCompatActivity {
         quantity = (EditText) findViewById(R.id.amountText);
         expirationDate = (EditText) findViewById(R.id.expirationDateText);
 
+
+
     }
 
         public void uploadMedicineClick(View view) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
             String userID = firebaseUser.getUid();
             String displayName = firebaseUser.getDisplayName();
             String nameText = name.getText().toString();

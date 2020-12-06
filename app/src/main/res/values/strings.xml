@@ -5,5 +5,10 @@
         <item>individual</item>
         <item>organization</item>
     </string-array>
+
     <string name="mapbox_access_token">pk.eyJ1IjoiaGl1c2FubWF6IiwiYSI6ImNraHM1a2hsMjBxMDIyeXBiNjNoZWt6amwifQ.YVkdGAUIDzLYnqYN-yZxRQ</string>
+   <string name="title_activity_choose">Choose</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
 </resources>

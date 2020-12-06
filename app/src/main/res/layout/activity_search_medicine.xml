@@ -68,7 +68,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/paytone_one"
-        android:onClick="goToSignInClick"
+        android:onClick="searchMedicineClick"
         android:paddingTop="5sp"
         android:text="List"
         android:textAlignment="center"

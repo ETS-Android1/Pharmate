@@ -11,7 +11,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName15"
+        android:id="@+id/signInEmailText"
         android:layout_width="325sp"
         android:layout_height="55sp"
         android:background="@drawable/edittextstyle"

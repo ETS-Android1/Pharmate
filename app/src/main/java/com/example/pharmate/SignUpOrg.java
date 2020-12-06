@@ -48,9 +48,8 @@ public class SignUpOrg extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
                                             Toast.makeText(SignUpOrg.this,"please check your email", Toast.LENGTH_LONG).show();
-                                            // Intent intent = new Intent(SignUp.this, HomePage.class);
-                                            // startActivity(intent);
-                                            //finish();
+                                             Intent intent = new Intent(SignUpOrg.this, Frag2.class);
+                                             startActivity(intent);
                                         }else{
                                             Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
                                                     Toast.LENGTH_LONG).show();
@@ -70,8 +69,4 @@ public class SignUpOrg extends AppCompatActivity {
 
     }
 
-    public void VerifySign(View view) {
-        Intent intent=new Intent(SignUpOrg.this,SignInOrg.class);
-        startActivity(intent);
-    }
 }

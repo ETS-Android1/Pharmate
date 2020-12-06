@@ -1,13 +1,10 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignIn"
-    android:background="@drawable/gradientbackground">
-
-
+    android:background="@drawable/gradientbackground"
+    tools:context=".Frag1">
 
 
     <EditText
@@ -26,7 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.301" />
+        app:layout_constraintVertical_bias="0.414" />
+
     <EditText
         android:id="@+id/signInPasswordText"
         android:layout_width="325sp"
@@ -41,27 +39,29 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintVertical_bias="0.55" />
+
 
     <TextView
         android:id="@+id/signInEmailText3"
         android:layout_width="322dp"
-        android:layout_height="54dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="108dp"
         android:ems="10"
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
-        android:text="Sign In"
+        android:text="Person"
         android:textColor="@color/grey"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnForgetPass"
         android:layout_width="155dp"
@@ -74,11 +74,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
-
+        app:layout_constraintVertical_bias="0.704"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/button2"
@@ -87,7 +86,7 @@
         android:layout_marginBottom="104dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/paytone_one"
-        android:onClick="signInClick"
+        android:onClick="loginClick"
         android:paddingTop="5sp"
         android:text="Sign In"
         android:textAlignment="center"
@@ -98,6 +97,9 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintVertical_bias="0.191"
+        tools:ignore="OnClick" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

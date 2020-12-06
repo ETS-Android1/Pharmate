@@ -99,20 +99,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.191" />
 
-    <Button
-        android:id="@+id/verifySign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
-        android:background="@drawable/mybluebutton"
-        android:onClick="VerifySign"
-        android:text="After verify Sign"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpClickButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

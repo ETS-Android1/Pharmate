@@ -22,6 +22,7 @@ public class UploadMedicine extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     EditText barcodeNo, name, amount, expirationDate, specialPrescription;
+    Button uploadMedicineButton;
     HashMap<String, Object> postMedicineData = new HashMap<>();
 
 
@@ -44,11 +45,11 @@ public class UploadMedicine extends AppCompatActivity {
         amount = (EditText) findViewById(R.id.amountText);
         expirationDate = (EditText) findViewById(R.id.expirationDateText);
         specialPrescription = (EditText) findViewById(R.id.prescriptionNoText);
+        uploadMedicineButton=(Button)findViewById(R.id.uploadMedicineButton);
     }
 
         public void uploadMedicineClick(View view){
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
             String userID = firebaseUser.getUid();
             String displayName = firebaseUser.getDisplayName();
             String nameText = name.getText().toString();

@@ -9,11 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pharmate">
+        <activity
+            android:name=".Choose"
+            android:label="@string/title_activity_choose"
+            android:theme="@style/Theme.Pharmate.NoActionBar"></activity>
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-
+        <activity android:name=".HomePageOrg" />
+        <activity android:name=".OrgInformationPage" />
+        <activity android:name=".SignUpOrg" />
+        <activity android:name=".OrganizationOrPerson" />
         <activity android:name=".OtpVerification" />
         <activity android:name=".OrganizatonListPage" />
         <activity android:name=".ReceiveMedicine" />
@@ -23,10 +36,7 @@
         <activity android:name=".UploadMedicine" />
         <activity android:name=".SignUp" />
         <activity android:name=".HomePage" />
-        <activity android:name=".SignIn" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

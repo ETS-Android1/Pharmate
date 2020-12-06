@@ -54,9 +54,9 @@ public class SignUp extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
                                             Toast.makeText(SignUp.this,"please check your email", Toast.LENGTH_LONG).show();
-                                            // Intent intent = new Intent(SignUp.this, HomePage.class);
-                                            // startActivity(intent);
-                                            //finish();
+                                             Intent intent = new Intent(SignUp.this, Frag1.class);
+                                             startActivity(intent);
+                                            finish();
                                         }else{
                                             Toast.makeText(SignUp.this, task.getException().getMessage(),
                                                     Toast.LENGTH_LONG).show();
@@ -75,8 +75,4 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    public void verifySign(View view) {
-        Intent intent=new Intent(SignUp.this,SignIn.class);
-        startActivity(intent);
-    }
 }

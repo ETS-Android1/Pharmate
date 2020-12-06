@@ -91,6 +91,7 @@ public class UploadMedicine extends AppCompatActivity {
                         } else {
 
                             MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText);
+
                             Map<String, Object> medicine = new HashMap<>();
 
                             medicine.put("nameOfMedicine", medicineClassToAdd.getNameOfMedicine());

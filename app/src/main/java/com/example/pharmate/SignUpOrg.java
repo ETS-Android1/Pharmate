@@ -15,27 +15,49 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 public class SignUpOrg extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private FirebaseFirestore firebaseFirestore;
 
-    EditText emailText, passwordText;
+
+    EditText emailText, passwordText,OrgNameText,OrgContactText,OrgAddressText;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_org);
-
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
+        OrgNameText=findViewById(R.id.OrgNameText);
+        OrgContactText=findViewById(R.id.OrgContactText);
+        OrgAddressText=findViewById(R.id.OrgAddressText);
         emailText = findViewById(R.id.signUpEmail);
         passwordText = findViewById(R.id.signUpPasswrd);
     }
 
     public void signUp(View view) {
-        System.out.println("button pressed");
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        String orgtext = OrgNameText.getText().toString();
+        String orgaddresstext = OrgAddressText.getText().toString();
+        String orgcontact = OrgContactText.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
         // validation islemlerini yapacagiz
+
+
 
 
         firebaseAuth.createUserWithEmailAndPassword(email,password)
@@ -47,8 +69,26 @@ public class SignUpOrg extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(orgtext+orgaddresstext)
+                                                    .build();
+                                            firebaseUser.updateProfile(profileUpdates)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                System.out.println("Task Successful");
+                                                            }
+                                                        }
+                                                    });
+                                            String id = firebaseUser.getUid();
+                                            HashMap<String, Object> postUserData = new HashMap<>();
+                                            postUserData.put("manager",orgtext);
+                                            postUserData.put("province",orgcontact);
+                                            postUserData.put("city",orgaddresstext);
+                                            firebaseFirestore.collection("organization").document(id).set(postUserData);
                                             Toast.makeText(SignUpOrg.this,"please check your email", Toast.LENGTH_LONG).show();
-                                             Intent intent = new Intent(SignUpOrg.this, Frag2.class);
+                                             Intent intent = new Intent(SignUpOrg.this, MainActivity.class);
                                              startActivity(intent);
                                         }else{
                                             Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
@@ -66,6 +106,7 @@ public class SignUpOrg extends AppCompatActivity {
                 Toast.makeText(SignUpOrg.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
             }
         });
+
 
     }
 

@@ -10,11 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pharmate">
         <activity
+            android:name=".registerPerson"
+            android:label="@string/title_activity_register_person"
+            android:theme="@style/Theme.Pharmate.NoActionBar"></activity>
+        <activity
             android:name=".Choose"
             android:label="@string/title_activity_choose"
-            android:theme="@style/Theme.Pharmate.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.Pharmate.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +31,6 @@
         <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-        <activity android:name=".OrganizationLocation" />
         <activity android:name=".OtpVerification" />
         <activity android:name=".OrganizatonListPage" />
         <activity android:name=".ReceiveMedicine" />
@@ -39,7 +40,6 @@
         <activity android:name=".UploadMedicine" />
         <activity android:name=".SignUp" />
         <activity android:name=".HomePage" />
-
 
         <meta-data
             android:name="preloaded_fonts"

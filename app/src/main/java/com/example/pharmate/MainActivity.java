@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
     public void goToSignUpClick(View view) {
-        Intent intent = new Intent(MainActivity.this, SignUp.class);
+        Intent intent = new Intent(MainActivity.this, OrganizationOrPerson.class);
         startActivity(intent);
 
     }

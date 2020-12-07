@@ -2,6 +2,7 @@
   <dictionary name="sacar">
     <words>
       <w>orgtext</w>
+      <w>regperson</w>
     </words>
   </dictionary>
 </component>

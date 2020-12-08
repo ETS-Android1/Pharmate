@@ -29,7 +29,6 @@
         <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-        <activity android:name=".OrganizationLocation" />
         <activity android:name=".OtpVerification" />
         <activity android:name=".OrganizatonListPage" />
         <activity android:name=".ReceiveMedicine" />

@@ -35,14 +35,15 @@
         android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textPassword"
         android:textColor="@color/cyan"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.643" />
+        app:layout_constraintVertical_bias="0.556" />
 
     <TextView
         android:id="@+id/signInEmailText3"
@@ -60,6 +61,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.208" />
+
+    <Button
+        android:id="@+id/btnForgetPass"
+        android:layout_width="155dp"
+        android:layout_height="41dp"
+        android:background="@drawable/mybluebutton"
+        android:onClick="clickforget"
+        android:text="Forget Password"
+        android:textAlignment="center"
+        android:textColor="#E32D2D"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.704"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/login"

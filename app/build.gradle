@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.1'
 
 
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.5.0'
+
 
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:7.0.0'

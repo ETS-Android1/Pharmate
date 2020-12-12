@@ -34,7 +34,7 @@
         android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textPassword"
         android:textColor="@color/cyan"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"

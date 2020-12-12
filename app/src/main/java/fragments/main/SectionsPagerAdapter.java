@@ -1,4 +1,4 @@
-package com.example.pharmate.ui.main;
+package fragments.main;
 
 import android.content.Context;
 
@@ -8,14 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.pharmate.Frag1;
-import com.example.pharmate.Frag2;
+import fragments.Frag1;
+import fragments.Frag2;
+
 import com.example.pharmate.R;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes

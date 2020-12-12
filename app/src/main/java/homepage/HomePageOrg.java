@@ -1,10 +1,17 @@
-package com.example.pharmate;
-
-import androidx.appcompat.app.AppCompatActivity;
+package homepage;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pharmate.R;
+
+import medicine.SearchMedicine;
+import medicine.UploadMedicine;
+import organization.OrgInformationPage;
+import organization.OrganizatonListPage;
 
 public class HomePageOrg extends AppCompatActivity {
 

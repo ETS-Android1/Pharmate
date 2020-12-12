@@ -1,4 +1,4 @@
-package com.example.pharmate;
+package medicine;
 
 public class Medicine {
 

@@ -1,4 +1,4 @@
-package com.example.pharmate.ui.main;
+package fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pharmate.R;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";

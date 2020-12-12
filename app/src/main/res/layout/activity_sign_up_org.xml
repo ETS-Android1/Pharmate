@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpOrg"
+    tools:context="signup.SignUpOrg"
     android:background="@drawable/gradientbackground">
     <TextView
         android:id="@+id/signInEmail"

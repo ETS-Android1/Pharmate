@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import fragments.Choose;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

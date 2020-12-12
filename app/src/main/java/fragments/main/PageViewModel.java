@@ -1,4 +1,4 @@
-package com.example.pharmate.ui.main;
+package fragments.main;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

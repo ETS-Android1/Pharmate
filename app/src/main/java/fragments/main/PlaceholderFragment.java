@@ -1,4 +1,4 @@
-package com.example.pharmate.main;
+package fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,26 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pharmate.R;
-import com.example.pharmate.ui.main.PageViewModel;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class PlaceholderFragment1 extends Fragment {
+public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
 
-    public static PlaceholderFragment1 newInstance(int index) {
-        PlaceholderFragment1 fragment = new PlaceholderFragment1();
+    public static PlaceholderFragment newInstance(int index) {
+        PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -16,14 +17,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 import fragments.Frag1;
+import models.UserClass;
 
 public class SignUp extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    EditText emailText, passwordText;
+    EditText emailText, passwordText,userType, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    private FirebaseFirestore firebaseFirestore;
 
 
     @Override
@@ -31,14 +40,31 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         firebaseAuth = FirebaseAuth.getInstance();
         emailText = findViewById(R.id.signUpEmailText);
         passwordText = findViewById(R.id.signUpPasswordText);
+        userType = findViewById(R.id.userTypeText);
+        name = findViewById(R.id.personNameText);
+        userSurname = findViewById(R.id.personSurnameText);
+        userTurkishID = findViewById(R.id.turkishIdText);
+        userContact = findViewById(R.id.personContactText);
+        userAddress = findViewById(R.id.personAddressText);
+        userBirthDate = findViewById(R.id.birthDateText);
 
         // girilen inputları kontrol edicez.
     }
     public void signUpClick (View view) {
         System.out.println("button pressed");
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        String nameText = name.getText().toString();
+        String userSurnameText = userSurname.getText().toString();
+        String userTurkishIDText = userTurkishID.getText().toString();
+        String userAddressText = userAddress.getText().toString();
+        String userContactText = userContact.getText().toString();
+        String userTypeText = userType.getText().toString();
+        String userBirthDayText = userBirthDate.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
@@ -54,14 +80,43 @@ public class SignUp extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(nameText+userSurnameText)
+                                                    .build();
+
+                                            firebaseUser.updateProfile(profileUpdates)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                DocumentSnapshot document = null;
+                                                                UserClass userClass = document.toObject(UserClass.class);
+                                                                System.out.println("Task Successful");
+                                                            }
+                                                        }
+                                                    });
+
+                                            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText,userAddressText,userContactText,userBirthDayText,null);
+                                            String userEmail = firebaseUser.getEmail();
+                                            String userID = firebaseUser.getUid();
+
+                                            HashMap<String, Object> postUserData = new HashMap<>();
+
+
+                                            postUserData.put("type", userClassToAdd.getType());
+                                            postUserData.put("name", userClassToAdd.getName());
+                                            postUserData.put("surname", userClassToAdd.getSurname());
+                                            postUserData.put("turkishId", userClassToAdd.getTurkishId());
+                                            postUserData.put("contact", userClassToAdd.getContact());
+                                            postUserData.put("address",userClassToAdd.getAddress());
+                                            postUserData.put("birthDate", userClassToAdd.getBirthdate());
+                                            firebaseFirestore.collection("user").document(userID).set(postUserData);
                                             Toast.makeText(SignUp.this,"please check your email", Toast.LENGTH_LONG).show();
-                                             Intent intent = new Intent(SignUp.this, Frag1.class);
-                                             startActivity(intent);
-                                            finish();
+                                            Intent intent = new Intent(SignUp.this, MainActivity.class);
+                                            startActivity(intent);
                                         }else{
                                             Toast.makeText(SignUp.this, task.getException().getMessage(),
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+                                                    Toast.LENGTH_LONG).show(); }
 
                                     }
                                 });
@@ -74,6 +129,8 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(SignUp.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
 
 }

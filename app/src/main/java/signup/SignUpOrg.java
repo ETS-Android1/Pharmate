@@ -94,8 +94,7 @@ public class SignUpOrg extends AppCompatActivity {
                                              startActivity(intent);
                                         }else{
                                             Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
-                                                    Toast.LENGTH_LONG).show();
-                                        }
+                                                    Toast.LENGTH_LONG).show(); }
 
                                     }
                                 });

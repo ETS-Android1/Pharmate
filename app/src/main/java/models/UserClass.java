@@ -4,6 +4,7 @@ public class UserClass {
 
     private String name,surname,email,password,turkishId,contact,type,address,birthdate;
 
+
     public UserClass(String name, String surname, String email, String password, String turkishId, String contact, String type) {
         this.name = name;
         this.surname = surname;

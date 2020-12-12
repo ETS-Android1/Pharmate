@@ -31,7 +31,7 @@
 
 
         <EditText
-            android:id="@+id/personNameText"
+            android:id="@+id/userNameText"
             android:layout_width="325sp"
             android:layout_height="55sp"
             android:background="@drawable/edittextstyle"
@@ -46,7 +46,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/personSurnameText"
+            android:id="@+id/userSurnameText"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextstyle"
@@ -61,7 +61,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/signUpEmailText"
+            android:id="@+id/userSignUpEmailText"
             android:layout_width="325sp"
             android:layout_height="55sp"
             android:background="@drawable/edittextstyle"
@@ -76,7 +76,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/signUpPasswordText"
+            android:id="@+id/userSignUpPasswordText"
             android:layout_width="325sp"
             android:layout_height="55sp"
             android:background="@drawable/edittextstyle"
@@ -91,7 +91,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/signUpPasswordText2"
+            android:id="@+id/userSignUpConfirmPasswordText"
             android:layout_width="325sp"
             android:layout_height="55sp"
             android:background="@drawable/edittextstyle"
@@ -106,7 +106,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/turkishIdText"
+            android:id="@+id/userTurkishIdText"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextstyle"
@@ -122,7 +122,7 @@
 
 
         <EditText
-            android:id="@+id/personContactText"
+            android:id="@+id/userContactText"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextstyle"
@@ -136,7 +136,7 @@
             android:layout_gravity="center" />
 
         <EditText
-            android:id="@+id/personAddressText"
+            android:id="@+id/userAddressText"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextstyle"
@@ -152,7 +152,7 @@
 
 
         <EditText
-            android:id="@+id/birthDateText"
+            android:id="@+id/userBirthDateText"
             android:layout_width="325dp"
             android:layout_height="55dp"
             android:background="@drawable/edittextstyle"
@@ -167,13 +167,13 @@
             android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/signUpClickButton"
+            android:id="@+id/signUpUserClickButton"
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_marginBottom="28dp"
             android:background="@drawable/mybluebutton"
             android:fontFamily="@font/paytone_one"
-            android:onClick="signUpClick"
+            android:onClick="signUpUserClick"
             android:paddingTop="5sp"
             android:text="Sign Up"
             android:textAlignment="center"

@@ -2,14 +2,13 @@ package models;
 
 public class UserClass {
 
-    private String name,surname,email,password,turkishId,contact,type,address,birthdate;
+    private String name, surname, email, turkishId, contact, type, address, birthdate;
 
 
-    public UserClass(String name, String surname, String email, String password, String turkishId, String contact, String type) {
+    public UserClass(String name, String surname, String email, String turkishId, String address, String contact, String birthdate, String type) {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.password = password;
         this.turkishId = turkishId;
         this.contact = contact;
         this.type = type;
@@ -39,14 +38,6 @@ public class UserClass {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getTurkishId() {

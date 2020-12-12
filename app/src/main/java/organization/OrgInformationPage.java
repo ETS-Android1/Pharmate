@@ -19,6 +19,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
+import models.MedicineClass;
+import models.OrganizationClass;
+
 public class OrgInformationPage extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
@@ -60,11 +63,12 @@ public class OrgInformationPage extends AppCompatActivity {
                         }
                     }
                 });
+        OrganizationClass organizationClassToAdd = new OrganizationClass(orgtext, orgaddresstext, orgcontact);
         String id = firebaseUser.getUid();
         HashMap<String, Object> postUserData = new HashMap<>();
-        postUserData.put("manager",orgtext);
-        postUserData.put("province",orgcontact);
-        postUserData.put("city",orgaddresstext);
+        postUserData.put("manager",organizationClassToAdd.getManager());
+        postUserData.put("province",organizationClassToAdd.getProvince());
+        postUserData.put("city",organizationClassToAdd.getCity());
         firebaseFirestore.collection("organization").document(id).set(postUserData);
 
 

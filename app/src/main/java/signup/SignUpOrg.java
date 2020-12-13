@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +24,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
+import fragments.Choose;
+
 public class SignUpOrg extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
@@ -32,7 +33,9 @@ public class SignUpOrg extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
 
 
-    EditText emailText, passwordText,OrgNameText,OrgContactText,OrgAddressText;;
+    EditText emailText, passwordText, OrgNameText, OrgContactText, OrgAddressText;
+    ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +59,6 @@ public class SignUpOrg extends AppCompatActivity {
         String orgcontact = OrgContactText.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-        // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
-        // validation islemlerini yapacagiz
-
-
-
 
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -90,7 +88,7 @@ public class SignUpOrg extends AppCompatActivity {
                                             postUserData.put("city",orgaddresstext);
                                             firebaseFirestore.collection("organization").document(id).set(postUserData);
                                             Toast.makeText(SignUpOrg.this,"please check your email", Toast.LENGTH_LONG).show();
-                                             Intent intent = new Intent(SignUpOrg.this, MainActivity.class);
+                                            Intent intent = new Intent(SignUpOrg.this, Choose.class);
                                              startActivity(intent);
                                         }else{
                                             Toast.makeText(SignUpOrg.this, task.getException().getMessage(),

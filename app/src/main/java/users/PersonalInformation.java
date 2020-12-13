@@ -1,7 +1,7 @@
-
 package users;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,23 +15,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Range;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
+import models.MedicineClass;
 import models.UserClass;
+import signup.SignUp;
 
 import static android.graphics.Color.*;
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+import static com.basgeekball.awesomevalidation.ValidationStyle.COLORATION;
 
 public class PersonalInformation extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
@@ -96,6 +106,7 @@ public class PersonalInformation extends AppCompatActivity {
             }
         };
         String regexusertype = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
+        awesomeValidation.addValidation(PersonalInformation.this, R.id.userTypeText,"[a-zA-Z\\s]+", R.string.usernameerror);
         awesomeValidation.addValidation(PersonalInformation.this,R.id.turkishIdText,"[0-9]{11}+",R.string.iderror);
         awesomeValidation.addValidation(PersonalInformation.this, R.id.personNameText, "[a-zA-Z\\s]+", R.string.nameerror);
         awesomeValidation.addValidation(PersonalInformation.this, R.id.personSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
@@ -132,12 +143,9 @@ public class PersonalInformation extends AppCompatActivity {
                     });
 
             UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText);
-            String userEmail = firebaseUser.getEmail();
             String userID = firebaseUser.getUid();
 
             HashMap<String, Object> postUserData = new HashMap<>();
-
-
             postUserData.put("name", userClassToAdd.getName());
             postUserData.put("surname", userClassToAdd.getSurname());
             postUserData.put("turkishId", userClassToAdd.getTurkishId());

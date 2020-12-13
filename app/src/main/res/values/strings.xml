@@ -13,7 +13,6 @@
     <string name="title_activity_register_person">registerPerson</string>
 
 
-
     <string name="nameerror">Enter a valid name</string>
     <string name="surnameerror">Enter a valid surname</string>
     <string name="usernameerror">Enter a valid username</string>

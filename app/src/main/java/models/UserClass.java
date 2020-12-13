@@ -16,7 +16,6 @@ public class UserClass {
         this.birthdate = birthdate;
     }
 
-
     public String getName() {
         return name;
     }

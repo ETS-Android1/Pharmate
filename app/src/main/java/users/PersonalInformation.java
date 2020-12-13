@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -35,7 +34,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import models.MedicineClass;
 import models.UserClass;
 import signup.SignUp;
 
@@ -144,22 +142,25 @@ public class PersonalInformation extends AppCompatActivity {
                         }
                     });
 
-            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userTypeText, userBirthDayText);
-            String userEmail = firebaseUser.getEmail();
-            String userID = firebaseUser.getUid();
 
-            HashMap<String, Object> postUserData = new HashMap<>();
+        String userEmail = firebaseUser.getEmail();
+        String userID = firebaseUser.getUid();
+
+        UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userEmail, userTurkishIDText, userAddressText, userContactText, userBirthDayText, userTypeText);
+
+        HashMap<String, Object> postUserData = new HashMap<>();
 
 
-            postUserData.put("type", userClassToAdd.getType());
-            postUserData.put("name", userClassToAdd.getName());
-            postUserData.put("surname", userClassToAdd.getSurname());
-            postUserData.put("turkishId", userClassToAdd.getTurkishId());
-            postUserData.put("contact", userClassToAdd.getContact());
-            postUserData.put("address", userClassToAdd.getAddress());
-            postUserData.put("birthDate", userClassToAdd.getBirthdate());
-            firebaseFirestore.collection("userType").document(userID).set(postUserData);
-        }
+        postUserData.put("type", userClassToAdd.getType());
+        postUserData.put("name", userClassToAdd.getName());
+        postUserData.put("surname", userClassToAdd.getSurname());
+        postUserData.put("turkishId", userClassToAdd.getTurkishId());
+        postUserData.put("contact", userClassToAdd.getContact());
+        postUserData.put("address", userClassToAdd.getAddress());
+        postUserData.put("birthDate", userClassToAdd.getBirthdate());
+        firebaseFirestore.collection("userType").document(userID).set(postUserData);
+    }
+
     }
 }
 

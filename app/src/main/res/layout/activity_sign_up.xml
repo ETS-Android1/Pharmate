@@ -170,6 +170,8 @@
             android:id="@+id/signUpUserClickButton"
             android:layout_width="250dp"
             android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="28dp"
             android:background="@drawable/mybluebutton"
             android:fontFamily="@font/paytone_one"
@@ -178,9 +180,7 @@
             android:text="Sign Up"
             android:textAlignment="center"
             android:textColor="@color/grey"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp" />
+            android:textSize="30sp" />
 
     </LinearLayout>
 </ScrollView>

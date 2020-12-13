@@ -28,7 +28,6 @@ public class PersonalInformation extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
-
     EditText userType, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
@@ -42,7 +41,6 @@ public class PersonalInformation extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-//
 //        //defining textFields
         userType = findViewById(R.id.userTypeText);
         name = findViewById(R.id.personNameText);

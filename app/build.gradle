@@ -57,6 +57,9 @@ dependencies {
 
     // FirebaseUI for Cloud Storage
     implementation 'com.firebaseui:firebase-ui-storage:7.0.0'
+    //regex
+        implementation 'com.basgeekball:awesome-validation:4.2'
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

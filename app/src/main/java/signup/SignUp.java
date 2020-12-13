@@ -1,8 +1,14 @@
 package signup;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,22 +20,52 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Range;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
+import com.example.pharmate.MainActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+
 
 import fragments.Choose;
+import fragments.Frag1;
+import medicine.UploadMedicine;
+
 import models.UserClass;
+import users.PersonalInformation;
 
 public class SignUp extends AppCompatActivity {
 
     EditText emailText, passwordText, userType, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
     private FirebaseAuth firebaseAuth;
+
     private FirebaseFirestore firebaseFirestore;
+   private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private FirebaseFirestore firebaseFirestore;
+    AwesomeValidation awesomeValidation;
+
+    private static final String TAG = "SignUp";
+
+    private DatePickerDialog.OnDateSetListener nOnDateSetListener;
+
+    EditText emailText, passwordText,userType, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    Button signUpClickButton;
 
 
     @Override
@@ -37,9 +73,13 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+
         emailText = findViewById(R.id.userSignUpEmailText);
         passwordText = findViewById(R.id.userSignUpConfirmPasswordText);
 //        userType = findViewById(R.id.userTypeText);
@@ -50,7 +90,15 @@ public class SignUp extends AppCompatActivity {
         userAddress = findViewById(R.id.userAddressText);
         userBirthDate = findViewById(R.id.userBirthDateText);
 
-        // girilen inputları kontrol edicez.
+        String regexpassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
+        awesomeValidation.addValidation(SignUp.this, R.id.signUpPasswordText,"[a-z][A-Z][1-9]{6,}+" , R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.signUpPasswordText2, R.id.signInPasswordText, R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this,R.id.turkishIdText,"[1-9]{11}+",R.string.iderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.signUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.personNameText, "[a-zA-Z\\s]+", R.string.nameerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.personSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.personContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
+
     }
 
     public void signUpUserClick(View view) {
@@ -117,5 +165,6 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(SignUp.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }

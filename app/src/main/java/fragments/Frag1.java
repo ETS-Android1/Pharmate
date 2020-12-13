@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import homepage.HomePage;
 
+import com.example.pharmate.ForgetPassword;
+import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Frag1 extends Fragment {
     private FirebaseAuth firebaseAuth;
     EditText emailText, passwordText;
-    Button button2;
+    Button button2,btnForgetPass;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ View view=inflater.inflate(R.layout.frag1_layout,container,false);
 emailText=view.findViewById(R.id.editTextTextPersonName15);
 passwordText=view.findViewById(R.id.signInPasswordText);
 button2=view.findViewById(R.id.button2);
+        btnForgetPass=view.findViewById(R.id.btnForgetPass);
 firebaseAuth = FirebaseAuth.getInstance();
 button2.setOnClickListener(new View.OnClickListener(){
     @Override
@@ -62,6 +65,15 @@ button2.setOnClickListener(new View.OnClickListener(){
 
     }
 });
+        btnForgetPass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent _intent = new Intent(getActivity(), ForgetPassword.class);
+                startActivity(_intent);
+
+            }
+        });
+
         return view;
 
 

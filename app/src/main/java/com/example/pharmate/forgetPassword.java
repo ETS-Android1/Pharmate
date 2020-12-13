@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class forgetPassword extends AppCompatActivity {
+public class ForgetPassword extends AppCompatActivity {
     EditText userEmail;
     Button userPass;
     TextView goFrag1, goFrag2;
@@ -44,10 +44,10 @@ public class forgetPassword extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(forgetPassword.this,
+                                    Toast.makeText(ForgetPassword.this,
                                             "Password send to your email", Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(forgetPassword.this,
+                                    Toast.makeText(ForgetPassword.this,
                                             task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
 
@@ -60,7 +60,7 @@ public class forgetPassword extends AppCompatActivity {
         goFrag1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(forgetPassword.this, goFrag1.getClass());
+                Intent intent = new Intent(ForgetPassword.this, goFrag1.getClass());
                 startActivity(intent);
                 finish();
             }
@@ -69,7 +69,7 @@ public class forgetPassword extends AppCompatActivity {
         goFrag2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(forgetPassword.this, goFrag2.getClass());
+                Intent intent = new Intent(ForgetPassword.this, goFrag2.getClass());
                 startActivity(intent);
                 finish();
             }

@@ -31,9 +31,9 @@
         <activity android:name="signup.SignUpOrg" />
         <activity android:name=".OrganizationOrPerson" />
         <activity android:name="homepage.HomePageOrg" />
-        <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
+       <activity android:name=".ForgetPassword"/>
         <activity android:name=".OtpVerification" />
         <activity android:name="organization.OrganizatonListPage" />
         <activity android:name="medicine.ReceiveMedicine" />

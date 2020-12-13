@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -34,6 +35,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
+import models.MedicineClass;
 import models.UserClass;
 import signup.SignUp;
 
@@ -54,7 +56,7 @@ public class PersonalInformation extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
 
 
-    EditText userType, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    EditText  name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -70,7 +72,6 @@ public class PersonalInformation extends AppCompatActivity {
 
 //
 //        //defining textFields
-        userType = findViewById(R.id.userTypeText);
         name = findViewById(R.id.personNameText);
         userSurname = findViewById(R.id.personSurnameText);
         userTurkishID = findViewById(R.id.turkishIdText);
@@ -122,7 +123,6 @@ public class PersonalInformation extends AppCompatActivity {
             String userTurkishIDText = userTurkishID.getText().toString();
             String userAddressText = userAddress.getText().toString();
             String userContactText = userContact.getText().toString();
-            String userTypeText = userType.getText().toString();
             String userBirthDayText = userBirthDate.getText().toString();
 
 
@@ -142,25 +142,18 @@ public class PersonalInformation extends AppCompatActivity {
                         }
                     });
 
+            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText);
+            String userID = firebaseUser.getUid();
 
-        String userEmail = firebaseUser.getEmail();
-        String userID = firebaseUser.getUid();
-
-        UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userEmail, userTurkishIDText, userAddressText, userContactText, userBirthDayText, userTypeText);
-
-        HashMap<String, Object> postUserData = new HashMap<>();
-
-
-        postUserData.put("type", userClassToAdd.getType());
-        postUserData.put("name", userClassToAdd.getName());
-        postUserData.put("surname", userClassToAdd.getSurname());
-        postUserData.put("turkishId", userClassToAdd.getTurkishId());
-        postUserData.put("contact", userClassToAdd.getContact());
-        postUserData.put("address", userClassToAdd.getAddress());
-        postUserData.put("birthDate", userClassToAdd.getBirthdate());
-        firebaseFirestore.collection("userType").document(userID).set(postUserData);
-    }
-
+            HashMap<String, Object> postUserData = new HashMap<>();
+            postUserData.put("name", userClassToAdd.getName());
+            postUserData.put("surname", userClassToAdd.getSurname());
+            postUserData.put("turkishId", userClassToAdd.getTurkishId());
+            postUserData.put("contact", userClassToAdd.getContact());
+            postUserData.put("address", userClassToAdd.getAddress());
+            postUserData.put("birthDate", userClassToAdd.getBirthdate());
+            firebaseFirestore.collection("userType").document(userID).set(postUserData);
+        }
     }
 }
 

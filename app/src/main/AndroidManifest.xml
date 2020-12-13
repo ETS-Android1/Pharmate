@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pharmate">
-        <activity android:name="signup.SignUpUser2"></activity>
+        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name="signup.SignUpUser2" />
         <activity android:name="signup.SignUpUser1" />
         <activity android:name="signup.SignUpUser" />
         <activity
@@ -23,7 +24,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
         <activity android:name=".SplashScreen">
@@ -37,7 +37,6 @@
         <activity android:name="signup.SignUpOrg" />
         <activity android:name=".OrganizationOrPerson" />
         <activity android:name="homepage.HomePageOrg" />
-        <activity android:name=".forgetPassword" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
         <activity android:name=".OtpVerification" />

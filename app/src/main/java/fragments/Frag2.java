@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import homepage.HomePageOrg;
 
+import com.example.pharmate.ForgetPassword;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,13 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Frag2 extends Fragment {
     private FirebaseAuth firebaseAuth;
     EditText mailSign, passwordSign;
-    Button login;
+    Button login,btnForgetPass;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frag2_layout,container,false);
 
         mailSign=view.findViewById(R.id.mailSign);
         passwordSign=view.findViewById(R.id.passwordSign);
         login=view.findViewById(R.id.login);
+        btnForgetPass=view.findViewById(R.id.btnForgetPass);
         firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -58,6 +60,14 @@ public class Frag2 extends Fragment {
                     }
                 });
 
+            }
+        });
+
+        btnForgetPass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent _intent = new Intent(getActivity(), ForgetPassword.class);
+                startActivity(_intent);
             }
         });
         return view;

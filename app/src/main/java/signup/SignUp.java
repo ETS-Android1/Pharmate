@@ -2,13 +2,8 @@ package signup;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,8 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Calendar;
+import fragments.Choose;
 
 import models.UserClass;
 
@@ -42,8 +38,7 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    private FirebaseFirestore firebaseFirestore;
-    AwesomeValidation awesomeValidation;
+//    AwesomeValidation awesomeValidation;
 
     private static final String TAG = "SignUp";
 
@@ -52,20 +47,33 @@ public class SignUp extends AppCompatActivity {
     EditText emailText, passwordText, name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
     Button signUpClickButton;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+//        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         emailText = findViewById(R.id.userSignUpEmailText);
+
+      
+          passwordText = findViewById(R.id.userSignUpConfirmPasswordText);
+//        userType = findViewById(R.id.userTypeText)
+
+//        String regexpassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
+//        awesomeValidation.addValidation(SignUp.this, R.id.signUpPasswordText,"[a-z][A-Z][1-9]{6,}+" , R.string.passworderror);
+//        awesomeValidation.addValidation(SignUp.this, R.id.signUpPasswordText2, R.id.signInPasswordText, R.string.passworderror);
+//        awesomeValidation.addValidation(SignUp.this,R.id.turkishIdText,"[1-9]{11}+",R.string.iderror);
+//        awesomeValidation.addValidation(SignUp.this, R.id.signUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
+//        awesomeValidation.addValidation(SignUp.this, R.id.personNameText, "[a-zA-Z\\s]+", R.string.nameerror);
+//        awesomeValidation.addValidation(SignUp.this, R.id.personSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
+//        awesomeValidation.addValidation(SignUp.this, R.id.personContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
+      
+      
         passwordText = findViewById(R.id.userSignUpPasswordText);
         name = findViewById(R.id.personNameText);
         userSurname = findViewById(R.id.personSurnameText);

@@ -9,31 +9,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pharmate">
-
+        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name="signup.SignUpUser2" />
+        <activity android:name="signup.SignUpUser1" />
+        <activity android:name="signup.SignUpUser" />
+        <activity
+            android:name="fragments.registerPerson"
+            android:label="@string/title_activity_register_person"
+            android:theme="@style/Theme.Pharmate.NoActionBar" />
+        <activity
+            android:name="fragments.Choose"
+            android:label="@string/title_activity_choose"
+            android:theme="@style/Theme.Pharmate.NoActionBar" />
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".forgetPassword" />
+        <activity android:name="organization.OrgInformationPage" />
+        <activity android:name="signup.SignUpOrg" />
+        <activity android:name=".OrganizationOrPerson" />
+        <activity android:name="homepage.HomePageOrg" />
         <activity android:name=".forgetPass" />
         <activity android:name=".ForgotPass" />
-        <activity android:name=".OrganizationLocation"/>
         <activity android:name=".OtpVerification" />
-        <activity android:name=".OrganizatonListPage" />
-        <activity android:name=".ReceiveMedicine" />
+        <activity android:name="organization.OrganizatonListPage" />
+        <activity android:name="medicine.ReceiveMedicine" />
         <activity android:name=".ListMedicine" />
-        <activity android:name=".PersonalInformation" />
-        <activity android:name=".SearchMedicine" />
-        <activity android:name=".UploadMedicine" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".HomePage" />
-        <activity android:name=".SignIn" />
-
-
+        <activity android:name="users.PersonalInformation" />
+        <activity android:name="medicine.SearchMedicine" />
+        <activity android:name="medicine.UploadMedicine" />
+        <activity android:name="signup.SignUp" />
+        <activity android:name="homepage.HomePage" />
 
         <meta-data
             android:name="preloaded_fonts"

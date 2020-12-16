@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import fragments.Choose;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void goToSignInClick(View view) {
-        Intent intent = new Intent(MainActivity.this, SignIn.class);
+        Intent intent = new Intent(MainActivity.this, Choose.class);
         startActivity(intent);
         finish();
     }
     public void goToSignUpClick(View view) {
-        Intent intent = new Intent(MainActivity.this, SignUp.class);
+        Intent intent = new Intent(MainActivity.this, OrganizationOrPerson.class);
         startActivity(intent);
 
     }

@@ -1,12 +1,13 @@
-package com.example.pharmate;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package organization;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +18,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
+
+import models.MedicineClass;
+import models.OrganizationClass;
 
 public class OrgInformationPage extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
@@ -59,11 +63,12 @@ public class OrgInformationPage extends AppCompatActivity {
                         }
                     }
                 });
+        OrganizationClass organizationClassToAdd = new OrganizationClass(orgtext, orgaddresstext, orgcontact);
         String id = firebaseUser.getUid();
         HashMap<String, Object> postUserData = new HashMap<>();
-        postUserData.put("manager",orgtext);
-        postUserData.put("province",orgcontact);
-        postUserData.put("city",orgaddresstext);
+        postUserData.put("manager",organizationClassToAdd.getManager());
+        postUserData.put("province",organizationClassToAdd.getProvince());
+        postUserData.put("city",organizationClassToAdd.getCity());
         firebaseFirestore.collection("organization").document(id).set(postUserData);
 
 

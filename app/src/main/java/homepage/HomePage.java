@@ -1,21 +1,21 @@
-package com.example.pharmate;
+package homepage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pharmate.MainActivity;
+import com.example.pharmate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import medicine.SearchMedicine;
+import medicine.UploadMedicine;
+import organization.OrganizatonListPage;
+import users.PersonalInformation;
 
 public class HomePage extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -36,7 +36,7 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View view) {
                 firebaseAuth.signOut();
                 finish();
-                startActivity(new Intent(HomePage.this,MainActivity.class));
+                startActivity(new Intent(HomePage.this, MainActivity.class));
             }
         });
     }

@@ -2,21 +2,19 @@ package models;
 
 public class OrganizationClass {
 
-    private String city, email, manager;
-    private Integer province;
-
-
+    private String city, email, manager, province;
 
 
     public OrganizationClass(String orgtext, String orgaddresstext, String orgcontact) {
     }
 
-    public OrganizationClass(String city, String email, String manager,Integer province){
+    public OrganizationClass(String city, String email, String manager, String province) {
         this.city = city;
-        this.email = email ;
+        this.email = email;
         this.manager = manager;
         this.province = province;
     }
+
     public String getCity() {
         return city;
     }
@@ -37,11 +35,11 @@ public class OrganizationClass {
 
     public void setManager(String manager) { this.manager = manager; }
 
-    public Integer getProvince() {
+    public String getProvince() {
         return province;
     }
 
-    public void setProvince(Integer province) {
+    public void setProvince(String province) {
         this.province = province;
     }
 

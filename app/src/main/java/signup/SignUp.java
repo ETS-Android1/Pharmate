@@ -150,7 +150,7 @@ public class SignUp extends AppCompatActivity {
                                                             }
                                                         });
 
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText);
+                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText, null);
                                                 String id = firebaseUser.getUid();
 
                                                 HashMap<String, Object> postUserData = new HashMap<>();

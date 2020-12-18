@@ -19,7 +19,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
-import models.MedicineClass;
 import models.OrganizationClass;
 
 public class OrgInformationPage extends AppCompatActivity {

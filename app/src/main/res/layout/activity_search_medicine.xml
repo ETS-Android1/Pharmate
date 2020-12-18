@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/button4"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
@@ -76,6 +76,26 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.900" />
+
+    <Button
+        android:id="@+id/request"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="124dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/paytone_one"
+        android:onClick="goRequest"
+        android:paddingTop="5sp"
+        android:text="Request"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.900" />

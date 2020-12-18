@@ -33,9 +33,9 @@ public class RequestMedicine extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
+
     EditText medicineName,barcodenum,amount;
     Button requesting;
-    HashMap<String, Object> postMedicineData = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +82,12 @@ public class RequestMedicine extends AppCompatActivity {
 
                     } else {
 
-                        RequestClass requestClassToAdd = new RequestClass(medicinename, userID, null, amountText, barcode);
+                        RequestClass requestClassToAdd = new RequestClass(medicinename, userID, barcode, amountText);
 
                         Map<String, Object> medicine = new HashMap<>();
 
                         medicine.put("medicinename", requestClassToAdd.getMedicinename());
-                        medicine.put("barcode", requestClassToAdd.getBarcode());
+                        medicine.put("requestedBy", userID);
                         medicine.put("quantity", requestClassToAdd.getQuantity());
 
 

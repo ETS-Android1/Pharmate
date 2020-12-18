@@ -2,10 +2,11 @@ package models;
 
 public class RequestClass {
 
-    private String medicinename,barcode,requestedBy;
+    private String medicinename, barcode, requestedBy;
     private Integer quantity;
 
-    public RequestClass(String medicinename, String barcode, String requestedBy, Integer quantity, String s) {
+
+    public RequestClass(String medicinename, String barcode, String requestedBy, Integer quantity) {
         this.medicinename = medicinename;
         this.barcode = barcode;
         this.requestedBy = requestedBy;

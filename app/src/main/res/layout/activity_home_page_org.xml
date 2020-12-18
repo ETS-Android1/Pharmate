@@ -1,149 +1,83 @@
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
     tools:context="homepage.HomePageOrg">
 
     <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="wrap_content"
-        android:layout_height="300sp"
-        android:background="@drawable/purpletab"
-        android:backgroundTint="@color/red"
-        android:text="How Can We Help You?"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-
-    <View
         android:id="@+id/view4"
-        android:layout_width="wrap_content"
-        android:layout_height="300sp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="128dp"
         android:background="@drawable/ic_group_17"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="235dp"
-        android:layout_height="118dp"
-        android:layout_marginTop="188dp"
-        android:fontFamily="@font/fugaz_one"
-        android:text="How Can We Help You?"
-        android:textColor="@color/grey"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/donated"
-        android:layout_width="150sp"
-        android:layout_height="120sp"
-        android:background="@drawable/mybluebutton"
+        android:layout_width="119dp"
+        android:layout_height="96dp"
+        android:background="@drawable/ic_care"
         android:fontFamily="@font/paytone_one"
         android:gravity="bottom|left"
         android:onClick="goDonateMedicineClick"
         android:text="Donate"
         android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.726"
+        android:textColor="@color/design_default_color_primary_variant"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
+        app:layout_constraintEnd_toStartOf="@+id/profilee"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
         tools:ignore="RtlCompat" />
 
-    <View
-        android:id="@+id/view5"
-        android:layout_width="90dp"
-        android:layout_height="80dp"
-        android:background="@drawable/ic_group_23"
-        android:translationZ="90sp"
+    <Button
+        android:id="@+id/aboutbutton"
+        android:layout_width="140dp"
+        android:layout_height="101dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/ic_about"
+        android:fontFamily="@font/paytone_one"
+        android:onClick="goAboutPageClick"
+        android:paddingTop="5sp"
+        android:text="About"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7">
+        app:layout_constraintStart_toStartOf="parent" />
 
-    </View>
-
-    <View
-        android:id="@+id/view6"
-        android:layout_width="90sp"
-        android:layout_height="80sp"
-        android:background="@drawable/ic_group_20"
-        android:translationZ="90sp"
+    <Button
+        android:id="@+id/requestbutton"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="240dp"
+        android:background="@drawable/ic_request"
+        android:fontFamily="@font/paytone_one"
+        android:gravity="left"
+        android:onClick="goRequestMedicinePageClick"
+        android:paddingTop="5sp"
+        android:text="Request"
+        android:textAlignment="inherit"
+        android:textColor="@color/design_default_color_primary_variant"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922">
-
-    </View>
-
-    <View
-        android:id="@+id/view7"
-        android:layout_width="44sp"
-        android:layout_height="80sp"
-        android:background="@drawable/ic_group_30"
-        android:translationZ="90sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695">
-
-    </View>
-
-    <View
-        android:id="@+id/view8"
-        android:layout_width="44sp"
-        android:layout_height="80sp"
-        android:background="@drawable/ic_group_52"
-        android:translationZ="90sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.174"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923">
-
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <Button
         android:id="@+id/profilee"
-        android:layout_width="150sp"
-        android:layout_height="120sp"
-        android:background="@drawable/mybluebutton"
+        android:layout_width="125dp"
+        android:layout_height="88dp"
+        android:background="@drawable/ic_user"
         android:fontFamily="@font/paytone_one"
         android:gravity="bottom"
         android:onClick="goOrganizationInformationPageClick"
@@ -151,67 +85,64 @@
         android:textAlignment="center"
         android:textColor="@color/grey"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.973"
+        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
         tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="150sp"
-        android:layout_height="120sp"
-        android:background="@drawable/mybluebutton"
+        android:layout_width="163dp"
+        android:layout_height="106dp"
+        android:background="@drawable/ic_bank"
         android:fontFamily="@font/paytone_one"
         android:gravity="bottom"
         android:onClick="goOrganizationClick"
         android:text="Organization"
         android:textAlignment="center"
-        android:textColor="@color/grey"
+        android:textColor="@color/design_default_color_primary_variant"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.972"
+        app:layout_constraintBottom_toTopOf="@+id/aboutbutton"
+        app:layout_constraintEnd_toStartOf="@+id/searchMedicine"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/requestbutton"
+        app:layout_constraintVertical_bias="0.416"
         tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/searchMedicine"
-        android:layout_width="150sp"
-        android:layout_height="120sp"
-        android:background="@drawable/mybluebutton"
+        android:layout_width="136dp"
+        android:layout_height="106dp"
+        android:background="@drawable/ic_search"
         android:fontFamily="@font/paytone_one"
         android:gravity="bottom"
         android:onClick="goSearchMedicineClick"
         android:text="SEARCH"
         android:textAlignment="center"
-        android:textColor="@color/grey"
+        android:textColor="@color/design_default_color_primary_variant"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.726"
+        app:layout_constraintBottom_toTopOf="@+id/aboutbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/requestbutton"
+        app:layout_constraintVertical_bias="0.344"
         tools:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="235dp"
-        android:layout_height="118dp"
+        android:layout_height="116dp"
         android:fontFamily="@font/fugaz_one"
+        android:gravity="top"
         android:text="Welcome to Pharmate"
         android:textColor="@color/blue"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:gravity="top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

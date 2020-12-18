@@ -1,5 +1,6 @@
 package medicine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class SearchMedicine extends AppCompatActivity {
     private MedicineAdapter adapter;
 
     EditText barcode;
-    Button searchButton;
+    Button searchButton,request;
     RecyclerView recyclerView;
     private CollectionReference medicineReference;
 
@@ -39,6 +40,9 @@ public class SearchMedicine extends AppCompatActivity {
         searchButton = findViewById(R.id.button10);
         medicineReference = db.collection("medicine");
         recyclerView = findViewById(R.id.medicine_recycler_view);
+        request =findViewById(R.id.request);
+        request.setVisibility(View.INVISIBLE);
+
 
         setUpRecyclerView();
     }
@@ -81,6 +85,9 @@ public class SearchMedicine extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+        request.setVisibility(View.VISIBLE);
+
+        Toast.makeText(getApplicationContext(),"ilaç yok",Toast.LENGTH_LONG).show();
     }
 
 
@@ -106,5 +113,10 @@ public class SearchMedicine extends AppCompatActivity {
             {
                 setUpRecyclerViewSearch();
             }
+    }
+
+    public void goRequest(View view) {
+        Intent intent=new Intent(SearchMedicine.this,RequestMedicine.class);
+        startActivity(intent);
     }
 }

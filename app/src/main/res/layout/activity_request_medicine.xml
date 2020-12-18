@@ -1,9 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="medicine.RequestMedicine">
+    tools:context="medicine.RequestMedicine"
+    android:background="@color/grey">
 
+
+    <EditText
+        android:id="@+id/medicinename"
+        android:layout_width="256dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:inputType="textPersonName"
+        android:hint="Name of medicine"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.251" />
+
+    <TextView
+        android:id="@+id/medicinenam"
+        android:layout_width="278dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="168dp"
+        android:hint="Request Medicine"
+        android:textColor="@color/cyan"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/barcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
+        app:layout_constraintVertical_bias="0.699" />
+
+    <EditText
+        android:id="@+id/barcode"
+        android:layout_width="276dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:hint="Barcode Number"
+        android:inputType="textPersonName"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="280dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="312dp"
+        android:ems="10"
+        android:hint="Amount"
+        android:inputType="textPersonName"
+        android:textColor="@color/cyan"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintVertical_bias="0.115" />
+
+    <Button
+        android:id="@+id/requesting"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/open_sans"
+        android:onClick="goTorequest"
+        android:paddingTop="5sp"
+        android:text="Request"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.191" />
 </androidx.constraintlayout.widget.ConstraintLayout>

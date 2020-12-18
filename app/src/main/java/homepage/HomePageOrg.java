@@ -40,4 +40,10 @@ public class HomePageOrg extends AppCompatActivity {
         Intent _intent = new Intent(this, SearchMedicine.class);
         startActivity(_intent);
     }
+
+    public void goAboutPageClick(View view) {
+    }
+
+    public void goRequestMedicinePageClick(View view) {
+    }
 }

@@ -1,13 +1,14 @@
 package models;
 
-import android.widget.EditText;
-
 public class MedicineClass {
 
-    private String nameOfMedicine,barcodeNumber,donatedBy,donatedTo;
+    public MedicineClass() {
+    }
+
+    private String nameOfMedicine, barcodeNumber, donatedBy, donatedTo;
     private Integer quantity;
 
-    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo,Integer quantity,String barcodeNumber) {
+    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo, Integer quantity, String barcodeNumber) {
         this.nameOfMedicine = nameOfMedicine;
         this.donatedBy = donatedBy;
         this.donatedTo = donatedTo;

@@ -47,6 +47,7 @@ public class SearchMedicine extends AppCompatActivity {
         setUpRecyclerView();
     }
 
+    
     private void setUpRecyclerView() {
 
         Query denemQuery = medicineReference.orderBy("barcodeNumber");

@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import models.MedicineClass;
 
-public class MedicineAdapter extends FirestoreRecyclerAdapter<MedicineClass,MedicineAdapter.MedicineHolder>{
 
+public class MedicineAdapter extends FirestoreRecyclerAdapter<MedicineClass,MedicineAdapter.MedicineHolder>{
+    private OnItemClickListener listener;
 
     public MedicineAdapter(@NonNull FirestoreRecyclerOptions<MedicineClass> options) {
         super(options);
@@ -40,17 +42,36 @@ public class MedicineAdapter extends FirestoreRecyclerAdapter<MedicineClass,Medi
 
     class MedicineHolder extends RecyclerView.ViewHolder{
 
-    TextView textViewName;
-    TextView textViewBarcodeNumber;
-    TextView textViewAmount;
+        TextView textViewName;
+        TextView textViewBarcodeNumber;
+        TextView textViewAmount;
 
 
-    public MedicineHolder(@NonNull View itemView) {
-        super(itemView);
-        textViewName = itemView.findViewById(R.id.text_view_title);
-        textViewBarcodeNumber = itemView.findViewById(R.id.text_view_description);
-        textViewAmount = itemView.findViewById(R.id.text_view_priority);
+        public MedicineHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewName = itemView.findViewById(R.id.text_view_title);
+            textViewBarcodeNumber = itemView.findViewById(R.id.text_view_description);
+            textViewAmount = itemView.findViewById(R.id.text_view_priority);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }
-}
+

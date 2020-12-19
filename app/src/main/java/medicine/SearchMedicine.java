@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -37,7 +38,7 @@ public class SearchMedicine extends AppCompatActivity {
         setContentView(R.layout.activity_search_medicine);
 
         barcode = findViewById(R.id.editTextTextPersonName14);
-        searchButton = findViewById(R.id.button10);
+//        searchButton = findViewById(R.id.button10);
         medicineReference = db.collection("medicine");
         recyclerView = findViewById(R.id.medicine_recycler_view);
         request =findViewById(R.id.request);
@@ -53,12 +54,22 @@ public class SearchMedicine extends AppCompatActivity {
 
         Query query = medicineReference.whereEqualTo("barcodeNumber",barcode.getText().toString().trim()).orderBy("barcodeNumber");
         System.out.println(barcode.getText().toString().trim());
-        if(barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")){
+        if(barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
 
             FirestoreRecyclerOptions<MedicineClass> options1 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
-                    .setQuery(denemQuery,MedicineClass.class)
+                    .setQuery(denemQuery, MedicineClass.class)
                     .build();
             adapter = new MedicineAdapter(options1);
+            adapter.setOnItemClickListener(new MedicineAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                    MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
+                    String id = documentSnapshot.getId();
+//                    Intent intent=new Intent(SearchMedicine.this,RequestMedicine.class);
+//                    startActivity(intent);
+                    Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();
+                }
+            });
         }
         else{
 

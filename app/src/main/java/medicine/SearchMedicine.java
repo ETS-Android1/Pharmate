@@ -65,8 +65,13 @@ public class SearchMedicine extends AppCompatActivity {
                 public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                     MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
                     String id = documentSnapshot.getId();
-//                    Intent intent=new Intent(SearchMedicine.this,RequestMedicine.class);
-//                    startActivity(intent);
+                  Intent intent=new Intent(SearchMedicine.this,ReceiveMedicine.class);
+                  intent.putExtra("nameOfMedicine",medicineClass.getNameOfMedicine());
+                    intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
+                    intent.putExtra("quantity",medicineClass.getQuantity());
+                    intent.putExtra("expirationdate",medicineClass.getExpirationdate());
+
+                    startActivity(intent);
                     Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();
                 }
             });

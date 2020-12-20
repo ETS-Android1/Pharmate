@@ -105,6 +105,7 @@ public class UploadMedicine extends AppCompatActivity {
     }
 
     public void uploadMedicineClick(View view) {
+
         if (awesomeValidation.validate()) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             String userID = firebaseUser.getUid();
@@ -115,6 +116,7 @@ public class UploadMedicine extends AppCompatActivity {
                 return;
             }
             String barcodeNoText = barcodeNo.getText().toString();
+            String expirationDateText=expirationDate.getText().toString();
             Integer quantityText = Integer.parseInt(String.valueOf(quantity.getText()));
             System.out.println("button pressed");
             System.out.println(displayName);
@@ -141,7 +143,7 @@ public class UploadMedicine extends AppCompatActivity {
 
                         } else {
 
-                            MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText);
+                            MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText,expirationDateText);
 
                             Map<String, Object> medicine = new HashMap<>();
 
@@ -150,6 +152,7 @@ public class UploadMedicine extends AppCompatActivity {
                             medicine.put("donatedBy", medicineClassToAdd.getDonatedBy());
                             medicine.put("donatedTo", medicineClassToAdd.getDonatedTo());
                             medicine.put("quantity", medicineClassToAdd.getQuantity());
+                            medicine.put("expirationdate",medicineClassToAdd.getExpirationdate());
 
 
                             documentReference.set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -164,6 +167,7 @@ public class UploadMedicine extends AppCompatActivity {
                                 }
                             });
                         }
+
                     }
                 }
             });

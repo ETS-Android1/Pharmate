@@ -1,19 +1,21 @@
 package models;
 
+import android.widget.TextView;
+
 public class MedicineClass {
-
-    public MedicineClass() {
-    }
-
-    private String nameOfMedicine, barcodeNumber, donatedBy, donatedTo;
+    private String nameOfMedicine, barcodeNumber, donatedBy, donatedTo,expirationdate;
     private Integer quantity;
 
-    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo, Integer quantity, String barcodeNumber) {
+    public MedicineClass(){}
+
+
+    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo, Integer quantity, String barcodeNumber,String expirationdate) {
         this.nameOfMedicine = nameOfMedicine;
         this.donatedBy = donatedBy;
         this.donatedTo = donatedTo;
         this.quantity = quantity;
         this.barcodeNumber = barcodeNumber;
+        this.expirationdate=expirationdate;
     }
 
     public String getNameOfMedicine() {
@@ -57,4 +59,13 @@ public class MedicineClass {
     public void setBarcodeNumber(String barcodeNumber) {
         this.barcodeNumber = barcodeNumber;
     }
+
+    public String getExpirationdate() {
+        return expirationdate;
+    }
+
+    public void setExpirationdate(String expirationdate) {
+        this.expirationdate = expirationdate;
+    }
+
 }

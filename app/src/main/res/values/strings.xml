@@ -22,6 +22,9 @@
     <string name="dateerror">Enter a valid date</string>
     <string name="ageerror">Enter a valid age</string>
     <string name="passworderror">Enter a valid password</string>
+    <string name="medicinenameerror">Enter a valid medicine name</string>
+    <string name="barcoderror">Enter a valid barcode number</string>
+    <string name="amounterror">Please only number</string>
 
 
 </resources>

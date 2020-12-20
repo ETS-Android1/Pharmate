@@ -3,17 +3,13 @@ package models;
 import android.widget.TextView;
 
 public class MedicineClass {
-
-
-    public MedicineClass(String nameText, String userID, Object o, Integer quantityText, String barcodeNoText, String expirationDate) {
-    }
-
     private String nameOfMedicine, barcodeNumber, donatedBy, donatedTo,expirationdate;
     private Integer quantity;
+
     public MedicineClass(){}
 
 
-    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo, Integer quantity, String barcodeNumber) {
+    public MedicineClass(String nameOfMedicine, String donatedBy, String donatedTo, Integer quantity, String barcodeNumber,String expirationdate) {
         this.nameOfMedicine = nameOfMedicine;
         this.donatedBy = donatedBy;
         this.donatedTo = donatedTo;

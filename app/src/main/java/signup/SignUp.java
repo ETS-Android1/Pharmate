@@ -49,33 +49,24 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        passwordText = findViewById(R.id.userSignUpPasswordText);
-        confirmPasswordText = findViewById(R.id.userSignUpConfirmPasswordText);
-        name = findViewById(R.id.personNameText);
-        userSurname = findViewById(R.id.personSurnameText);
-        userTurkishID = findViewById(R.id.turkishIdText);
-        userContact = findViewById(R.id.personContactText);
-        userAddress = findViewById(R.id.personAddressText);
-        userBirthDate = findViewById(R.id.birthDateText);
+        passwordText =(EditText) findViewById(R.id.userSignUpPasswordText);
+        confirmPasswordText = (EditText)findViewById(R.id.userSignUpConfirmPasswordText);
+        name = (EditText)findViewById(R.id.personNameText);
+        userSurname = (EditText)findViewById(R.id.personSurnameText);
+        userTurkishID =(EditText) findViewById(R.id.turkishIdText);
+        userContact = (EditText)findViewById(R.id.personContactText);
+        userAddress =(EditText) findViewById(R.id.personAddressText);
+        userBirthDate = (EditText)findViewById(R.id.birthDateText);
         signUpClickButton = findViewById(R.id.signUpUserClickButton);
+        
 
 
-        String regexpassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpPasswordText, "[a-z][A-Z][1-9]{6,}+", R.string.passworderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpConfirmPasswordText, R.id.userSignUpPasswordText, R.string.passworderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userTurkishIdText, "[1-9]{11}+", R.string.iderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userNameText, "[a-zA-Z\\s]+", R.string.nameerror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
 
 //
 //        userBirthDate.setOnClickListener(new View.OnClickListener() {
@@ -110,9 +101,107 @@ public class SignUp extends AppCompatActivity {
 //        };
 
     }
+    private Boolean validateName() {
+        String val = name.getText().toString();
+
+        if (val.isEmpty()) {
+            name.setError("Field cannot be empty");
+            return false;
+        }
+        else {
+            name.setError(null);
+            return true;
+        }
+    }
+    private Boolean validateSurname() {
+        String val = userSurname.getText().toString();
+
+        if (val.isEmpty()) {
+            userSurname.setError("Field cannot be empty");
+            return false;
+        }
+        else {
+            userSurname.setError(null);
+            return true;
+        }
+    }
+    private Boolean validateEmail() {
+        String val = emailText.getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if (val.isEmpty()) {
+            emailText.setError("Field cannot be empty");
+            return false;
+        } else if (!val.matches(emailPattern)) {
+            emailText.setError("Invalid email address");
+            return false;
+        } else {
+            emailText.setError(null);
+            return true;
+        }
+    }
+    private Boolean validatePhoneNo() {
+        String val = userContact.getText().toString();
+
+        if (val.isEmpty()) {
+            userContact.setError("Field cannot be empty");
+            return false;
+        } else {
+            userContact.setError(null);
+           // userContact.setErrorEnabled(false);
+            return true;
+        }
+    }
+    private Boolean validatePassword() {
+        String val = passwordText.getText().toString();
+        String passwordVal = "^" +
+                //"(?=.*[0-9])" +         //at least 1 digit
+                //"(?=.*[a-z])" +         //at least 1 lower case letter
+                //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                "(?=.*[a-zA-Z])" +      //any letter
+                "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                "(?=\\S+$)" +           //no white spaces
+                ".{4,}" +               //at least 4 characters
+                "$";
+
+        if (val.isEmpty()) {
+            passwordText.setError("Field cannot be empty");
+            return false;
+        } else if (!val.matches(passwordVal)) {
+            passwordText.setError("Password is too weak");
+            return false;
+        } else {
+            passwordText.setError(null);
+         //  passwordText.setErrorEnabled(false);
+            return true;
+        }
+    }
+    private Boolean validateturkishId() {
+        String val = userTurkishID.getText().toString();
+        String noWhiteSpace = "[a-zA-Z\\s]+";
+
+        if (val.isEmpty()) {
+            userTurkishID.setError("Field cannot be empty");
+            return false;
+        } else if (val.length() >= 12) {
+            userTurkishID.setError("Username too long");
+            return false;
+        } else if(val.length()<11){
+            userTurkishID.setError("Username too short");
+            return false;
+        }
+        else if (!val.matches(noWhiteSpace)) {
+            userTurkishID.setError("White Spaces are not allowed");
+            return false;
+        } else {
+            userTurkishID.setError(null);
+           // userTurkishID.setErrorEnabled(false);
+            return true;
+        }
+    }
 
     public void signUpUserClick(View view) {
-        if (awesomeValidation.validate()) {
+        if (!validateName() | !validateSurname()| !validatePassword() | !validatePhoneNo() | !validateEmail() | !validateturkishId()) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             String nameText = name.getText().toString();
             String userSurnameText = userSurname.getText().toString();
@@ -183,8 +272,7 @@ public class SignUp extends AppCompatActivity {
                 }
             });
 
-
-        }
+    }
     }
 
 }

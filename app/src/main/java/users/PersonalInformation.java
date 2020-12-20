@@ -3,17 +3,21 @@ package users;
 import android.app.DatePickerDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.example.pharmate.Loadingbar;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,7 +48,8 @@ public class PersonalInformation extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
 
-
+    CardView cardView;
+    Button button3;
     EditText  name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
@@ -52,6 +57,25 @@ public class PersonalInformation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_information_page);
+
+        button3=findViewById(R.id.button3);
+        cardView=findViewById(R.id.cardview);
+        final Loadingbar loadingbar = new Loadingbar(PersonalInformation.this);
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardView.setVisibility(View.GONE);
+
+                    }
+                }, 5000);
+            }
+        });
         // Instance
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();

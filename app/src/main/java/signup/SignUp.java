@@ -3,6 +3,7 @@ package signup;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,8 +30,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
+import medicine.UploadMedicine;
 import models.UserClass;
 
 public class SignUp extends AppCompatActivity {
@@ -53,155 +60,64 @@ public class SignUp extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 
-        passwordText =(EditText) findViewById(R.id.userSignUpPasswordText);
-        confirmPasswordText = (EditText)findViewById(R.id.userSignUpConfirmPasswordText);
-        name = (EditText)findViewById(R.id.personNameText);
-        userSurname = (EditText)findViewById(R.id.personSurnameText);
-        userTurkishID =(EditText) findViewById(R.id.turkishIdText);
-        userContact = (EditText)findViewById(R.id.personContactText);
-        userAddress =(EditText) findViewById(R.id.personAddressText);
-        userBirthDate = (EditText)findViewById(R.id.birthDateText);
+        passwordText =findViewById(R.id.userSignUpPasswordText);
+        confirmPasswordText =findViewById(R.id.userSignUpConfirmPasswordText);
+        name =findViewById(R.id.userNameText);
+        emailText = findViewById(R.id.userSignUpEmailText);
+        userSurname =findViewById(R.id.userSurnameText);
+        userTurkishID =findViewById(R.id.userTurkishIdText);
+        userContact =findViewById(R.id.userContactText);
+        userAddress =findViewById(R.id.userAddressText);
+        userBirthDate = findViewById(R.id.userBirthDateText);
         signUpClickButton = findViewById(R.id.signUpUserClickButton);
-        
 
 
+        awesomeValidation.addValidation(SignUp.this, R.id.userNameText, "[a-zA-Z\\s]+", R.string.nameerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpPasswordText, "[a-zA-Z\\d\\!@#.\\$%&\\*]{8,}", R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpConfirmPasswordText, "[a-zA-Z\\d\\!@#.\\$%&\\*]{8,}", R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userTurkishIdText, "^((?!(0))[0-9]{11})$+", R.string.iderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userBirthDateText, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String input) {
+                // check if the age is >= 18
+                try {
+                    Calendar calendarBirthday = Calendar.getInstance();
+                    Calendar calendarToday = Calendar.getInstance();
+                    calendarBirthday.setTime(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(input));
+                    int yearOfToday = calendarToday.get(Calendar.YEAR);
+                    int yearOfBirthday = calendarBirthday.get(Calendar.YEAR);
+                    if (yearOfToday - yearOfBirthday > 18) {
+                        return true;
+                    } else if (yearOfToday - yearOfBirthday == 18) {
+                        int monthOfToday = calendarToday.get(Calendar.MONTH);
+                        int monthOfBirthday = calendarBirthday.get(Calendar.MONTH);
+                        if (monthOfToday > monthOfBirthday) {
+                            return true;
+                        } else if (monthOfToday == monthOfBirthday) {
+                            if (calendarToday.get(Calendar.DAY_OF_MONTH) >= calendarBirthday.get(Calendar.DAY_OF_MONTH)) {
+                                return true;
+                            }
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        }, R.string.dateerror);
 
-//
-//        userBirthDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Calendar cal = Calendar.getInstance();
-//                int year = cal.get(Calendar.YEAR);
-//                int month = cal.get(Calendar.MONTH);
-//                int day = cal.get(Calendar.DAY_OF_MONTH);
-//
-//                DatePickerDialog dialog = new DatePickerDialog(SignUp.this,
-//                        android.R.style.Theme_Holo_Dialog_MinWidth,
-//                        nOnDateSetListener,
-//                        year, month, day);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
-//            }
-//        });
-//        nOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int month, int day) {
-//                month = month + 1;
-//                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-//                String date = month + "/" + day + "/" + year;
-//                userBirthDate.setText(date);
-//            }
-//        };
 
     }
-    private Boolean validateName() {
-        String val = name.getText().toString();
 
-        if (val.isEmpty()) {
-            name.setError("Field cannot be empty");
-            return false;
-        }
-        else {
-            name.setError(null);
-            return true;
-        }
-    }
-    private Boolean validateSurname() {
-        String val = userSurname.getText().toString();
-
-        if (val.isEmpty()) {
-            userSurname.setError("Field cannot be empty");
-            return false;
-        }
-        else {
-            userSurname.setError(null);
-            return true;
-        }
-    }
-    private Boolean validateEmail() {
-        String val = emailText.getText().toString();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        if (val.isEmpty()) {
-            emailText.setError("Field cannot be empty");
-            return false;
-        } else if (!val.matches(emailPattern)) {
-            emailText.setError("Invalid email address");
-            return false;
-        } else {
-            emailText.setError(null);
-            return true;
-        }
-    }
-    private Boolean validatePhoneNo() {
-        String val = userContact.getText().toString();
-
-        if (val.isEmpty()) {
-            userContact.setError("Field cannot be empty");
-            return false;
-        } else {
-            userContact.setError(null);
-           // userContact.setErrorEnabled(false);
-            return true;
-        }
-    }
-    private Boolean validatePassword() {
-        String val = passwordText.getText().toString();
-        String passwordVal = "^" +
-                //"(?=.*[0-9])" +         //at least 1 digit
-                //"(?=.*[a-z])" +         //at least 1 lower case letter
-                //"(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
-                "(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{4,}" +               //at least 4 characters
-                "$";
-
-        if (val.isEmpty()) {
-            passwordText.setError("Field cannot be empty");
-            return false;
-        } else if (!val.matches(passwordVal)) {
-            passwordText.setError("Password is too weak");
-            return false;
-        } else {
-            passwordText.setError(null);
-         //  passwordText.setErrorEnabled(false);
-            return true;
-        }
-    }
-    private Boolean validateturkishId() {
-        String val = userTurkishID.getText().toString();
-        String noWhiteSpace = "[a-zA-Z\\s]+";
-
-        if (val.isEmpty()) {
-            userTurkishID.setError("Field cannot be empty");
-            return false;
-        } else if (val.length() >= 12) {
-            userTurkishID.setError("Username too long");
-            return false;
-        } else if(val.length()<11){
-            userTurkishID.setError("Username too short");
-            return false;
-        }
-        else if (!val.matches(noWhiteSpace)) {
-            userTurkishID.setError("White Spaces are not allowed");
-            return false;
-        } else {
-            userTurkishID.setError(null);
-           // userTurkishID.setErrorEnabled(false);
-            return true;
-        }
-    }
 
     public void signUpUserClick(View view) {
-        if (!validateName() | !validateSurname()| !validatePassword() | !validatePhoneNo() | !validateEmail() | !validateturkishId()) {
+        if (awesomeValidation.validate()) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             String nameText = name.getText().toString();
             String userSurnameText = userSurname.getText().toString();
@@ -272,7 +188,7 @@ public class SignUp extends AppCompatActivity {
                 }
             });
 
-    }
+        }
     }
 
 }

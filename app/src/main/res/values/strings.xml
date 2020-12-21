@@ -13,13 +13,13 @@
     <string name="title_activity_register_person">registerPerson</string>
 
 
-    <string name="nameerror">Enter a valid name</string>
-    <string name="surnameerror">Enter a valid surname</string>
+    <string name="nameerror">The name is not contain a number or special character</string>
+    <string name="surnameerror">The surname is not contain a number or special character</string>
     <string name="usernameerror">Enter a valid username</string>
-    <string name="iderror">please enter only 11 character</string>
+    <string name="iderror">please enter only 11 character and not start with 0</string>
     <string name="emailerror">Enter a valid email</string>
     <string name="mobileerror">Enter a valid mobile</string>
-    <string name="dateerror">Enter a valid date</string>
+    <string name="dateerror">Your age is not appropriate.</string>
     <string name="ageerror">Enter a valid age</string>
     <string name="passworderror">Enter a valid password</string>
     <string name="medicinenameerror">Enter a valid medicine name</string>

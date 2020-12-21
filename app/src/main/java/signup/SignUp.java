@@ -166,6 +166,7 @@ public class SignUp extends AppCompatActivity {
                                                 Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(SignUp.this, MainActivity.class);
                                                 startActivity(intent);
+                                                finish();
                                             } else {
                                                 Toast.makeText(SignUp.this, task.getException().getMessage(),
                                                         Toast.LENGTH_LONG).show();

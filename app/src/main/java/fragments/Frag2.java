@@ -48,6 +48,7 @@ public class Frag2 extends Fragment {
 
                             Intent _intent = new Intent(getActivity(), HomePageOrg.class);
                             startActivity(_intent);
+                            getActivity().finish();
                         }else{
                             Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
                         }

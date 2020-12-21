@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -88,8 +89,9 @@ public class SignUpOrg extends AppCompatActivity {
                                             postUserData.put("city",orgaddresstext);
                                             firebaseFirestore.collection("organization").document(id).set(postUserData);
                                             Toast.makeText(SignUpOrg.this,"please check your email", Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(SignUpOrg.this, Choose.class);
+                                            Intent intent = new Intent(SignUpOrg.this, MainActivity.class);
                                              startActivity(intent);
+                                             finish();
                                         }else{
                                             Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
                                                     Toast.LENGTH_LONG).show(); }

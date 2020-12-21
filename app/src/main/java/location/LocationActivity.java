@@ -82,7 +82,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latlng);
-                System.out.println(latlng);
+//                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//                System.out.println(latlng);
+//                String id = firebaseUser.getUid();
+//                System.out.println(id);
 
                 markerOptions.title("My Marker");
                 mMap.clear();

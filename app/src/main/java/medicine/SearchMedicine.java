@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +24,7 @@ import models.MedicineClass;
 public class SearchMedicine extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth;
 
 
     private MedicineAdapter adapter;
@@ -66,10 +68,11 @@ public class SearchMedicine extends AppCompatActivity {
                     MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
                     String id = documentSnapshot.getId();
                   Intent intent=new Intent(SearchMedicine.this,ReceiveMedicine.class);
-                  intent.putExtra("nameOfMedicine",medicineClass.getNameOfMedicine());
+                    intent.putExtra("nameOfMedicine", medicineClass.getNameOfMedicine());
                     intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
                     intent.putExtra("quantity",medicineClass.getQuantity());
                     intent.putExtra("expirationdate",medicineClass.getExpirationdate());
+//                    intent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
 
                     startActivity(intent);
                     Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();

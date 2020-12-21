@@ -97,7 +97,7 @@
         android:layout_marginBottom="72dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/open_sans"
-        android:onClick="goToSignInClick"
+        android:onClick="goReceiveOptionClick"
         android:paddingTop="5sp"
         android:text="Receive"
         android:textAlignment="center"

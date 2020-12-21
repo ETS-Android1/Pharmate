@@ -2,14 +2,18 @@ package medicine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmate.R;
 
+import location.LocationActivity;
+
 public class ReceiveMedicine extends AppCompatActivity {
-    EditText medicineName,barcode,amount,date;
+    EditText medicineName, barcode, amount, date;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +26,30 @@ public class ReceiveMedicine extends AppCompatActivity {
         date=findViewById(R.id.editTextTextPersonName4);
 
         Intent intent=getIntent();
-        String name=intent.getStringExtra("nameOfMedicine");
+        String name = intent.getStringExtra("nameOfMedicine");
         medicineName.setText(name);
-        String barcodenum=intent.getStringExtra("barcodeNumber");
+        medicineName.setEnabled(false);
+        String barcodenum = intent.getStringExtra("barcodeNumber");
         barcode.setText(barcodenum);
-        String quantity=intent.getStringExtra("quantity");
+        barcode.setEnabled(false);
+        String quantity = intent.getStringExtra("quantity");
         amount.setText(quantity);
-
-        String expdate=intent.getStringExtra("expirationdate");
+        String expdate = intent.getStringExtra("expirationdate");
         date.setText(expdate);
+        date.setEnabled(false);
+        userID = intent.getStringExtra("userID");
+        System.out.println(userID);
+    }
+
+    public void goReceiveOptionClick(View v) {
+        Intent receiveOptionsIntent = new Intent(ReceiveMedicine.this, LocationActivity.class);
+//        receiveOptionsIntent.putExtra("nameOfMedicine",name);
+//        receiveOptionsIntent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
+//        receiveOptionsIntent.putExtra("quantity",medicineClass.getQuantity());
+//        receiveOptionsIntent.putExtra("expirationdate",medicineClass.getExpirationdate());
+//        receiveOptionsIntent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
+//
+        startActivity(receiveOptionsIntent);
+
     }
 }

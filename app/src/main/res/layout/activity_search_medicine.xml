@@ -105,7 +105,7 @@
         android:layout_width="410dp"
         android:layout_height="442dp"
         android:layout_marginBottom="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button10"
+        app:layout_constraintBottom_toBottomOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

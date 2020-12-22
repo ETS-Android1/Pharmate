@@ -22,7 +22,7 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
-    Button signout;
+    Button signout,profile;
 
 
     @Override
@@ -31,6 +31,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         firebaseAuth = FirebaseAuth.getInstance();
 //        signout=findViewById(R.id.button4);
+        profile=findViewById(R.id.profilebutton);
 
 //        signout.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -44,6 +45,7 @@ public class HomePage extends AppCompatActivity {
 
 
     public void goPersonalInformationPageClick(View v) {
+
         Intent _intent = new Intent(this, PersonalInformation.class);
         startActivity(_intent);
     }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,15 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Frag2 extends Fragment {
     private FirebaseAuth firebaseAuth;
     EditText mailSign, passwordSign;
-    Button login,btnForgetPass;
+    Button login;
+    TextView forget;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frag2_layout,container,false);
 
         mailSign=view.findViewById(R.id.mailSign);
         passwordSign=view.findViewById(R.id.passwordSign);
         login=view.findViewById(R.id.login);
-        btnForgetPass=view.findViewById(R.id.btnForgetPass);
+        forget=view.findViewById(R.id.forgotpasswordd);
         firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,7 +65,7 @@ public class Frag2 extends Fragment {
             }
         });
 
-        btnForgetPass.setOnClickListener(new View.OnClickListener(){
+        forget.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent _intent = new Intent(getActivity(), ForgetPassword.class);

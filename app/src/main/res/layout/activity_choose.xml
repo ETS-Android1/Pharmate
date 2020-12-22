@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Pharmate.AppBarOverlay"
-        android:background="@color/colorAccent">
+        android:background="#212F8E">
 
         <TextView
             android:id="@+id/title"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:backgroundTint="@color/colorAccent"/>
+            android:backgroundTint="#1C0453"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

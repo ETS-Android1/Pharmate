@@ -18,17 +18,34 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 23;
+    public LatLng latlng;
+    private FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private CollectionReference locationReference;
     Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        locationReference = firebaseFirestore.collection("location");
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        System.out.println(latlng);
+        String id = firebaseUser.getUid();
+        System.out.println(id);
+
         checkPermission();
     }
 
@@ -79,20 +96,31 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                latlng = new LatLng(location.getLatitude(), location.getLongitude());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latlng);
-//                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-//                System.out.println(latlng);
-//                String id = firebaseUser.getUid();
-//                System.out.println(id);
+
+                LatLng latlng2 = new LatLng(40.4272414, -3.7020037);
+                MarkerOptions m2 = new MarkerOptions();
+                m2.position(latlng2);
+
+
+//                firebaseFirestore.collection("location").document(id).set(postLocationData);
 
                 markerOptions.title("My Marker");
                 mMap.clear();
+
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                         latlng, 15);
                 mMap.animateCamera(cameraUpdate);
                 mMap.addMarker(markerOptions);
+
+                CameraUpdate cameraUpdate2 = CameraUpdateFactory.newLatLngZoom(
+                        latlng, 15);
+                mMap.animateCamera(cameraUpdate2);
+                mMap.addMarker(m2);
+
 
             }
         });

@@ -5,6 +5,8 @@ public class RequestClass {
     private String medicinename, barcode, requestedBy;
     private Integer quantity;
 
+    public RequestClass() {
+    }
 
     public RequestClass(String medicinename, String barcode, String requestedBy, Integer quantity) {
         this.medicinename = medicinename;

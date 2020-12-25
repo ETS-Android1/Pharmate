@@ -21,9 +21,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import models.MedicineClass;
 
 public class SearchMedicine extends AppCompatActivity {
@@ -90,7 +87,9 @@ public class SearchMedicine extends AppCompatActivity {
                 Query denemQuery = medicineReference.orderBy("barcodeNumber");
 
                 Query query = medicineReference.whereEqualTo("barcodeNumber", barcode.getText().toString().trim()).orderBy("barcodeNumber");
+
                 System.out.println(barcode.getText().toString().trim());
+
                 if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
 
                     FirestoreRecyclerOptions<MedicineClass> options1 = new FirestoreRecyclerOptions.Builder<MedicineClass>()

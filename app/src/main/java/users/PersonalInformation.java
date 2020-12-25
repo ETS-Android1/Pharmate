@@ -57,6 +57,7 @@ public class PersonalInformation extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 //
@@ -130,8 +131,8 @@ public class PersonalInformation extends AppCompatActivity {
                             }
                         }
                     });
-
-            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText, null);
+            String email = firebaseUser.getEmail();
+            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
             String userID = firebaseUser.getUid();
 
             HashMap<String, Object> postUserData = new HashMap<>();
@@ -141,7 +142,7 @@ public class PersonalInformation extends AppCompatActivity {
             postUserData.put("contact", userClassToAdd.getContact());
             postUserData.put("address", userClassToAdd.getAddress());
             postUserData.put("birthDate", userClassToAdd.getBirthdate());
-            firebaseFirestore.collection("user").document(userID).set(postUserData);
+            firebaseFirestore.collection("user").document(userID).update(postUserData);
         }
     }
 }

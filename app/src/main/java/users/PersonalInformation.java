@@ -1,12 +1,15 @@
 package users;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +41,7 @@ public class PersonalInformation extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     AwesomeValidation awesomeValidation;
 
 
@@ -45,7 +50,9 @@ public class PersonalInformation extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
 
 
-    EditText  name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
+    Button update;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -54,7 +61,7 @@ public class PersonalInformation extends AppCompatActivity {
         setContentView(R.layout.activity_personal_information_page);
         // Instance
         firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference();
+        storageReference = firebaseStorage.getReference("user");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -68,8 +75,7 @@ public class PersonalInformation extends AppCompatActivity {
         userContact = findViewById(R.id.personContactText);
         userAddress = findViewById(R.id.personAddressText);
         userBirthDate = findViewById(R.id.birthDateText);
-
-
+        update=findViewById(R.id.button3);
         userBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,13 +101,24 @@ public class PersonalInformation extends AppCompatActivity {
                 userBirthDate.setText(date);
             }
         };
-        String regexusertype = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
-        awesomeValidation.addValidation(PersonalInformation.this, R.id.userTypeText,"[a-zA-Z\\s]+", R.string.usernameerror);
-        awesomeValidation.addValidation(PersonalInformation.this,R.id.turkishIdText,"[0-9]{11}+",R.string.iderror);
-        awesomeValidation.addValidation(PersonalInformation.this, R.id.personNameText, "[a-zA-Z\\s]+", R.string.nameerror);
-        awesomeValidation.addValidation(PersonalInformation.this, R.id.personSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
-        awesomeValidation.addValidation(PersonalInformation.this, R.id.personContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
-    }
+
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null) {
+            Log.d(TAG, "onCreate:"+user.getDisplayName());
+            if (user.getDisplayName() != null) {
+                name.setText(user.getDisplayName());
+                name.setSelection(user.getDisplayName().length());
+                userSurname.setText(user.getDisplayName());
+                userSurname.setSelection(user.getDisplayName().length());
+                userTurkishID.setText(user.getDisplayName());
+                userTurkishID.setSelection(user.getDisplayName().length());
+                userContact.setText(user.getDisplayName());
+                userContact.setSelection(user.getDisplayName().length());
+                userAddress.setText(user.getDisplayName());
+                userAddress.setSelection(user.getDisplayName().length());
+                userBirthDate.setText(user.getDisplayName());
+                userBirthDate.setSelection(user.getDisplayName().length());
+
 
 
     public void submitPersonInfoClick(View v) {
@@ -143,9 +160,19 @@ public class PersonalInformation extends AppCompatActivity {
             postUserData.put("address", userClassToAdd.getAddress());
             postUserData.put("birthDate", userClassToAdd.getBirthdate());
             firebaseFirestore.collection("user").document(userID).update(postUserData);
+
         }
     }
+
+
+
 }
+
+
+
+
+
+
 
 
 

@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,12 +28,15 @@ public class SearchMedicine extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
+    ImageButton scantosearch;
 
 
 
     private MedicineAdapter adapter;
 
-    EditText barcode,name;
+    EditText name;
+    public static EditText resultsearcheview;
+    public static EditText barcode;
     Button searchButton,request;
     RecyclerView recyclerView;
     private CollectionReference medicineReference;
@@ -41,17 +45,25 @@ public class SearchMedicine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_medicine);
-
         barcode = findViewById(R.id.editTextTextPersonName14);
         name=findViewById(R.id.editTextTextPersonName13);
-//        searchButton = findViewById(R.id.button10);
+        searchButton = findViewById(R.id.button4);
         medicineReference = db.collection("medicine");
         recyclerView = findViewById(R.id.medicine_recycler_view);
+        scantosearch = findViewById(R.id.imageButtonsearch);
         request =findViewById(R.id.request);
         request.setVisibility(View.INVISIBLE);
 
 
-        setUpRecyclerView();
+
+
+        scantosearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), BarcodeScanner.class));
+            }
+        });
+
 
         barcode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,94 +91,97 @@ public class SearchMedicine extends AppCompatActivity {
             }
         });
 
+        setUpRecyclerView();
 
     }
 
-            private void setUpRecyclerView() {
 
-                Query denemQuery = medicineReference.orderBy("barcodeNumber");
+    private void setUpRecyclerView() {
 
-                Query query = medicineReference.whereEqualTo("barcodeNumber", barcode.getText().toString().trim()).orderBy("barcodeNumber");
+        Query denemQuery = medicineReference.orderBy("barcodeNumber");
 
-                System.out.println(barcode.getText().toString().trim());
+        Query query = medicineReference.whereEqualTo("barcodeNumber", barcode.getText().toString().trim()).orderBy("barcodeNumber");
+        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
 
-                if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
+            FirestoreRecyclerOptions<MedicineClass> options1 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
+                    .setQuery(denemQuery, MedicineClass.class)
+                    .build();
+            adapter = new MedicineAdapter(options1);
+            adapter.setOnItemClickListener(new MedicineAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                    MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
+                    String id = documentSnapshot.getId();
+                    Intent intent = new Intent(SearchMedicine.this, ReceiveMedicine.class);
+                    intent.putExtra("nameOfMedicine", medicineClass.getNameOfMedicine());
+                    intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
+                    intent.putExtra("quantity", medicineClass.getQuantity());
+                    intent.putExtra("expirationdate", medicineClass.getExpirationdate());
 
-                    FirestoreRecyclerOptions<MedicineClass> options1 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
-                            .setQuery(denemQuery, MedicineClass.class)
-                            .build();
-                    adapter = new MedicineAdapter(options1);
-                    adapter.setOnItemClickListener(new MedicineAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                            MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
-                            String id = documentSnapshot.getId();
-                            Intent intent = new Intent(SearchMedicine.this, ReceiveMedicine.class);
-                            intent.putExtra("nameOfMedicine", medicineClass.getNameOfMedicine());
-                            intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
-                            intent.putExtra("quantity", medicineClass.getQuantity());
-                            intent.putExtra("expirationdate", medicineClass.getExpirationdate());
 //                    intent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
 
-                            startActivity(intent);
-                            Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-
-                    FirestoreRecyclerOptions<MedicineClass> options2 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
-                            .setQuery(query, MedicineClass.class)
-                            .build();
-                    adapter = new MedicineAdapter(options2);
+                    startActivity(intent);
+                    Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();
                 }
+            });
+        } else {
 
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(adapter);
-            }
+            FirestoreRecyclerOptions<MedicineClass> options2 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
+                    .setQuery(query, MedicineClass.class)
+                    .build();
+            adapter = new MedicineAdapter(options2);
+        }
 
-            private void setUpRecyclerViewSearch() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
 
-                Query query = medicineReference.whereEqualTo("barcodeNumber", "08699565523578").orderBy("barcodeNumber");
-                System.out.println(barcode.getText().toString().trim());
-                FirestoreRecyclerOptions<MedicineClass> options2 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
-                        .setQuery(query, MedicineClass.class)
-                        .build();
-                adapter = new MedicineAdapter(options2);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                adapter.notifyDataSetChanged();
-                recyclerView.setAdapter(adapter);
-                request.setVisibility(View.VISIBLE);
+    private void setUpRecyclerViewSearch() {
 
-                Toast.makeText(getApplicationContext(), "ilaç yok", Toast.LENGTH_LONG).show();
-            }
+        Query query = medicineReference.whereEqualTo("barcodeNumber", "08699565523578").orderBy("barcodeNumber");
+        System.out.println(barcode.getText().toString().trim());
+        FirestoreRecyclerOptions<MedicineClass> options2 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
+                .setQuery(query, MedicineClass.class)
+                .build();
+        adapter = new MedicineAdapter(options2);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+        request.setVisibility(View.VISIBLE);
+
+        Toast.makeText(getApplicationContext(), "ilaç yok", Toast.LENGTH_LONG).show();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+
+    }
 
 
-            @Override
-            protected void onStart() {
-                super.onStart();
-                adapter.startListening();
-            }
 
-            @Override
-            protected void onStop() {
-                super.onStop();
-                adapter.stopListening();
 
-            }
 
-            public void searchMedicineClick(View view) {
 
-                if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
-                    Toast.makeText(getApplicationContext(), "BOS ARAMA DA YAPMAZSIN", Toast.LENGTH_LONG).show();
-                } else {
-                    setUpRecyclerViewSearch();
-                }
-            }
+    public void searchMedicineClick(View view) {
 
-            public void goRequest(View view) {
-                Intent intent = new Intent(SearchMedicine.this, RequestMedicine.class);
-                startActivity(intent);
-            }
+        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "BOS ARAMA DA YAPMAZSIN", Toast.LENGTH_LONG).show();
+        } else {
+            setUpRecyclerViewSearch();
+        }
+    }
+
+    public void goRequest(View view) {
+        Intent intent = new Intent(SearchMedicine.this, RequestMedicine.class);
+        startActivity(intent);
+    }
 }

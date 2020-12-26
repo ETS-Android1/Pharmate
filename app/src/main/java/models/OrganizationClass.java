@@ -5,14 +5,18 @@ public class OrganizationClass {
     private String city, email, manager, province;
 
 
-    public OrganizationClass(String orgtext, String orgaddresstext, String orgcontact) {
-    }
+    public OrganizationClass(){}
+
 
     public OrganizationClass(String city, String email, String manager, String province) {
         this.city = city;
         this.email = email;
         this.manager = manager;
         this.province = province;
+
+    }
+
+    public OrganizationClass(String orgtext, String orgaddresstext, String orgcontact) {
     }
 
     public String getCity() {

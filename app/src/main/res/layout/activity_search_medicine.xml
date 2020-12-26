@@ -1,104 +1,84 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="medicine.SearchMedicine"
-    android:background="@drawable/gradientbackground">
-
-
-    <EditText
-        android:id="@+id/editTextTextPersonName14"
-        android:layout_width="325sp"
-        android:layout_height="55sp"
-        android:background="@drawable/edittextstyle"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:focusable="true"
-        android:hint="Barcode Number - #9781654"
-        android:inputType="textPersonName"
-        android:textColor="@color/cyan"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.200" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName13"
-        android:layout_width="325sp"
-        android:layout_height="55sp"
-        android:background="@drawable/edittextstyle"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:hint="Name Of Medicine"
-        android:inputType="textPersonName"
-        android:textColor="@color/cyan"
-        android:textSize="22sp"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100" />
+    android:orientation="vertical"
+    android:background="@drawable/ic_endless_constellation__1_">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="240sp"
-        android:layout_height="42sp"
-        android:fontFamily="@font/fugaz_one"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="0dp"
         android:text="Search Medicine"
+        android:textColor="#C1F8B0B0"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonsearch"
+        android:layout_width="58dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="315dp"
+        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName14"
+        android:layout_width="289dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="-38dp"
+        android:background="#11AA9E9E"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:ems="10"
+        android:hint="Barcode Number"
+        android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        android:textColor="#fff"
+        android:textColorHint="#F7F2F2"
+        android:textSize="16dp" />
+    <EditText
+        android:id="@+id/editTextTextPersonName13"
+        android:layout_width="289dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="25dp"
+        android:background="#11AA9E9E"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:ems="10"
+        android:hint="Name Medicine"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textColorHint="#F7F2F2"
+        android:textSize="16dp" />
+
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/paytone_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
         android:onClick="searchMedicineClick"
-        android:paddingTop="5sp"
-        android:text="List"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.900" />
+        android:text="Search"
+        android:textColor="@color/design_default_color_primary_dark" />
 
     <Button
         android:id="@+id/request"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="124dp"
-        android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/paytone_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
         android:onClick="goRequest"
-        android:paddingTop="5sp"
         android:text="Request"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.900" />
+        android:textColor="@color/design_default_color_primary_variant" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicine_recycler_view"
@@ -112,4 +92,4 @@
         app:layout_constraintVertical_bias="0.300" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

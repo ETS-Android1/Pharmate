@@ -50,7 +50,7 @@ public class OrgInformationPage extends AppCompatActivity {
         String orgcontact = OrgContactText.getText().toString();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(orgtext+orgaddresstext)
+                .setDisplayName(orgtext)
                 .build();
 
         firebaseUser.updateProfile(profileUpdates)
@@ -62,12 +62,13 @@ public class OrgInformationPage extends AppCompatActivity {
                         }
                     }
                 });
-        OrganizationClass organizationClassToAdd = new OrganizationClass(orgtext, orgaddresstext, orgcontact);
         String id = firebaseUser.getUid();
+        OrganizationClass organizationClassToAdd = new OrganizationClass(orgtext, orgaddresstext, id, orgcontact);
         HashMap<String, Object> postUserData = new HashMap<>();
         postUserData.put("manager",organizationClassToAdd.getManager());
         postUserData.put("province",organizationClassToAdd.getProvince());
-        postUserData.put("city",organizationClassToAdd.getCity());
+        postUserData.put("city", organizationClassToAdd.getCity());
+        postUserData.put("orgID", organizationClassToAdd.getManager());
         firebaseFirestore.collection("organization").document(id).set(postUserData);
 
 

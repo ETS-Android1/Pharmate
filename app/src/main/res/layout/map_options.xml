@@ -2,57 +2,50 @@
 <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-                                   
-
-
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
-    app:contentPadding="5dp"
-    app:cardUseCompatPadding="true"
-    android:background="@color/cardview_shadow_end_color">
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/red"
+
+    >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/backgroundgradient"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/text_view_title"
+            android:id="@+id/option_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="Option"
             android:textColor="#ffffff"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:maxLines="1"
-            android:layout_toStartOf="@id/text_view_priority"
+            android:layout_toStartOf="@id/option_quantity"
             android:layout_alignParentStart="true"
-            android:ellipsize="end"
-            />
+            android:ellipsize="end" />
 
         <TextView
-            android:id="@+id/text_view_description"
+            android:id="@+id/option_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="Description"
             android:textColor="#ffffff"
-            android:layout_below="@id/text_view_title"
-            />
+            android:layout_below="@id/option_title" />
+
         <TextView
-            android:id="@+id/text_view_priority"
+            android:id="@+id/option_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
             android:textColor="#ffffff"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>

@@ -64,6 +64,7 @@ public class PersonalInformation extends AppCompatActivity {
         storageReference = firebaseStorage.getReference("user");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 //
@@ -119,7 +120,47 @@ public class PersonalInformation extends AppCompatActivity {
                 userBirthDate.setSelection(user.getDisplayName().length());
 
 
-            }
+
+    public void submitPersonInfoClick(View v) {
+
+        if (awesomeValidation.validate()) {
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            String nameText = name.getText().toString();
+            String userSurnameText = userSurname.getText().toString();
+            String userTurkishIDText = userTurkishID.getText().toString();
+            String userAddressText = userAddress.getText().toString();
+            String userContactText = userContact.getText().toString();
+            String userBirthDayText = userBirthDate.getText().toString();
+
+
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(nameText + userSurnameText)
+                    .build();
+
+            firebaseUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = null;
+                                UserClass userClass = document.toObject(UserClass.class);
+                                System.out.println("Task Successful");
+                            }
+                        }
+                    });
+            String email = firebaseUser.getEmail();
+            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
+            String userID = firebaseUser.getUid();
+
+            HashMap<String, Object> postUserData = new HashMap<>();
+            postUserData.put("name", userClassToAdd.getName());
+            postUserData.put("surname", userClassToAdd.getSurname());
+            postUserData.put("turkishId", userClassToAdd.getTurkishId());
+            postUserData.put("contact", userClassToAdd.getContact());
+            postUserData.put("address", userClassToAdd.getAddress());
+            postUserData.put("birthDate", userClassToAdd.getBirthdate());
+            firebaseFirestore.collection("user").document(userID).update(postUserData);
+
         }
     }
 

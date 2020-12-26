@@ -3,7 +3,6 @@ package signup;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +17,7 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +36,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import medicine.UploadMedicine;
+import location.LocationTracker;
 import models.UserClass;
 
 public class SignUp extends AppCompatActivity {
@@ -50,6 +50,7 @@ public class SignUp extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
+    private LocationTracker locationTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class SignUp extends AppCompatActivity {
     }
 
 
+
     public void signUpUserClick(View view) {
         if (awesomeValidation.validate()) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -127,6 +129,7 @@ public class SignUp extends AppCompatActivity {
             String userBirthDayText = userBirthDate.getText().toString();
             String email = emailText.getText().toString();
             String password = passwordText.getText().toString();
+
             // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
 
             // validation islemlerini yapacagiz
@@ -155,8 +158,10 @@ public class SignUp extends AppCompatActivity {
                                                             }
                                                         });
 
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText, null);
                                                 String id = firebaseUser.getUid();
+                                                LatLng userLocation = getLocation();
+                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
+
 
                                                 HashMap<String, Object> postUserData = new HashMap<>();
 
@@ -167,7 +172,9 @@ public class SignUp extends AppCompatActivity {
                                                 postUserData.put("contact", userClassToAdd.getContact());
                                                 postUserData.put("address", userClassToAdd.getAddress());
                                                 postUserData.put("birthDate", userClassToAdd.getBirthdate());
-                                                firebaseFirestore.collection("userType").document(id).set(postUserData);
+                                                postUserData.put("location", userLocation);
+
+                                                firebaseFirestore.collection("user").document(id).set(postUserData);
                                                 Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(SignUp.this, MainActivity.class);
                                                 startActivity(intent);
@@ -190,5 +197,19 @@ public class SignUp extends AppCompatActivity {
 
         }
     }
+
+    public LatLng getLocation() {
+        locationTracker = new LocationTracker(SignUp.this);
+        LatLng location;
+        if (locationTracker.canGetLocation()) {
+            location = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
+            System.out.println(location);
+            return location;
+        } else {
+            locationTracker.showSettingsAlert();
+            return null;
+        }
+    }
+
 
 }

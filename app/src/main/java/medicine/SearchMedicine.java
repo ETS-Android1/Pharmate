@@ -22,9 +22,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import models.MedicineClass;
 
 public class SearchMedicine extends AppCompatActivity {
@@ -98,6 +95,7 @@ public class SearchMedicine extends AppCompatActivity {
 
     }
 
+
     private void setUpRecyclerView() {
 
         Query denemQuery = medicineReference.orderBy("barcodeNumber");
@@ -119,6 +117,7 @@ public class SearchMedicine extends AppCompatActivity {
                     intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
                     intent.putExtra("quantity", medicineClass.getQuantity());
                     intent.putExtra("expirationdate", medicineClass.getExpirationdate());
+
 //                    intent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
 
                     startActivity(intent);

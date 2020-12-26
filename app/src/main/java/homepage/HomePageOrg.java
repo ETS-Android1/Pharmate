@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmate.R;
 
+import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrgInformationPage;
@@ -44,6 +45,9 @@ public class HomePageOrg extends AppCompatActivity {
     public void goAboutPageClick(View view) {
     }
 
-    public void goRequestMedicinePageClick(View view) {
+    public void goRequestedMedicinePageClick(View v) {
+        Intent _intent = new Intent(this, RequestMedicineList.class);
+        startActivity(_intent);
     }
+
 }

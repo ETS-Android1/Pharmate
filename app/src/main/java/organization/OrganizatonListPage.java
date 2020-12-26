@@ -1,10 +1,5 @@
 package organization;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,18 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import medicine.MedicineAdapter;
-import medicine.ReceiveMedicine;
-import medicine.SearchMedicine;
-import models.MedicineClass;
 import models.OrganizationClass;
 
 public class OrganizatonListPage extends AppCompatActivity {
@@ -63,7 +57,7 @@ public class OrganizatonListPage extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                Query query = organizationReference.whereEqualTo("province", nameorganization.getText().toString().trim()).orderBy("province");
+                Query query = organizationReference;
 
                 FirestoreRecyclerOptions<OrganizationClass> options1 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
                             .setQuery(query, OrganizationClass.class)
@@ -77,9 +71,9 @@ public class OrganizatonListPage extends AppCompatActivity {
     }
     private void setUpRecyclerView() {
 
-        Query denemQuery = organizationReference.orderBy("manager");
+        Query denemQuery = organizationReference;
 
-        Query query = organizationReference.whereEqualTo("manager", nameorganization.getText().toString().trim()).orderBy("manager");
+        Query query = organizationReference;
         System.out.println(nameorganization.getText().toString().trim());
 
         if (nameorganization.getText().toString().trim().equals(null) || nameorganization.getText().toString().trim().equals("")) {
@@ -102,21 +96,21 @@ public class OrganizatonListPage extends AppCompatActivity {
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         recyclerView1.setAdapter(adapter);
     }
-    private void setUpRecyclerViewSearch() {
-
-        Query query = organizationReference.whereEqualTo("manager", "SaglikOcagi").orderBy("manager");
-        System.out.println(nameorganization.getText().toString().trim());
-        FirestoreRecyclerOptions<OrganizationClass> options2 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
-                .setQuery(query, OrganizationClass.class)
-                .build();
-        adapter = new OrganizationAdapter(options2);
-        recyclerView1.setHasFixedSize(true);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-        adapter.notifyDataSetChanged();
-        recyclerView1.setAdapter(adapter);
-
-        Toast.makeText(getApplicationContext(), "kurum yok", Toast.LENGTH_LONG).show();
-    }
+//    private void setUpRecyclerViewSearch() {
+//
+//        Query query = organizationReference.whereEqualTo("manager", "SaglikOcagi").orderBy("manager");
+//        System.out.println(nameorganization.getText().toString().trim());
+//        FirestoreRecyclerOptions<OrganizationClass> options2 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
+//                .setQuery(query, OrganizationClass.class)
+//                .build();
+//        adapter = new OrganizationAdapter(options2);
+//        recyclerView1.setHasFixedSize(true);
+//        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
+//        adapter.notifyDataSetChanged();
+//        recyclerView1.setAdapter(adapter);
+//
+//        Toast.makeText(getApplicationContext(), "kurum yok", Toast.LENGTH_LONG).show();
+//    }
 
 
     @Override
@@ -137,7 +131,8 @@ public class OrganizatonListPage extends AppCompatActivity {
         if (nameorganization.getText().toString().trim().equals(null) || nameorganization.getText().toString().trim().equals("")) {
             Toast.makeText(getApplicationContext(), "BOS ARAMA DA YAPMAZSIN", Toast.LENGTH_LONG).show();
         } else {
-            setUpRecyclerViewSearch();
+//            setUpRecyclerViewSearch();
+            System.out.println("denemeeeee");
         }
     }
 }

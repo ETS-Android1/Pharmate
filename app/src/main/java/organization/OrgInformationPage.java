@@ -62,15 +62,18 @@ public class OrgInformationPage extends AppCompatActivity {
                         }
                     }
                 });
-        String id = firebaseUser.getUid();
-        OrganizationClass organizationClassToAdd = new OrganizationClass(orgtext, orgaddresstext, id, orgcontact);
-        HashMap<String, Object> postUserData = new HashMap<>();
-        postUserData.put("manager",organizationClassToAdd.getManager());
-        postUserData.put("province",organizationClassToAdd.getProvince());
-        postUserData.put("city", organizationClassToAdd.getCity());
-        postUserData.put("orgID", organizationClassToAdd.getManager());
-        firebaseFirestore.collection("organization").document(id).set(postUserData);
 
+        String email = firebaseUser.getEmail();
+        String id = firebaseUser.getUid();
+        OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, null);
+        HashMap<String, Object> postUserData = new HashMap<>();
+
+        postUserData.put("organizatonName", organizationClass.getOrganizationName());
+        postUserData.put("contact", organizationClass.getContact());
+        postUserData.put("city", organizationClass.getCity());
+        postUserData.put("email", organizationClass.getEmail());
+
+        firebaseFirestore.collection("organization").document(id).update(postUserData);
 
 
     }

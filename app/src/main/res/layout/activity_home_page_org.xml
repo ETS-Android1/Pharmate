@@ -62,7 +62,7 @@
         android:background="@drawable/ic_request"
         android:fontFamily="@font/paytone_one"
         android:gravity="left"
-        android:onClick="goRequestMedicinePageClick"
+        android:onClick="goRequestedMedicinePageClick"
         android:paddingTop="5sp"
         android:text="Request"
         android:textAlignment="inherit"

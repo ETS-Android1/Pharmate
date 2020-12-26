@@ -4,19 +4,18 @@ import com.google.firebase.firestore.GeoPoint;
 
 public class OrganizationClass {
 
-    private String city, email, manager, province;
+    private String city, email, organizationName, contact;
     GeoPoint location;
 
 
     public OrganizationClass() {
     }
 
-
-    public OrganizationClass(String city, String email, String manager, String province, GeoPoint location) {
+    public OrganizationClass(String city, String email, String organizationName, String contact, GeoPoint location) {
         this.city = city;
         this.email = email;
-        this.manager = manager;
-        this.province = province;
+        this.organizationName = organizationName;
+        this.contact = contact;
         this.location = location;
     }
 
@@ -33,6 +32,10 @@ public class OrganizationClass {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public GeoPoint getLocation() {
         return location;
     }
@@ -41,24 +44,21 @@ public class OrganizationClass {
         this.location = location;
     }
 
-    public void setEmail(String email) {
-        this.email = city;
+
+    public String getOrganizationName() {
+        return organizationName;
     }
 
-    public String getManager() {
-        return manager;
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public String getContact() {
+        return contact;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
 }

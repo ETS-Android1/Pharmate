@@ -1,7 +1,6 @@
 package users;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,17 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,7 +71,7 @@ public class PersonalInformation extends AppCompatActivity {
         userContact = findViewById(R.id.personContactText);
         userAddress = findViewById(R.id.personAddressText);
         userBirthDate = findViewById(R.id.birthDateText);
-        update=findViewById(R.id.button3);
+        update = findViewById(R.id.button3);
         userBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,9 +98,9 @@ public class PersonalInformation extends AppCompatActivity {
             }
         };
 
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null) {
-            Log.d(TAG, "onCreate:"+user.getDisplayName());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Log.d(TAG, "onCreate:" + user.getDisplayName());
             if (user.getDisplayName() != null) {
                 name.setText(user.getDisplayName());
                 name.setSelection(user.getDisplayName().length());
@@ -119,12 +115,13 @@ public class PersonalInformation extends AppCompatActivity {
                 userBirthDate.setText(user.getDisplayName());
                 userBirthDate.setSelection(user.getDisplayName().length());
 
+            }
+        }
+    }
 
-
-    public void submitPersonInfoClick(View v) {
+    public void updatePersonInfoClick(View v) {
 
         if (awesomeValidation.validate()) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             String nameText = name.getText().toString();
             String userSurnameText = userSurname.getText().toString();
             String userTurkishIDText = userTurkishID.getText().toString();
@@ -149,7 +146,9 @@ public class PersonalInformation extends AppCompatActivity {
                         }
                     });
             String email = firebaseUser.getEmail();
-            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
+
+
+            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, null);
             String userID = firebaseUser.getUid();
 
             HashMap<String, Object> postUserData = new HashMap<>();
@@ -165,12 +164,7 @@ public class PersonalInformation extends AppCompatActivity {
     }
 
 
-
 }
-
-
-
-
 
 
 

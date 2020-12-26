@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -20,43 +18,44 @@ public class RequestMedicineList extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RequestMedicineListAdapter requestMedicineListAdapter;
     RecyclerView recyclerView;
-    private CollectionReference requestListReference = db.collection("requestedMedicine");
+    private CollectionReference requestListReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicinerequest_list);
+        recyclerView = findViewById(R.id.medicine_request_recyclerview);
+        ;
         setUpRecyclerView();
     }
 
     private void setUpRecyclerView() {
 
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        System.out.println(userID);
-        Query requestQuery = requestListReference.whereEqualTo("requestedBy", "OmZYn4AFUQfB6VgkQn0E8nN9r7t2").orderBy("requestedBy");
+        requestListReference = db.collection("requestedMedicine");
+        Query requestListQuery = requestListReference;
 
-        FirestoreRecyclerOptions<RequestClass> options = new FirestoreRecyclerOptions.Builder<RequestClass>()
-                .setQuery(requestQuery, RequestClass.class)
+        FirestoreRecyclerOptions<RequestClass> options1 = new FirestoreRecyclerOptions.Builder<RequestClass>()
+                .setQuery(requestListQuery, RequestClass.class)
                 .build();
 
-
-        requestMedicineListAdapter = new RequestMedicineListAdapter(options);
-
-        recyclerView = findViewById(R.id.request_recycler_view);
+        requestMedicineListAdapter = new RequestMedicineListAdapter(options1);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(requestMedicineListAdapter);
+    }
 
-        requestMedicineListAdapter.setOnItemClickListener(new RequestMedicineListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                RequestClass requestClass = documentSnapshot.toObject(RequestClass.class);
-                String id = documentSnapshot.getId();
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestMedicineListAdapter.startListening();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        requestMedicineListAdapter.stopListening();
 
     }
 

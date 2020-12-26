@@ -26,9 +26,12 @@ public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<Request
     @Override
     protected void onBindViewHolder(@NonNull RequestHolder holder, int position, @NonNull RequestClass model) {
 
-        holder.textViewName.setText(model.getMedicinename());
+        holder.textViewRequestName.setText(model.getMedicineName());
+        System.out.println(model.getMedicineName());
         holder.textViewBarcodeNumber.setText(model.getBarcode());
-        holder.textViewAmount.setText(String.valueOf(model.getQuantity()));
+        System.out.println(model.getBarcode());
+        holder.textViewQuantity.setText(String.valueOf(model.getQuantity()));
+        System.out.println(model.getQuantity());
 
     }
 
@@ -42,16 +45,16 @@ public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<Request
 
     class RequestHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName;
+        TextView textViewRequestName;
         TextView textViewBarcodeNumber;
-        TextView textViewAmount;
+        TextView textViewQuantity;
 
 
         public RequestHolder(@NonNull View itemView) {
             super(itemView);
-            textViewName = itemView.findViewById(R.id.request_title);
+            textViewRequestName = itemView.findViewById(R.id.request_title);
             textViewBarcodeNumber = itemView.findViewById(R.id.request_description);
-            textViewAmount = itemView.findViewById(R.id.request_quantity);
+            textViewQuantity = itemView.findViewById(R.id.request_quantity);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

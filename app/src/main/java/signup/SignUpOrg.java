@@ -108,8 +108,8 @@ public class SignUpOrg extends AppCompatActivity {
                                                 OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, location);
                                                 HashMap<String, Object> postUserData = new HashMap<>();
 
-                                                postUserData.put("manager", organizationClass.getManager());
-                                                postUserData.put("province", organizationClass.getProvince());
+                                                postUserData.put("organizationName", organizationClass.getOrganizationName());
+                                                postUserData.put("contact", organizationClass.getContact());
                                                 postUserData.put("city", organizationClass.getCity());
                                                 postUserData.put("location", organizationClass.getLocation());
                                                 postUserData.put("email", organizationClass.getEmail());

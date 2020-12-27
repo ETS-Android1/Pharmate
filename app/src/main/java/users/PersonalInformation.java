@@ -5,8 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -35,17 +38,21 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
+import homepage.HomePage;
 import models.UserClass;
 
 import static android.graphics.Color.TRANSPARENT;
@@ -69,6 +76,7 @@ public class PersonalInformation extends AppCompatActivity {
     Button update;
     ImageView picture;
     public Uri imageUri;
+    Bitmap selectedImage;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -92,14 +100,6 @@ public class PersonalInformation extends AppCompatActivity {
         userAddress = findViewById(R.id.personAddressText);
         userBirthDate = findViewById(R.id.birthDateText);
         update=findViewById(R.id.button3);
-
-        picture.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                choosePictures();
-            }
-        });
         userBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,14 +148,82 @@ public class PersonalInformation extends AppCompatActivity {
         }
     }
 
-    private void choosePictures() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
-        } else {
-            Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intentToGallery,2);
+
+    public void updatePersonInfoClick(View view) {
+        if (imageUri != null) {
+
+            //universal unique id
+            UUID uuid = UUID.randomUUID();
+            final String imageName = "images/" + uuid + ".jpg";
+
+            storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    //Download URL
+
+                    StorageReference newReference = FirebaseStorage.getInstance().getReference(imageName);
+                    newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            String downloadUrl = uri.toString();
+
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                            String userEmail = firebaseUser.getEmail();
+
+                            String Name = name.getText().toString();
+                            String surName = userSurname.getText().toString();
+                            String id = userTurkishID.getText().toString();
+                            String contact = userContact.getText().toString();
+                            String address = userAddress.getText().toString();
+                            String birthdate = userBirthDate.getText().toString();
+
+
+                            HashMap<String, Object> postData = new HashMap<>();
+                            postData.put("name",Name);
+                            postData.put("surname",surName);
+                            postData.put("turkishId",id);
+                            postData.put("contact",contact);
+                            postData.put("address",address);
+                            postData.put("birthDate",birthdate);
+
+
+                            firebaseFirestore.collection("user").add(postData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+
+                                    Intent intent = new Intent(PersonalInformation.this, HomePage.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(PersonalInformation.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+
+
+                        }
+                    });
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(PersonalInformation.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
+
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -170,51 +238,44 @@ public class PersonalInformation extends AppCompatActivity {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
-            imageUri=data.getData();
-            picture.setImageURI(imageUri);
-            uploadPicture();
+
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null ) {
+
+            imageUri = data.getData();
+
+            try {
+
+                if (Build.VERSION.SDK_INT >= 28) {
+                    ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(),imageUri);
+                    selectedImage = ImageDecoder.decodeBitmap(source);
+                    picture.setImageBitmap(selectedImage);
+                } else {
+                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(),imageUri);
+                    picture.setImageBitmap(selectedImage);
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
+
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void uploadPicture() {
-        final ProgressDialog pd=new ProgressDialog(this);
-        pd.setTitle("Uploading image...");
-        pd.show();
-        final String randomKey= UUID.randomUUID().toString();
-        StorageReference riversRef = storageReference.child("images/"+randomKey);
-
-        riversRef.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        pd.dismiss();
-                        Snackbar.make(findViewById(android.R.id.content),"Image Uploaded",Snackbar.LENGTH_LONG).show();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        pd.dismiss();
-                       Toast.makeText(getApplicationContext(),"Failed To Upload",Toast.LENGTH_LONG).show();
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progressPercent=(100.00 * snapshot.getBytesTransferred()/ snapshot.getTotalByteCount());
-                pd.setMessage("percantage:"+(int)progressPercent+"%");
-            }
-        });
-
-    }
-
-    public void updatePersonInfoClick(View view) {
+    public void selectedImage(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        } else {
+            Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intentToGallery,2);
+        }
     }
 }
 

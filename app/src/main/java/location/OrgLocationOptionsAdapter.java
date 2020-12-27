@@ -14,15 +14,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import models.OrganizationClass;
-import models.UserClass;
 
-public class OrgLocationAdapter extends FirestoreRecyclerAdapter<OrganizationClass, OrgLocationAdapter.OrganizationLocationHolder> {
-    public OrgLocationAdapter(@NonNull FirestoreRecyclerOptions<OrganizationClass> options) {
+public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<OrganizationClass, OrgLocationOptionsAdapter.OrganizationLocationHolder> {
+    public OrgLocationOptionsAdapter(@NonNull FirestoreRecyclerOptions<OrganizationClass> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull OrgLocationAdapter.OrganizationLocationHolder holder, int position, @NonNull OrganizationClass model) {
+    protected void onBindViewHolder(@NonNull OrgLocationOptionsAdapter.OrganizationLocationHolder holder, int position, @NonNull OrganizationClass model) {
 
         holder.textViewManager.setText(model.getOrganizationName());
         System.out.println("OrgName" + model.getOrganizationName());
@@ -36,7 +35,7 @@ public class OrgLocationAdapter extends FirestoreRecyclerAdapter<OrganizationCla
     public OrganizationLocationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.map_options,
                 parent, false);
-        return new OrgLocationAdapter.OrganizationLocationHolder(view);
+        return new OrgLocationOptionsAdapter.OrganizationLocationHolder(view);
     }
 
     class OrganizationLocationHolder extends RecyclerView.ViewHolder {
@@ -46,8 +45,8 @@ public class OrgLocationAdapter extends FirestoreRecyclerAdapter<OrganizationCla
 
         public OrganizationLocationHolder(@NonNull View itemView) {
             super(itemView);
-            textViewManager = itemView.findViewById(R.id.text_view_title);
-            textViewCity = itemView.findViewById(R.id.text_view_description);
+            textViewManager = itemView.findViewById(R.id.option_title);
+            textViewCity = itemView.findViewById(R.id.option_desc);
 
 
         }

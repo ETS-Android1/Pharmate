@@ -22,14 +22,12 @@ import com.google.firebase.firestore.Query;
 import models.OrganizationClass;
 
 public class OrganizatonListPage extends AppCompatActivity {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth firebaseAuth;
-
-    private OrganizationAdapter adapter;
-
     EditText nameorganization;
     Button list;
     RecyclerView recyclerView1;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth;
+    private OrganizationAdapter adapter;
     private CollectionReference organizationReference;
 
     @Override
@@ -37,8 +35,8 @@ public class OrganizatonListPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizaton_list_page);
 
-        nameorganization=findViewById(R.id.editTextTextPersonName16);
-        list=findViewById(R.id.button9);
+        nameorganization = findViewById(R.id.editTextTextPersonName16);
+        list = findViewById(R.id.button9);
         organizationReference = db.collection("organization");
         recyclerView1 = findViewById(R.id.org_recycler_view);
 
@@ -60,15 +58,16 @@ public class OrganizatonListPage extends AppCompatActivity {
                 Query query = organizationReference;
 
                 FirestoreRecyclerOptions<OrganizationClass> options1 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
-                            .setQuery(query, OrganizationClass.class)
-                            .build();
-                    adapter = new OrganizationAdapter(options1);
+                        .setQuery(query, OrganizationClass.class)
+                        .build();
+                adapter = new OrganizationAdapter(options1);
 
             }
         });
 
 
     }
+
     private void setUpRecyclerView() {
 
         Query denemQuery = organizationReference;
@@ -84,7 +83,7 @@ public class OrganizatonListPage extends AppCompatActivity {
             adapter = new OrganizationAdapter(options1);
 
 
-        }else {
+        } else {
 
             FirestoreRecyclerOptions<OrganizationClass> options2 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
                     .setQuery(query, OrganizationClass.class)

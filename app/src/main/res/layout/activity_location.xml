@@ -21,6 +21,7 @@
         tools:context="location.LocationActivity" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/map_options_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"

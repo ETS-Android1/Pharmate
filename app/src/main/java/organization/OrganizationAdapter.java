@@ -18,6 +18,7 @@ public class OrganizationAdapter extends FirestoreRecyclerAdapter<OrganizationCl
     public OrganizationAdapter(@NonNull FirestoreRecyclerOptions<OrganizationClass> options) {
         super(options);
     }
+
     @Override
     protected void onBindViewHolder(@NonNull OrganizationAdapter.OrganizationHolder holder, int position, @NonNull OrganizationClass model) {
 
@@ -27,11 +28,12 @@ public class OrganizationAdapter extends FirestoreRecyclerAdapter<OrganizationCl
         System.out.println("City" + model.getCity());
 
     }
+
     @NonNull
     @Override
     public OrganizationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.orgitem,
-                parent,false);
+                parent, false);
         return new OrganizationAdapter.OrganizationHolder(view);
     }
 

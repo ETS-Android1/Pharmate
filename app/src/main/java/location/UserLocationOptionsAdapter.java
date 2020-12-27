@@ -23,10 +23,10 @@ public class UserLocationOptionsAdapter extends FirestoreRecyclerAdapter<UserCla
     @Override
     protected void onBindViewHolder(@NonNull UserLocationOptionsAdapter.UserLocationHolder holder, int position, @NonNull UserClass model) {
 
-        holder.textViewManager.setText(model.getOrganizationName());
-        System.out.println("OrgName" + model.getOrganizationName());
-        holder.textViewCity.setText(model.getCity());
-        System.out.println("City" + model.getCity());
+//        holder.textViewManager.setText(model.getOrganizationName());
+//        System.out.println("OrgName" + model.getOrganizationName());
+//        holder.textViewCity.setText(model.getCity());
+//        System.out.println("City" + model.getCity());
 
     }
 

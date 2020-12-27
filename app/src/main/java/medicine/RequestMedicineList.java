@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -26,12 +28,13 @@ public class RequestMedicineList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medicinerequest_list);
         recyclerView = findViewById(R.id.medicine_request_recyclerview);
-        ;
+
         setUpRecyclerView();
     }
 
     private void setUpRecyclerView() {
-
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         requestListReference = db.collection("requestedMedicine");
         Query requestListQuery = requestListReference;
 

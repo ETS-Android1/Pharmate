@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -32,11 +34,11 @@ import models.OrganizationClass;
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 23;
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     public LatLng latlng;
     Button btn;
     private FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
-    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference locationReference;
     private RecyclerView recyclerView;
     private OrgLocationOptionsAdapter adapter;
@@ -145,11 +147,30 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 .setQuery(getLocations, OrganizationClass.class)
                 .build();
         adapter = new OrgLocationOptionsAdapter(options);
+        adapter.setOnItemClickListener(new OrgLocationOptionsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                OrganizationClass organizationClass = documentSnapshot.toObject(OrganizationClass.class);
+
+                System.out.println(organizationClass.getEmail());
+                System.out.println(organizationClass.getCity());
+                System.out.println(organizationClass.getLocation());
+                System.out.println(organizationClass.getContact());
+                System.out.println(organizationClass.getOrganizationName());
+
+                String id = documentSnapshot.getId();
+                Toast.makeText(LocationActivity.this, "Click Calisiyor" + position, Toast.LENGTH_LONG).show();
+
+
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
     }
+
 
     @Override
     protected void onStart() {

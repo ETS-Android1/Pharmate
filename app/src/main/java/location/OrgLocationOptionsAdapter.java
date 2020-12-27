@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmate.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import models.OrganizationClass;
 
 public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<OrganizationClass, OrgLocationOptionsAdapter.OrganizationLocationHolder> {
+
+    private OnItemClickListener listener;
+
     public OrgLocationOptionsAdapter(@NonNull FirestoreRecyclerOptions<OrganizationClass> options) {
         super(options);
     }
@@ -38,6 +42,7 @@ public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<Organiza
         return new OrgLocationOptionsAdapter.OrganizationLocationHolder(view);
     }
 
+
     class OrganizationLocationHolder extends RecyclerView.ViewHolder {
 
         TextView textViewManager;
@@ -48,6 +53,16 @@ public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<Organiza
             textViewManager = itemView.findViewById(R.id.option_title);
             textViewCity = itemView.findViewById(R.id.option_desc);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                    }
+                }
+            });
 
         }
 
@@ -55,5 +70,13 @@ public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<Organiza
 
     public void getLocationData() {
 
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

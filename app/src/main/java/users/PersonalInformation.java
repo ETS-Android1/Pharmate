@@ -40,8 +40,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -77,6 +79,7 @@ public class PersonalInformation extends AppCompatActivity {
     ImageView picture;
     public Uri imageUri;
     Bitmap selectedImage;
+    String userId;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -126,26 +129,21 @@ public class PersonalInformation extends AppCompatActivity {
             }
         };
 
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null) {
-            Log.d(TAG, "onCreate:"+user.getDisplayName());
-            if (user.getDisplayName() != null) {
-                name.setText(user.getDisplayName());
-                name.setSelection(user.getDisplayName().length());
-                userSurname.setText(user.getDisplayName());
-                userSurname.setSelection(user.getDisplayName().length());
-                userTurkishID.setText(user.getDisplayName());
-                userTurkishID.setSelection(user.getDisplayName().length());
-                userContact.setText(user.getDisplayName());
-                userContact.setSelection(user.getDisplayName().length());
-                userAddress.setText(user.getDisplayName());
-                userAddress.setSelection(user.getDisplayName().length());
-                userBirthDate.setText(user.getDisplayName());
-                userBirthDate.setSelection(user.getDisplayName().length());
-
+        userId=firebaseAuth.getCurrentUser().getUid();
+        DocumentReference documentReference=firebaseFirestore.collection("user").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+name.setText(value.getString("name"));
+                userSurname.setText(value.getString("surname"));
+                userTurkishID.setText(value.getString("turkishId"));
+                userContact.setText(value.getString("contact"));
+                userAddress.setText(value.getString("address"));
+                userBirthDate.setText(value.getString("birthDate"));
 
             }
-        }
+        });
+
     }
 
 

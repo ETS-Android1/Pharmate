@@ -1,23 +1,24 @@
 package models;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class OrganizationClass {
 
-    private String city, email, manager, province;
+    private String city, email, organizationName, contact;
+    GeoPoint location;
 
 
-    public OrganizationClass(){}
+    public OrganizationClass() {
+    }
 
-
-    public OrganizationClass(String city, String email, String manager, String province) {
+    public OrganizationClass(String city, String email, String organizationName, String contact, GeoPoint location) {
         this.city = city;
         this.email = email;
-        this.manager = manager;
-        this.province = province;
-
+        this.organizationName = organizationName;
+        this.contact = contact;
+        this.location = location;
     }
 
-    public OrganizationClass(String orgtext, String orgaddresstext, String orgcontact) {
-    }
 
     public String getCity() {
         return city;
@@ -31,20 +32,33 @@ public class OrganizationClass {
         return email;
     }
 
-    public void setEmail(String email) { this.email = city; }
-
-    public String getManager() {
-        return manager;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setManager(String manager) { this.manager = manager; }
-
-    public String getProvince() {
-        return province;
+    public GeoPoint getLocation() {
+        return location;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
+
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
 }

@@ -1,6 +1,5 @@
 package models;
 
-import android.widget.TextView;
 
 public class MedicineClass {
     private String nameOfMedicine, barcodeNumber, donatedBy, donatedTo,expirationdate;

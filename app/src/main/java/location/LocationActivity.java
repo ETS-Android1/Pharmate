@@ -9,8 +9,11 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmate.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,31 +25,37 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import models.OrganizationClass;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 23;
     public LatLng latlng;
+    Button btn;
     private FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private CollectionReference locationReference;
-    Button btn;
+    private RecyclerView recyclerView;
+    private OrgLocationOptionsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        locationReference = firebaseFirestore.collection("location");
+        locationReference = firebaseFirestore.collection("organization");
         firebaseAuth = FirebaseAuth.getInstance();
+        recyclerView = findViewById(R.id.map_options_recyclerview);
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         System.out.println(latlng);
         String id = firebaseUser.getUid();
         System.out.println(id);
-
         checkPermission();
+        setUpRecyclerView();
     }
 
     private void checkPermission() {
@@ -126,4 +135,33 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
     }
+
+    private void setUpRecyclerView() {
+
+        Query getLocations = locationReference;
+
+
+        FirestoreRecyclerOptions<OrganizationClass> options = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
+                .setQuery(getLocations, OrganizationClass.class)
+                .build();
+        adapter = new OrgLocationOptionsAdapter(options);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+
+    }
+
 }

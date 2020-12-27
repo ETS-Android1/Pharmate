@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,10 @@ import androidx.core.content.ContextCompat;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.pharmate.R;
+
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -113,6 +117,7 @@ public class PersonalInformation extends AppCompatActivity {
             }
         };
 
+
         userId = firebaseAuth.getCurrentUser().getUid();
         DocumentReference documentReference = firebaseFirestore.collection("user").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -146,6 +151,7 @@ public class PersonalInformation extends AppCompatActivity {
 
                     StorageReference newReference = FirebaseStorage.getInstance().getReference(imageName);
                     newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
                         @Override
                         public void onSuccess(Uri uri) {
 
@@ -182,6 +188,22 @@ public class PersonalInformation extends AppCompatActivity {
 
                         }
                     });
+
+            String email = firebaseUser.getEmail();
+
+
+            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, null);
+            String userID = firebaseUser.getUid();
+
+            HashMap<String, Object> postUserData = new HashMap<>();
+            postUserData.put("name", userClassToAdd.getName());
+            postUserData.put("surname", userClassToAdd.getSurname());
+            postUserData.put("turkishId", userClassToAdd.getTurkishId());
+            postUserData.put("contact", userClassToAdd.getContact());
+            postUserData.put("address", userClassToAdd.getAddress());
+            postUserData.put("birthDate", userClassToAdd.getBirthdate());
+            firebaseFirestore.collection("user").document(userID).update(postUserData);
+
 
 
                 }
@@ -232,6 +254,7 @@ public class PersonalInformation extends AppCompatActivity {
         }
 
 
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -243,11 +266,8 @@ public class PersonalInformation extends AppCompatActivity {
             startActivityForResult(intentToGallery, 2);
         }
     }
+
 }
-
-
-
-
 
 
 

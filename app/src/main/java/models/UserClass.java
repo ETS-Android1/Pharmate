@@ -1,11 +1,14 @@
 package models;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class UserClass {
 
     private String name, surname, email, turkishId, contact, address, birthdate, photoURL;
+    GeoPoint location;
 
 
-    public UserClass(String name, String surname, String email, String turkishId, String contact, String address, String birthdate, String photoURL) {
+    public UserClass(String name, String surname, String email, String turkishId, String contact, String address, String birthdate, String photoURL, GeoPoint location) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -14,7 +17,7 @@ public class UserClass {
         this.address = address;
         this.birthdate = birthdate;
         this.photoURL = photoURL;
-        ;
+        this.location = location;
 
     }
 
@@ -42,6 +45,13 @@ public class UserClass {
         this.email = email;
     }
 
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
 
     public String getTurkishId() {
         return turkishId;

@@ -11,7 +11,6 @@ import com.example.pharmate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import medicine.ListRequest;
 import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
@@ -71,14 +70,14 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void goRequestMedicinePageClick(View v) {
-        Intent _intent = new Intent(this, ListRequest.class);
-        startActivity(_intent);
-    }
-
-    public void goRequestMedicineList(View v) {
         Intent _intent = new Intent(this, RequestMedicineList.class);
         startActivity(_intent);
     }
+
+//    public void goRequestMedicineList(View v) {
+//        Intent _intent = new Intent(this, RequestMedicineList.class);
+//        startActivity(_intent);
+//    }
 
 
 }

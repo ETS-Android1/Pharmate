@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -160,7 +161,8 @@ public class SignUp extends AppCompatActivity {
 
                                                 String id = firebaseUser.getUid();
                                                 LatLng userLocation = getLocation();
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
+                                                GeoPoint geoPoint = new GeoPoint(userLocation.latitude, userLocation.longitude);
+                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, geoPoint);
 
 
                                                 HashMap<String, Object> postUserData = new HashMap<>();
@@ -172,7 +174,7 @@ public class SignUp extends AppCompatActivity {
                                                 postUserData.put("contact", userClassToAdd.getContact());
                                                 postUserData.put("address", userClassToAdd.getAddress());
                                                 postUserData.put("birthDate", userClassToAdd.getBirthdate());
-                                                postUserData.put("location", userLocation);
+                                                postUserData.put("location", userClassToAdd.getLocation());
 
                                                 firebaseFirestore.collection("user").document(id).set(postUserData);
                                                 Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();

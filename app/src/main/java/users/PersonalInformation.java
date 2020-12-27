@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +27,7 @@ import androidx.core.content.ContextCompat;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.pharmate.R;
-
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -142,70 +138,37 @@ public class PersonalInformation extends AppCompatActivity {
             //universal unique id
             UUID uuid = UUID.randomUUID();
             final String imageName = "images/" + userId + ".jpg";
-
             storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    String userEmail = firebaseUser.getEmail();
 
-                    //Download URL
-
-                    StorageReference newReference = FirebaseStorage.getInstance().getReference(imageName);
-                    newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-
-                        @Override
-                        public void onSuccess(Uri uri) {
-
-                            String downloadUrl = uri.toString();
-
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            String userEmail = firebaseUser.getEmail();
-
-                            String Name = name.getText().toString();
-                            String surName = userSurname.getText().toString();
-                            String turkishId = userTurkishID.getText().toString();
-                            String contact = userContact.getText().toString();
-                            String address = userAddress.getText().toString();
-                            String birthdate = userBirthDate.getText().toString();
+                    String Name = name.getText().toString();
+                    String surName = userSurname.getText().toString();
+                    String turkishId = userTurkishID.getText().toString();
+                    String contact = userContact.getText().toString();
+                    String address = userAddress.getText().toString();
+                    String birthdate = userBirthDate.getText().toString();
 
 
-                            HashMap<String, Object> postData = new HashMap<>();
-                            postData.put("name", Name);
-                            postData.put("surname", surName);
-                            postData.put("turkishId", turkishId);
-                            postData.put("contact", contact);
-                            postData.put("address", address);
-                            postData.put("birthDate", birthdate);
+                    HashMap<String, Object> postData = new HashMap<>();
+                    postData.put("name", Name);
+                    postData.put("surname", surName);
+                    postData.put("turkishId", turkishId);
+                    postData.put("contact", contact);
+                    postData.put("address", address);
+                    postData.put("birthDate", birthdate);
 
 
-                            firebaseFirestore.collection("user").document(userId).update(postData);
+                    firebaseFirestore.collection("user").document(userId).update(postData);
 
-                            Intent intent = new Intent(PersonalInformation.this, HomePage.class);
+                    Intent intent = new Intent(PersonalInformation.this, HomePage.class);
 
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                            startActivity(intent);
-                            finish();
-
-                        }
-                    });
-
-            String email = firebaseUser.getEmail();
-
-
-            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, null);
-            String userID = firebaseUser.getUid();
-
-            HashMap<String, Object> postUserData = new HashMap<>();
-            postUserData.put("name", userClassToAdd.getName());
-            postUserData.put("surname", userClassToAdd.getSurname());
-            postUserData.put("turkishId", userClassToAdd.getTurkishId());
-            postUserData.put("contact", userClassToAdd.getContact());
-            postUserData.put("address", userClassToAdd.getAddress());
-            postUserData.put("birthDate", userClassToAdd.getBirthdate());
-            firebaseFirestore.collection("user").document(userID).update(postUserData);
-
-
-
+                    startActivity(intent);
+                    finish();
                 }
             });
         }

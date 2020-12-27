@@ -53,4 +53,7 @@ public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<Organiza
 
     }
 
+    public void getLocationData() {
+
+    }
 }

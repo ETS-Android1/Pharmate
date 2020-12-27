@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="medicine.SearchMedicine"
     android:orientation="vertical"
-    android:background="@drawable/ic_endless_constellation__1_">
+    android:background="@drawable/backgroundgradient">
 
     <TextView
         android:id="@+id/textView"

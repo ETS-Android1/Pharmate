@@ -1,54 +1,73 @@
 package users;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.pharmate.R;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
-import models.UserClass;
+import homepage.HomePage;
 
 import static android.graphics.Color.TRANSPARENT;
 
 public class PersonalInformation extends AppCompatActivity {
+    private static final String TAG = "PersonalInformation";
+    public Uri imageUri;
+    AwesomeValidation awesomeValidation;
+    EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
+    String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
+    Button update;
+    ImageView picture;
+    Bitmap selectedImage;
+    String userId;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    AwesomeValidation awesomeValidation;
-
-
-    private static final String TAG = "PersonalInformation";
-
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
-
-
-    EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
-    String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
-    Button update;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -60,11 +79,11 @@ public class PersonalInformation extends AppCompatActivity {
         storageReference = firebaseStorage.getReference("user");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 //
-//        //defining textFields
+//        //defining
+        picture = findViewById(R.id.pictureId);
         name = findViewById(R.id.personNameText);
         userSurname = findViewById(R.id.personSurnameText);
         userTurkishID = findViewById(R.id.turkishIdText);
@@ -98,53 +117,78 @@ public class PersonalInformation extends AppCompatActivity {
             }
         };
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            Log.d(TAG, "onCreate:" + user.getDisplayName());
-            if (user.getDisplayName() != null) {
-                name.setText(user.getDisplayName());
-                name.setSelection(user.getDisplayName().length());
-                userSurname.setText(user.getDisplayName());
-                userSurname.setSelection(user.getDisplayName().length());
-                userTurkishID.setText(user.getDisplayName());
-                userTurkishID.setSelection(user.getDisplayName().length());
-                userContact.setText(user.getDisplayName());
-                userContact.setSelection(user.getDisplayName().length());
-                userAddress.setText(user.getDisplayName());
-                userAddress.setSelection(user.getDisplayName().length());
-                userBirthDate.setText(user.getDisplayName());
-                userBirthDate.setSelection(user.getDisplayName().length());
+
+        userId = firebaseAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = firebaseFirestore.collection("user").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                name.setText(value.getString("name"));
+                userSurname.setText(value.getString("surname"));
+                userTurkishID.setText(value.getString("turkishId"));
+                userContact.setText(value.getString("contact"));
+                userAddress.setText(value.getString("address"));
+                userBirthDate.setText(value.getString("birthDate"));
 
             }
-        }
+        });
+
     }
 
-    public void updatePersonInfoClick(View v) {
 
-        if (awesomeValidation.validate()) {
-            String nameText = name.getText().toString();
-            String userSurnameText = userSurname.getText().toString();
-            String userTurkishIDText = userTurkishID.getText().toString();
-            String userAddressText = userAddress.getText().toString();
-            String userContactText = userContact.getText().toString();
-            String userBirthDayText = userBirthDate.getText().toString();
+    public void updatePersonInfoClick(View view) {
+        if (imageUri != null) {
 
+            //universal unique id
+            UUID uuid = UUID.randomUUID();
+            final String imageName = "images/" + userId + ".jpg";
 
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(nameText + userSurnameText)
-                    .build();
+            storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-            firebaseUser.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    //Download URL
+
+                    StorageReference newReference = FirebaseStorage.getInstance().getReference(imageName);
+                    newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = null;
-                                UserClass userClass = document.toObject(UserClass.class);
-                                System.out.println("Task Successful");
-                            }
+                        public void onSuccess(Uri uri) {
+
+                            String downloadUrl = uri.toString();
+
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                            String userEmail = firebaseUser.getEmail();
+
+                            String Name = name.getText().toString();
+                            String surName = userSurname.getText().toString();
+                            String turkishId = userTurkishID.getText().toString();
+                            String contact = userContact.getText().toString();
+                            String address = userAddress.getText().toString();
+                            String birthdate = userBirthDate.getText().toString();
+
+
+                            HashMap<String, Object> postData = new HashMap<>();
+                            postData.put("name", Name);
+                            postData.put("surname", surName);
+                            postData.put("turkishId", turkishId);
+                            postData.put("contact", contact);
+                            postData.put("address", address);
+                            postData.put("birthDate", birthdate);
+
+
+                            firebaseFirestore.collection("user").document(userId).update(postData);
+
+                            Intent intent = new Intent(PersonalInformation.this, HomePage.class);
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            startActivity(intent);
+                            finish();
+
                         }
                     });
+
             String email = firebaseUser.getEmail();
 
 
@@ -160,9 +204,68 @@ public class PersonalInformation extends AppCompatActivity {
             postUserData.put("birthDate", userClassToAdd.getBirthdate());
             firebaseFirestore.collection("user").document(userID).update(postUserData);
 
+
+
+                }
+            });
         }
+
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intentToGallery, 2);
+            }
+        }
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
+
+            imageUri = data.getData();
+
+            try {
+
+                if (Build.VERSION.SDK_INT >= 28) {
+                    ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), imageUri);
+                    selectedImage = ImageDecoder.decodeBitmap(source);
+                    picture.setImageBitmap(selectedImage);
+                } else {
+                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    picture.setImageBitmap(selectedImage);
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void selectedImage(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        } else {
+            Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intentToGallery, 2);
+        }
+    }
 
 }
 

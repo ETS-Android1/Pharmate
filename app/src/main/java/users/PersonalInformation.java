@@ -1,36 +1,50 @@
 package users;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
 import models.UserClass;
 
@@ -53,6 +67,8 @@ public class PersonalInformation extends AppCompatActivity {
     EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
     String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
     Button update;
+    ImageView picture;
+    public Uri imageUri;
 
     // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
@@ -64,11 +80,11 @@ public class PersonalInformation extends AppCompatActivity {
         storageReference = firebaseStorage.getReference("user");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 //
-//        //defining textFields
+//        //defining
+        picture=findViewById(R.id.pictureId);
         name = findViewById(R.id.personNameText);
         userSurname = findViewById(R.id.personSurnameText);
         userTurkishID = findViewById(R.id.turkishIdText);
@@ -76,6 +92,14 @@ public class PersonalInformation extends AppCompatActivity {
         userAddress = findViewById(R.id.personAddressText);
         userBirthDate = findViewById(R.id.birthDateText);
         update=findViewById(R.id.button3);
+
+        picture.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                choosePictures();
+            }
+        });
         userBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,52 +144,78 @@ public class PersonalInformation extends AppCompatActivity {
                 userBirthDate.setSelection(user.getDisplayName().length());
 
 
+            }
+        }
+    }
 
-    public void submitPersonInfoClick(View v) {
+    private void choosePictures() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        } else {
+            Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intentToGallery,2);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (awesomeValidation.validate()) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            String nameText = name.getText().toString();
-            String userSurnameText = userSurname.getText().toString();
-            String userTurkishIDText = userTurkishID.getText().toString();
-            String userAddressText = userAddress.getText().toString();
-            String userContactText = userContact.getText().toString();
-            String userBirthDayText = userBirthDate.getText().toString();
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intentToGallery,2);
+            }
+        }
 
 
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(nameText + userSurnameText)
-                    .build();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
-            firebaseUser.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = null;
-                                UserClass userClass = document.toObject(UserClass.class);
-                                System.out.println("Task Successful");
-                            }
-                        }
-                    });
-            String email = firebaseUser.getEmail();
-            UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null);
-            String userID = firebaseUser.getUid();
-
-            HashMap<String, Object> postUserData = new HashMap<>();
-            postUserData.put("name", userClassToAdd.getName());
-            postUserData.put("surname", userClassToAdd.getSurname());
-            postUserData.put("turkishId", userClassToAdd.getTurkishId());
-            postUserData.put("contact", userClassToAdd.getContact());
-            postUserData.put("address", userClassToAdd.getAddress());
-            postUserData.put("birthDate", userClassToAdd.getBirthdate());
-            firebaseFirestore.collection("user").document(userID).update(postUserData);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri=data.getData();
+            picture.setImageURI(imageUri);
+            uploadPicture();
 
         }
     }
 
+    private void uploadPicture() {
+        final ProgressDialog pd=new ProgressDialog(this);
+        pd.setTitle("Uploading image...");
+        pd.show();
+        final String randomKey= UUID.randomUUID().toString();
+        StorageReference riversRef = storageReference.child("images/"+randomKey);
 
+        riversRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        pd.dismiss();
+                        Snackbar.make(findViewById(android.R.id.content),"Image Uploaded",Snackbar.LENGTH_LONG).show();
 
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        pd.dismiss();
+                       Toast.makeText(getApplicationContext(),"Failed To Upload",Toast.LENGTH_LONG).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progressPercent=(100.00 * snapshot.getBytesTransferred()/ snapshot.getTotalByteCount());
+                pd.setMessage("percantage:"+(int)progressPercent+"%");
+            }
+        });
+
+    }
+
+    public void updatePersonInfoClick(View view) {
+    }
 }
 
 

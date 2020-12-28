@@ -1,6 +1,13 @@
 package location;
 
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,6 +33,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 
+import medicine.ReachOrg;
+import medicine.ReceiveMedicine;
+import medicine.SearchMedicine;
+import models.MedicineClass;
 import models.OrganizationClass;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -91,17 +102,17 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                organizationClass = documentSnapshot.toObject(OrganizationClass.class);
-                GeoPoint myLocation = organizationClass.getLocation();
-                myLocations = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                System.out.println(organizationClass.getEmail());
-                System.out.println(organizationClass.getCity());
-                System.out.println(organizationClass.getLocation());
-                System.out.println(organizationClass.getContact());
-                System.out.println(organizationClass.getOrganizationName());
-
+                OrganizationClass organizationClass = documentSnapshot.toObject(OrganizationClass.class);
                 String id = documentSnapshot.getId();
-                Toast.makeText(LocationActivity.this, "Click Calisiyor" + position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LocationActivity.this, ReachOrg.class);
+                intent.putExtra("organizationName", organizationClass.getOrganizationName());
+                intent.putExtra("contact", organizationClass.getContact());
+                intent.putExtra("email", organizationClass.getEmail());
+                intent.putExtra("city",organizationClass.getCity());
+                intent.putExtra("location",organizationClass.getLocation());
+
+                startActivity(intent);
+
 
             }
         });

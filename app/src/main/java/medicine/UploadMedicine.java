@@ -37,22 +37,16 @@ import java.util.Map;
 import models.MedicineClass;
 
 public class UploadMedicine extends AppCompatActivity {
+    private static final String TAG = "UploadMedicine";
+    AwesomeValidation awesomeValidation;
+    EditText barcodeNo, quantity, name;
+    HashMap<String, Object> postMedicineData = new HashMap<>();
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    AwesomeValidation awesomeValidation;
-
-
-    private static final String TAG = "UploadMedicine";
-
     private TextView expirationDate;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
-
-    EditText barcodeNo, quantity, name;
-    HashMap<String, Object> postMedicineData = new HashMap<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +62,10 @@ public class UploadMedicine extends AppCompatActivity {
 
 //        //defining textFields
 
-        name = (EditText) findViewById(R.id.nameOfMedicineText);
-        barcodeNo = (EditText) findViewById(R.id.barcodeNumberText);
-        quantity = (EditText) findViewById(R.id.amountText);
-        expirationDate = (TextView) findViewById(R.id.ExpirationDateText);
+        name = findViewById(R.id.nameOfMedicineText);
+        barcodeNo = findViewById(R.id.barcodeNumberText);
+        quantity = findViewById(R.id.amountText);
+        expirationDate = findViewById(R.id.ExpirationDateText);
 
 
         expirationDate.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +95,7 @@ public class UploadMedicine extends AppCompatActivity {
         };
         awesomeValidation.addValidation(UploadMedicine.this, R.id.nameOfMedicineText, "[a-zA-Z\\s]+", R.string.medicinenameerror);
         awesomeValidation.addValidation(UploadMedicine.this, R.id.barcodeNumberText, "[0-9]+", R.string.barcoderror);
-   awesomeValidation.addValidation(UploadMedicine.this, R.id.amountText, "[0-9]+", R.string.amounterror);
+        awesomeValidation.addValidation(UploadMedicine.this, R.id.amountText, "[0-9]+", R.string.amounterror);
     }
 
     public void uploadMedicineClick(View view) {
@@ -111,12 +105,12 @@ public class UploadMedicine extends AppCompatActivity {
             String userID = firebaseUser.getUid();
             String displayName = firebaseUser.getDisplayName();
             String nameText = name.getText().toString();
-            if(TextUtils.isEmpty(nameText)) {
+            if (TextUtils.isEmpty(nameText)) {
                 Toast.makeText(UploadMedicine.this, "not empty", Toast.LENGTH_SHORT).show();
                 return;
             }
             String barcodeNoText = barcodeNo.getText().toString();
-            String expirationDateText=expirationDate.getText().toString();
+            String expirationDateText = expirationDate.getText().toString();
             Integer quantityText = Integer.parseInt(String.valueOf(quantity.getText()));
             System.out.println("button pressed");
             System.out.println(displayName);
@@ -143,7 +137,7 @@ public class UploadMedicine extends AppCompatActivity {
 
                         } else {
 
-                            MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText,expirationDateText);
+                            MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText, expirationDateText);
 
                             Map<String, Object> medicine = new HashMap<>();
 
@@ -152,7 +146,7 @@ public class UploadMedicine extends AppCompatActivity {
                             medicine.put("donatedBy", medicineClassToAdd.getDonatedBy());
                             medicine.put("donatedTo", medicineClassToAdd.getDonatedTo());
                             medicine.put("quantity", medicineClassToAdd.getQuantity());
-                            medicine.put("expirationdate",medicineClassToAdd.getExpirationdate());
+                            medicine.put("expirationdate", medicineClassToAdd.getExpirationdate());
 
 
                             documentReference.set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {

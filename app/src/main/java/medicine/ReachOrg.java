@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.pharmate.R;
+import com.google.android.material.snackbar.Snackbar;
+
+import homepage.HomePage;
 
 public class ReachOrg extends AppCompatActivity {
 
@@ -43,6 +48,13 @@ public class ReachOrg extends AppCompatActivity {
 
         userID = intent.getStringExtra("userID");
         System.out.println(userID);
+
+    }
+
+    public void informClick(View view) {
+        Intent intent=new Intent(ReachOrg.this, HomePage.class);
+        Toast.makeText(this,"The organization has been informed",Toast.LENGTH_LONG).show();
+        startActivity(intent);
 
     }
 }

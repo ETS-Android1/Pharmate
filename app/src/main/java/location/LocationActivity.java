@@ -169,7 +169,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
                 startActivity(intent);
 
-                Toast.makeText(LocationActivity.this, "Click Calisiyor" + position, Toast.LENGTH_LONG).show();
 
 
             }

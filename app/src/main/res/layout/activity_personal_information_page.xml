@@ -1,59 +1,12 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="users.PersonalInformation">
+    tools:context="users.PersonalInformation"
     android:background="@drawable/backgroundgradient">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardCornerRadius="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/turkishIdText"
-        app:layout_constraintStart_toStartOf="@+id/turkishIdText"
-        app:layout_constraintTop_toBottomOf="@+id/turkishIdText">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
-    </androidx.cardview.widget.CardView>
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turkishIdText"
-        app:layout_constraintVertical_bias="0.683">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="28dp"
-            android:background="@drawable/mybluebutton"
-            android:fontFamily="@font/paytone_one"
-            android:onClick="submitPersonInfoClick"
-            android:paddingTop="5sp"
-            android:text="Submit"
-            android:textAlignment="center"
-            android:textColor="@color/grey"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:layout_constraintVertical_bias="0.950" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/signInEmailText"
@@ -67,10 +20,10 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <ImageView
         android:id="@+id/pictureId"
@@ -101,9 +54,7 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.173" />
-
 
     <EditText
         android:id="@+id/personSurnameText"
@@ -119,12 +70,9 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.286" />
-
 
     <EditText
         android:id="@+id/personContactText"
@@ -141,9 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.421" />
-
 
     <EditText
         android:id="@+id/personAddressText"
@@ -162,9 +108,7 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.538" />
-
 
     <EditText
         android:id="@+id/birthDateText"
@@ -180,12 +124,10 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.655" />
-
 
     <EditText
         android:id="@+id/turkishIdText"
@@ -204,7 +146,6 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:layout_constraintVertical_bias="0.8" />
 
     <Button
@@ -226,7 +167,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.950" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 

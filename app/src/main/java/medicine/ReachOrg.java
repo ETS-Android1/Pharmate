@@ -13,6 +13,7 @@ import com.example.pharmate.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import homepage.HomePage;
+import models.OrganizationClass;
 
 public class ReachOrg extends AppCompatActivity {
 
@@ -56,5 +57,19 @@ public class ReachOrg extends AppCompatActivity {
         Toast.makeText(this,"The organization has been informed",Toast.LENGTH_LONG).show();
         startActivity(intent);
 
+    }
+
+    public void send(View view) {
+        String mail=email.getText().toString();
+        Intent intent=new Intent(ReachOrg.this,SendEmail.class);
+        intent.putExtra("email",mail);
+        startActivity(intent);
+    }
+
+    public void callClick(View view) {
+        String phoneNum=phone.getText().toString();
+        Intent intent=new Intent(ReachOrg.this,CallPhone.class);
+        intent.putExtra("contact",phoneNum);
+        startActivity(intent);
     }
 }

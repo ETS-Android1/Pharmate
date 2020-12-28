@@ -2,6 +2,7 @@ package organization;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,7 +10,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import com.example.pharmate.Loadingbar;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +31,6 @@ import java.util.HashMap;
 
 import homepage.HomePage;
 import models.OrganizationClass;
-import users.PersonalInformation;
 
 public class OrgInformationPage extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
@@ -36,22 +38,44 @@ public class OrgInformationPage extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
-    EditText  OrgNameText,OrgContactText,OrgAddressText;
+    Button OrgSubmit;
+    CardView cardView;
+    EditText OrgNameText, OrgContactText, OrgAddressText;
     Button updateInfo;
     String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_information_page);
+
+        OrgSubmit = findViewById(R.id.OrgSubmit);
+        cardView = findViewById(R.id.cardview);
+        final Loadingbar loadingbar = new Loadingbar(OrgInformationPage.this);
+
+        OrgSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardView.setVisibility(View.GONE);
+
+                    }
+                }, 5000);
+            }
+        });
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        OrgNameText=findViewById(R.id.OrgNameText);
-        OrgContactText=findViewById(R.id.OrgContactText);
-        OrgAddressText=findViewById(R.id.OrgAddressText);
-        updateInfo=findViewById(R.id.OrgSubmit);
+        OrgNameText = findViewById(R.id.OrgNameText);
+        OrgContactText = findViewById(R.id.OrgContactText);
+        OrgAddressText = findViewById(R.id.OrgAddressText);
+        updateInfo = findViewById(R.id.OrgSubmit);
 
         userId = firebaseAuth.getCurrentUser().getUid();
         DocumentReference documentReference = firebaseFirestore.collection("organization").document(userId);

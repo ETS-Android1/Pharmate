@@ -6,6 +6,7 @@
     android:background="@color/grey"
     tools:context=".MainActivity">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="wrap_content"
@@ -88,10 +89,14 @@
         app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:layout_constraintVertical_bias="0.186" />
 
+
     <EditText
         android:id="@+id/editTextTextPersonName2"
-        android:layout_width="276dp"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="45dp"
         android:ems="10"
         android:hint="Barcode Number"
         android:inputType="textPersonName"
@@ -104,15 +109,19 @@
         app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:layout_constraintVertical_bias="0.362" />
 
+
     <EditText
         android:id="@+id/editTextTextPersonName3"
         android:layout_width="280dp"
-        android:layout_height="57dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="36dp"
         android:ems="10"
         android:hint="Amount"
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
+
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.229"
@@ -120,21 +129,47 @@
         app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:layout_constraintVertical_bias="0.552" />
 
+
     <EditText
         android:id="@+id/editTextTextPersonName4"
-        android:layout_width="276dp"
-        android:layout_height="64dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="114dp"
         android:ems="10"
         android:hint="Expriy Date"
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
+
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:layout_constraintVertical_bias="0.77" />
+ <Button
+        android:id="@+id/button5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/open_sans"
+        android:onClick="goReceiveOptionClick"
+        android:paddingTop="5sp"
+        android:text="Receive"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
 
 
+
+ 
 </androidx.constraintlayout.widget.ConstraintLayout>

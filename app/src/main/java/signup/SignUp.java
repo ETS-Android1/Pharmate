@@ -14,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,11 +27,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
+import location.LocationTracker;
 import models.UserClass;
 
 public class SignUp extends AppCompatActivity {
@@ -43,73 +51,73 @@ public class SignUp extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
+    private LocationTracker locationTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 
-        passwordText = findViewById(R.id.userSignUpPasswordText);
-        confirmPasswordText = findViewById(R.id.userSignUpConfirmPasswordText);
-        name = findViewById(R.id.personNameText);
-        userSurname = findViewById(R.id.personSurnameText);
-        userTurkishID = findViewById(R.id.turkishIdText);
-        userContact = findViewById(R.id.personContactText);
-        userAddress = findViewById(R.id.personAddressText);
-        userBirthDate = findViewById(R.id.birthDateText);
+        passwordText =findViewById(R.id.userSignUpPasswordText);
+        confirmPasswordText =findViewById(R.id.userSignUpConfirmPasswordText);
+        name =findViewById(R.id.userNameText);
+        emailText = findViewById(R.id.userSignUpEmailText);
+        userSurname =findViewById(R.id.userSurnameText);
+        userTurkishID =findViewById(R.id.userTurkishIdText);
+        userContact =findViewById(R.id.userContactText);
+        userAddress =findViewById(R.id.userAddressText);
+        userBirthDate = findViewById(R.id.userBirthDateText);
         signUpClickButton = findViewById(R.id.signUpUserClickButton);
 
 
-        String regexpassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\\d])(?=.*[~`!@#\\\\$%\\\\^&\\\\*\\\\(\\\\)\\\\-_\\\\+=\\\\{\\\\}\\\\[\\\\]\\\\|\\\\;:\\\"<>,./\\\\?]).{8,}";
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpPasswordText, "[a-z][A-Z][1-9]{6,}+", R.string.passworderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpConfirmPasswordText, R.id.userSignUpPasswordText, R.string.passworderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userTurkishIdText, "[1-9]{11}+", R.string.iderror);
-        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
         awesomeValidation.addValidation(SignUp.this, R.id.userNameText, "[a-zA-Z\\s]+", R.string.nameerror);
         awesomeValidation.addValidation(SignUp.this, R.id.userSurnameText, "[a-zA-Z\\s]+", R.string.surnameerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpPasswordText, "[a-zA-Z\\d\\!@#.\\$%&\\*]{8,}", R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpConfirmPasswordText, "[a-zA-Z\\d\\!@#.\\$%&\\*]{8,}", R.string.passworderror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userSignUpEmailText, android.util.Patterns.EMAIL_ADDRESS, R.string.emailerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userTurkishIdText, "^((?!(0))[0-9]{11})$+", R.string.iderror);
         awesomeValidation.addValidation(SignUp.this, R.id.userContactText, RegexTemplate.TELEPHONE, R.string.mobileerror);
+        awesomeValidation.addValidation(SignUp.this, R.id.userBirthDateText, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String input) {
+                // check if the age is >= 18
+                try {
+                    Calendar calendarBirthday = Calendar.getInstance();
+                    Calendar calendarToday = Calendar.getInstance();
+                    calendarBirthday.setTime(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(input));
+                    int yearOfToday = calendarToday.get(Calendar.YEAR);
+                    int yearOfBirthday = calendarBirthday.get(Calendar.YEAR);
+                    if (yearOfToday - yearOfBirthday > 18) {
+                        return true;
+                    } else if (yearOfToday - yearOfBirthday == 18) {
+                        int monthOfToday = calendarToday.get(Calendar.MONTH);
+                        int monthOfBirthday = calendarBirthday.get(Calendar.MONTH);
+                        if (monthOfToday > monthOfBirthday) {
+                            return true;
+                        } else if (monthOfToday == monthOfBirthday) {
+                            if (calendarToday.get(Calendar.DAY_OF_MONTH) >= calendarBirthday.get(Calendar.DAY_OF_MONTH)) {
+                                return true;
+                            }
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        }, R.string.dateerror);
 
-//
-//        userBirthDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Calendar cal = Calendar.getInstance();
-//                int year = cal.get(Calendar.YEAR);
-//                int month = cal.get(Calendar.MONTH);
-//                int day = cal.get(Calendar.DAY_OF_MONTH);
-//
-//                DatePickerDialog dialog = new DatePickerDialog(SignUp.this,
-//                        android.R.style.Theme_Holo_Dialog_MinWidth,
-//                        nOnDateSetListener,
-//                        year, month, day);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
-//            }
-//        });
-//        nOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int month, int day) {
-//                month = month + 1;
-//                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-//                String date = month + "/" + day + "/" + year;
-//                userBirthDate.setText(date);
-//            }
-//        };
 
     }
+
+
 
     public void signUpUserClick(View view) {
         if (awesomeValidation.validate()) {
@@ -122,6 +130,7 @@ public class SignUp extends AppCompatActivity {
             String userBirthDayText = userBirthDate.getText().toString();
             String email = emailText.getText().toString();
             String password = passwordText.getText().toString();
+
             // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
 
             // validation islemlerini yapacagiz
@@ -150,8 +159,11 @@ public class SignUp extends AppCompatActivity {
                                                             }
                                                         });
 
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, userTurkishIDText, userAddressText, userContactText, userBirthDayText, null);
                                                 String id = firebaseUser.getUid();
+                                                LatLng userLocation = getLocation();
+                                                GeoPoint geoPoint = new GeoPoint(userLocation.latitude, userLocation.longitude);
+                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, geoPoint);
+
 
                                                 HashMap<String, Object> postUserData = new HashMap<>();
 
@@ -162,7 +174,9 @@ public class SignUp extends AppCompatActivity {
                                                 postUserData.put("contact", userClassToAdd.getContact());
                                                 postUserData.put("address", userClassToAdd.getAddress());
                                                 postUserData.put("birthDate", userClassToAdd.getBirthdate());
-                                                firebaseFirestore.collection("userType").document(id).set(postUserData);
+                                                postUserData.put("location", userClassToAdd.getLocation());
+
+                                                firebaseFirestore.collection("user").document(id).set(postUserData);
                                                 Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(SignUp.this, MainActivity.class);
                                                 startActivity(intent);
@@ -183,8 +197,21 @@ public class SignUp extends AppCompatActivity {
                 }
             });
 
-
         }
     }
+
+    public LatLng getLocation() {
+        locationTracker = new LocationTracker(SignUp.this);
+        LatLng location;
+        if (locationTracker.canGetLocation()) {
+            location = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
+            System.out.println(location);
+            return location;
+        } else {
+            locationTracker.showSettingsAlert();
+            return null;
+        }
+    }
+
 
 }

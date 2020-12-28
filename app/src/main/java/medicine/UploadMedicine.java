@@ -4,9 +4,12 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,9 +17,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+
+import com.example.pharmate.Loadingbar;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,6 +57,8 @@ public class UploadMedicine extends AppCompatActivity {
     private TextView expirationDate;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
 
+    Button uploadMedicineButton;
+    CardView cardView;
     EditText barcodeNo, quantity, name;
     HashMap<String, Object> postMedicineData = new HashMap<>();
 
@@ -58,6 +68,25 @@ public class UploadMedicine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_medicine);
+
+        uploadMedicineButton=findViewById(R.id.uploadMedicineButton);
+        cardView=findViewById(R.id.cardview);
+        final Loadingbar loadingbar = new Loadingbar(UploadMedicine.this);
+
+        uploadMedicineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardView.setVisibility(View.GONE);
+
+                    }
+                }, 5000);
+            }
+        });
 
         // Instance
         firebaseStorage = FirebaseStorage.getInstance();

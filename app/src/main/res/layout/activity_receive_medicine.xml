@@ -7,37 +7,88 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="278dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginBottom="62dp"
-        android:text="Receive Medicine"
-        android:textColor="@color/cyan"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/signInEmailText"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="250dp"
+        android:layout_height="98dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.881">
+
+        <Button
+            android:id="@+id/receive"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="72dp"
+            android:background="@drawable/mybluebutton"
+            android:fontFamily="@font/open_sans"
+            android:onClick="goToSignInClick"
+            android:paddingTop="5sp"
+            android:text="Receive"
+            android:textAlignment="center"
+            android:textColor="@color/grey"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.285"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintVertical_bias="0.191" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/signInEmailText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="320dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
-        android:hint="Medicine Information"
+        android:text="Medicine Information"
+        android:textColor="@color/cyan"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="278dp"
+        android:layout_height="44dp"
+        android:hint="Name of Medicine"
         android:textColor="@color/cyan"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
+        app:layout_constraintVertical_bias="0.186" />
+
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
@@ -51,10 +102,13 @@
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
-        app:layout_constraintStart_toStartOf="@+id/signInEmailText"
-        app:layout_constraintTop_toBottomOf="@+id/signInEmailText" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
+        app:layout_constraintVertical_bias="0.362" />
+
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
@@ -67,9 +121,14 @@
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName4"
+
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
+        app:layout_constraintVertical_bias="0.552" />
+
 
     <EditText
         android:id="@+id/editTextTextPersonName4"
@@ -83,12 +142,14 @@
         android:inputType="textPersonName"
         android:textColor="@color/cyan"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
-    <Button
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
+        app:layout_constraintVertical_bias="0.77" />
+ <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -107,4 +168,8 @@
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+
+
+
+ 
 </androidx.constraintlayout.widget.ConstraintLayout>

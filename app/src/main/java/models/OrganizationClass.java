@@ -44,7 +44,6 @@ public class OrganizationClass {
         this.location = location;
     }
 
-
     public String getOrganizationName() {
         return organizationName;
     }

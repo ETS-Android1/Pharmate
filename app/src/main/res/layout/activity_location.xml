@@ -4,21 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="location.LocationActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="location.LocationActivity">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/googleMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="325dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:context="location.LocationActivity" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/map_options_recyclerview"

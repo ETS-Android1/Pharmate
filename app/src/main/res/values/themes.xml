@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Pharmate" parent="Theme.AppCompat.DayNight.NoActionBar"></style>
+    <style name="Theme.Pharmate" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
     <style name="Theme.Pharmate.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Menu"
+        app:showAsAction="always"
+        >
 
-    <item
-        android:id="@+id/signOutOption"
-        android:onClick="signOutClick"
-        android:title="Sign Out" />
-    <item
-        android:id="@+id/close"
-        android:onClick="close"
-        android:title="close"/>
+        <menu>
+            <item
+                android:id="@+id/logoutMenu"
+                android:orderInCategory="300"
+                android:title="Logout"
+                app:showAsAction="collapseActionView">
 
+            </item>
+        </menu>
+
+
+
+    </item>
 </menu>

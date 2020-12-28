@@ -34,6 +34,7 @@ public class ReceiveMedicine extends AppCompatActivity {
         barcode.setEnabled(false);
         String quantity = intent.getStringExtra("quantity");
         amount.setText(quantity);
+        amount.setEnabled(false);
         String expdate = intent.getStringExtra("expirationdate");
         date.setText(expdate);
         date.setEnabled(false);

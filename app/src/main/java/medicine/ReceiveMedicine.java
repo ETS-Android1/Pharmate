@@ -2,6 +2,7 @@ package medicine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,6 +25,9 @@ public class ReceiveMedicine extends AppCompatActivity {
         barcode=findViewById(R.id.editTextTextPersonName2);
         amount=findViewById(R.id.editTextTextPersonName3);
         date=findViewById(R.id.editTextTextPersonName4);
+
+        medicineName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        barcode.setFilters(new  InputFilter[]{new InputFilter.LengthFilter(14)});
 
         Intent intent=getIntent();
         String name = intent.getStringExtra("nameOfMedicine");

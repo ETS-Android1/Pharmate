@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -73,7 +74,8 @@ public class UploadMedicine extends AppCompatActivity {
         quantity = (EditText) findViewById(R.id.amountText);
         expirationDate = (TextView) findViewById(R.id.ExpirationDateText);
 
-
+        name.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        barcodeNo.setFilters(new  InputFilter[]{new InputFilter.LengthFilter(14)});
         expirationDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

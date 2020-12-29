@@ -1,6 +1,7 @@
 package medicine;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,9 @@ public class RequestMedicine extends AppCompatActivity {
         barcodenum=findViewById(R.id.barcode);
         amount=findViewById(R.id.amount);
         requesting=findViewById(R.id.requesting);
+
+        medicineName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        barcodenum.setFilters(new  InputFilter[]{new InputFilter.LengthFilter(14)});
 
     }
 

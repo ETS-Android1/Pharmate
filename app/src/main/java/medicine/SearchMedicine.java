@@ -3,6 +3,7 @@ package medicine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +54,8 @@ public class SearchMedicine extends AppCompatActivity {
         request =findViewById(R.id.request);
         request.setVisibility(View.INVISIBLE);
 
-
+        name.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        barcode.setFilters(new  InputFilter[]{new InputFilter.LengthFilter(14)});
         setUpRecyclerView();
 
         barcode.addTextChangedListener(new TextWatcher() {

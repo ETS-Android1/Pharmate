@@ -1,5 +1,7 @@
 package medicine;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,6 +24,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import homepage.HomePage;
 import models.MedicineClass;
 
 public class SearchMedicine extends AppCompatActivity {
@@ -172,14 +178,23 @@ public class SearchMedicine extends AppCompatActivity {
 
 
     public void searchMedicineClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Information");
+                alert.setMessage("Are you sure you want to look for medicine?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
+                            Toast.makeText(getApplicationContext(), "You can't do it on idle call", Toast.LENGTH_LONG).show();
+                        } else {
+                            setUpRecyclerViewSearch();
+                        }
+                    }
 
-        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
-            Toast.makeText(getApplicationContext(), "BOS ARAMA DA YAPMAZSIN", Toast.LENGTH_LONG).show();
-        } else {
-            setUpRecyclerViewSearch();
-        }
-    }
-
+                });
+                alert.create().show();
+            }
+  
     public void goRequest(View view) {
         Intent intent = new Intent(SearchMedicine.this, RequestMedicine.class);
         startActivity(intent);

@@ -1,5 +1,14 @@
 package organization;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +27,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+
+import medicine.MedicineAdapter;
+import medicine.ReceiveMedicine;
+import medicine.RequestMedicine;
+import medicine.SearchMedicine;
+import models.MedicineClass;
 
 import models.OrganizationClass;
 
@@ -95,21 +111,33 @@ public class OrganizatonListPage extends AppCompatActivity {
         recyclerView1.setLayoutManager(new LinearLayoutManager(this));
         recyclerView1.setAdapter(adapter);
     }
-//    private void setUpRecyclerViewSearch() {
-//
-//        Query query = organizationReference.whereEqualTo("manager", "SaglikOcagi").orderBy("manager");
-//        System.out.println(nameorganization.getText().toString().trim());
-//        FirestoreRecyclerOptions<OrganizationClass> options2 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
-//                .setQuery(query, OrganizationClass.class)
-//                .build();
-//        adapter = new OrganizationAdapter(options2);
-//        recyclerView1.setHasFixedSize(true);
-//        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
-//        adapter.notifyDataSetChanged();
-//        recyclerView1.setAdapter(adapter);
-//
-//        Toast.makeText(getApplicationContext(), "kurum yok", Toast.LENGTH_LONG).show();
-//    }
+  
+ private void setUpRecyclerViewSearch() {
+
+        Query query = organizationReference.whereEqualTo("manager", "SaglikOcagi").orderBy("manager");
+        System.out.println(nameorganization.getText().toString().trim());
+        FirestoreRecyclerOptions<OrganizationClass> options2 = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
+                .setQuery(query, OrganizationClass.class)
+                .build();
+        adapter = new OrganizationAdapter(options2);
+        recyclerView1.setHasFixedSize(true);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(this));
+        adapter.notifyDataSetChanged();
+        recyclerView1.setAdapter(adapter);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Information");
+        alert.setMessage("Institution not found!");
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "kurum yok", Toast.LENGTH_LONG).show();
+            }
+
+        });
+        alert.create().show();
+
+
+    }
 
 
     @Override

@@ -1,5 +1,11 @@
 package com.example.pharmate;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import homepage.HomePage;
 
 public class ForgetPassword extends AppCompatActivity {
     EditText userEmail;
@@ -37,6 +45,13 @@ public class ForgetPassword extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                     
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ForgetPassword.this);
+                                alert.setTitle("Information");
+                                alert.setMessage("Do you want to change your password?");
+                                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(ForgetPassword.this,
                                             "Password send to your email", Toast.LENGTH_LONG).show();
@@ -51,7 +66,8 @@ public class ForgetPassword extends AppCompatActivity {
                             }
 
                         });
-            }
+                         alert.create().show();
+            }}
 
         });
     }

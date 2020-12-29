@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.example.pharmate.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,16 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 
 import fragments.Choose;
+import location.LocationTracker;
+import models.OrganizationClass;
 
 public class SignUpOrg extends AppCompatActivity {
     AwesomeValidation awesomeValidation;
@@ -40,7 +39,7 @@ public class SignUpOrg extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
-
+    private LocationTracker locationTracker;
 
     EditText emailText, passwordText, OrgNameText, OrgContactText, OrgAddressText,confirmpassword;
     ;
@@ -101,11 +100,20 @@ public class SignUpOrg extends AppCompatActivity {
                                                                 }
                                                             }
                                                         });
+
                                                 String id = firebaseUser.getUid();
+                                                LatLng organizationLocation = getLocation();
+                                                GeoPoint location = new GeoPoint(organizationLocation.latitude, organizationLocation.longitude);
+
+                                                OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, location);
                                                 HashMap<String, Object> postUserData = new HashMap<>();
-                                                postUserData.put("manager", orgtext);
-                                                postUserData.put("province", orgcontact);
-                                                postUserData.put("city", orgaddresstext);
+
+                                                postUserData.put("organizationName", organizationClass.getOrganizationName());
+                                                postUserData.put("contact", organizationClass.getContact());
+                                                postUserData.put("city", organizationClass.getCity());
+                                                postUserData.put("location", organizationClass.getLocation());
+                                                postUserData.put("email", organizationClass.getEmail());
+
                                                 firebaseFirestore.collection("organization").document(id).set(postUserData);
                                                 Toast.makeText(SignUpOrg.this, "please check your email", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(SignUpOrg.this, Choose.class);
@@ -128,6 +136,19 @@ public class SignUpOrg extends AppCompatActivity {
             });
 
 
+        }
+    }
+
+    public LatLng getLocation() {
+        locationTracker = new LocationTracker(SignUpOrg.this);
+        LatLng location;
+        if (locationTracker.canGetLocation()) {
+            location = new LatLng(locationTracker.getLatitude(), locationTracker.getLongitude());
+            System.out.println(location);
+            return location;
+        } else {
+            locationTracker.showSettingsAlert();
+            return null;
         }
     }
 

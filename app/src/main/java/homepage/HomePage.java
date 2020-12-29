@@ -2,17 +2,20 @@ package homepage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import medicine.ListRequest;
-import medicine.RequestMedicine;
+import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrganizatonListPage;
@@ -71,8 +74,39 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void goRequestMedicinePageClick(View v) {
-        Intent _intent = new Intent(this, ListRequest.class);
+        Intent _intent = new Intent(this, RequestMedicineList.class);
         startActivity(_intent);
+    }
+
+//    public void goRequestMedicineList(View v) {
+//        Intent _intent = new Intent(this, RequestMedicineList.class);
+//        startActivity(_intent);
+//    }
+
+    private void Logout()
+    {
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(HomePage.this, MainActivity.class));
+        Toast.makeText(HomePage.this,"LOGOUT SUCCESSFUL", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case  R.id.logoutMenu:{
+                Logout();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

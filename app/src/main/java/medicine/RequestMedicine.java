@@ -88,7 +88,7 @@ public class RequestMedicine extends AppCompatActivity {
 
                         Map<String, Object> medicine = new HashMap<>();
 
-                        medicine.put("medicinename", requestClassToAdd.getMedicinename());
+                        medicine.put("medicineName", requestClassToAdd.getMedicineName());
                         medicine.put("requestedBy", userID);
                         medicine.put("quantity", requestClassToAdd.getQuantity());
 

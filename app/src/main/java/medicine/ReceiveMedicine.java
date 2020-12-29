@@ -34,6 +34,7 @@ public class ReceiveMedicine extends AppCompatActivity {
         barcode.setEnabled(false);
         String quantity = intent.getStringExtra("quantity");
         amount.setText(quantity);
+
         String expdate = intent.getStringExtra("expirationdate");
         date.setText(expdate);
         date.setEnabled(false);
@@ -48,7 +49,7 @@ public class ReceiveMedicine extends AppCompatActivity {
 //        receiveOptionsIntent.putExtra("quantity",medicineClass.getQuantity());
 //        receiveOptionsIntent.putExtra("expirationdate",medicineClass.getExpirationdate());
 //        receiveOptionsIntent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
-//
+
         startActivity(receiveOptionsIntent);
 
     }

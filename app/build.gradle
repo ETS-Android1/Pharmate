@@ -60,6 +60,12 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:7.0.0'
     //regex
         implementation 'com.basgeekball:awesome-validation:4.2'
+    //Barcode Scanner
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
+
+   // cloud
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,101 +1,92 @@
 package location;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmate.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+import medicine.ReachOrg;
+import models.OrganizationClass;
 
-    static final int MY_PERMISSIONS_REQUEST_LOCATION = 23;
-    private GoogleMap mMap;
-    Button btn;
+public class LocationActivity extends AppCompatActivity {
+
+
+    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    public LatLng latlng;
+    private FirebaseAuth firebaseAuth;
+    private RecyclerView recyclerView;
+    private OrgLocationOptionsAdapter adapter;
+    private CollectionReference locationReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        checkPermission();
-    }
-
-    private void checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
-        } else {
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
-            mapFragment.getMapAsync(this);
-        }
+        recyclerView = findViewById(R.id.map_options_recyclerview);
+        setUpRecyclerView();
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
-                    mapFragment.getMapAsync(this);
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-        }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+    private void setUpRecyclerView() {
+        locationReference = firebaseFirestore.collection("organization");
+        Query getLocations = locationReference;
+        FirestoreRecyclerOptions<OrganizationClass> options = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
+                .setQuery(getLocations, OrganizationClass.class)
+                .build();
+        adapter = new OrgLocationOptionsAdapter(options);
+        adapter.setOnItemClickListener(new OrgLocationOptionsAdapter.OnItemClickListener() {
             @Override
-            public void onMyLocationChange(Location location) {
-                LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latlng);
-//                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-//                System.out.println(latlng);
-//                String id = firebaseUser.getUid();
-//                System.out.println(id);
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                markerOptions.title("My Marker");
-                mMap.clear();
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        latlng, 15);
-                mMap.animateCamera(cameraUpdate);
-                mMap.addMarker(markerOptions);
+                OrganizationClass organizationClass = documentSnapshot.toObject(OrganizationClass.class);
+                String id = documentSnapshot.getId();
+                GeoPoint location = organizationClass.getLocation();
+                Double latitude = location.getLatitude();
+                Double longitude = location.getLongitude();
+
+                Intent intent = new Intent(LocationActivity.this, ReachOrg.class);
+                intent.putExtra("organizationName", organizationClass.getOrganizationName());
+                intent.putExtra("contact", organizationClass.getContact());
+                intent.putExtra("email", organizationClass.getEmail());
+                intent.putExtra("city", organizationClass.getCity());
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                startActivity(intent);
+
 
             }
         });
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
 }

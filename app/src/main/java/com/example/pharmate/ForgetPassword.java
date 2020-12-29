@@ -1,5 +1,6 @@
 package com.example.pharmate;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +25,6 @@ import homepage.HomePage;
 public class ForgetPassword extends AppCompatActivity {
     EditText userEmail;
     Button userPass;
-    TextView goFrag1, goFrag2;
-
-
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -34,8 +34,6 @@ public class ForgetPassword extends AppCompatActivity {
 
         userEmail = findViewById(R.id.etUserEmail);
         userPass = findViewById(R.id.buttonForgetPass);
-        goFrag1 = findViewById(R.id.BackTo);
-        goFrag2 = findViewById(R.id.BackTo);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -47,48 +45,30 @@ public class ForgetPassword extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                     
                         AlertDialog.Builder alert = new AlertDialog.Builder(ForgetPassword.this);
                                 alert.setTitle("Information");
                                 alert.setMessage("Do you want to change your password?");
                                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(ForgetPassword.this,
-                                                    "Password send to your email", Toast.LENGTH_LONG).show();
-                                        } else {
-                                            Toast.makeText(ForgetPassword.this,
-                                                    task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                   }
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(ForgetPassword.this,
+                                            "Password send to your email", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(ForgetPassword.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(ForgetPassword.this,
+                                            task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
 
-                                });
-                                alert.create().show();
-            }
+                            }
+
+                        });
+                         alert.create().show();
+            }}
 
         });
-
-
-      //  goFrag1.setOnClickListener(new View.OnClickListener() {
-       //     @Override
-      //      public void onClick(View v) {
-      //          Intent intent = new Intent(ForgetPassword.this, goFrag1.getClass());
-     //           startActivity(intent);
-     //           finish();
-     //       }
-     //   });
-
-   //     goFrag2.setOnClickListener(new View.OnClickListener() {
-   //         @Override
-  //          public void onClick(View v) {
-    //            Intent intent = new Intent(ForgetPassword.this, goFrag2.getClass());
-   //             startActivity(intent);
-   //            finish();
-    //        }
-   //     });
-
-   // }
-                    }
-                });
     }
 }

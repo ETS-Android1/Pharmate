@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,13 +14,13 @@ import androidx.cardview.widget.CardView;
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrgInformationPage;
 import organization.OrganizatonListPage;
-import users.PersonalInformation;
 
 public class HomePageOrg extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
@@ -30,13 +31,24 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_org);
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        donateMed = findViewById(R.id.donate1);
+        searchMed = findViewById(R.id.search1);
+        requestMed = findViewById(R.id.request1);
+        listOrg = findViewById(R.id.organization1);
+        about = findViewById(R.id.about1);
+        profile = findViewById(R.id.profile1);
+        String userName = firebaseUser.getDisplayName();
+        System.out.println(userName);
 
-        donateMed=findViewById(R.id.donate1);
-        searchMed=findViewById(R.id.search1);
-        requestMed=findViewById(R.id.request1);
-        listOrg=findViewById(R.id.organization1);
-        about=findViewById(R.id.about1);
-        profile=findViewById(R.id.profile1);
+        if (userName != null) {
+            TextView userText = (TextView) findViewById(R.id.OrgNameText2);
+            userText.setText(userName);
+        } else {
+            TextView userText = (TextView) findViewById(R.id.OrgNameText2);
+            userText.setText("Organization");
+        }
 
 
         donateMed.setOnClickListener((View.OnClickListener) this);

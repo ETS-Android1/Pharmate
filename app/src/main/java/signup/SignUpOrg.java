@@ -89,7 +89,7 @@ public class SignUpOrg extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                        .setDisplayName(orgtext + orgaddresstext)
+                                                        .setDisplayName(orgtext)
                                                         .build();
                                                 firebaseUser.updateProfile(profileUpdates)
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {

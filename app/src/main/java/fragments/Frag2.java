@@ -23,7 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import homepage.HomePage;
+import homepage.HomePageOrg;
 
 public class Frag2 extends Fragment {
     private FirebaseAuth firebaseAuth;
@@ -63,6 +63,7 @@ public class Frag2 extends Fragment {
 
                                     Intent _intent = new Intent(getActivity(), HomePageOrg.class);
                                     startActivity(_intent);
+                                    getActivity().finish();
                                 }else{
                                     Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
                                 }
@@ -87,6 +88,7 @@ public class Frag2 extends Fragment {
             public void onClick(View view) {
                 Intent _intent = new Intent(getActivity(), ForgetPassword.class);
                 startActivity(_intent);
+                getActivity().finish();
             }
         });
         return view;

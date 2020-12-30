@@ -17,16 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import homepage.HomePage;
-import medicine.UploadMedicine;
-
 import com.example.pharmate.ForgetPassword;
-import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import homepage.HomePage;
 
 public class Frag1 extends Fragment {
     private FirebaseAuth firebaseAuth;
@@ -104,6 +102,7 @@ button2.setOnClickListener(new View.OnClickListener(){
 
                             Intent _intent = new Intent(getActivity(), HomePage.class);
                             startActivity(_intent);
+                            getActivity().finish();
                         }else{
                             Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
                         }
@@ -129,7 +128,8 @@ button2.setOnClickListener(new View.OnClickListener(){
             @Override
            public void onClick(View view) {
                Intent _intent = new Intent(getActivity(), ForgetPassword.class);
-              startActivity(_intent);
+                startActivity(_intent);
+                getActivity().finish();
 
            }
         });

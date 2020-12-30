@@ -61,7 +61,7 @@ public class Frag2 extends Fragment {
                                 if(firebaseAuth.getCurrentUser().isEmailVerified()){
                                     Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
 
-                                    Intent _intent = new Intent(getActivity(), HomePage.class);
+                                    Intent _intent = new Intent(getActivity(), HomePageOrg.class);
                                     startActivity(_intent);
                                 }else{
                                     Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();

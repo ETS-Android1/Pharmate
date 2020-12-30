@@ -16,15 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import homepage.HomePage;
-import homepage.HomePageOrg;
-
 import com.example.pharmate.ForgetPassword;
 import com.example.pharmate.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import homepage.HomePage;
 
 public class Frag2 extends Fragment {
     private FirebaseAuth firebaseAuth;

@@ -35,8 +35,10 @@ public class RequestMedicineList extends AppCompatActivity {
     private void setUpRecyclerView() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        String userID = firebaseUser.getUid();
+        System.out.println(userID);
         requestListReference = db.collection("requestedMedicine");
-        Query requestListQuery = requestListReference;
+        Query requestListQuery = requestListReference.whereEqualTo("requestedBy", userID);
 
         FirestoreRecyclerOptions<RequestClass> options1 = new FirestoreRecyclerOptions.Builder<RequestClass>()
                 .setQuery(requestListQuery, RequestClass.class)

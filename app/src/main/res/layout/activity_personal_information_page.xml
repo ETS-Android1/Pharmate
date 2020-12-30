@@ -1,23 +1,22 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="users.PersonalInformation"
-    android:background="@drawable/backgroundgradient">
+    android:background="@drawable/gradientbackground">
 
 
     <TextView
         android:id="@+id/signInEmailText"
         android:layout_width="322dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
         android:text="Personal Information"
         android:textColor="@color/grey"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,12 +28,13 @@
         android:id="@+id/pictureId"
         android:layout_width="231dp"
         android:layout_height="52dp"
-        android:onClick="selectedImage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:onClick="selectedImage"
         app:layout_constraintBottom_toTopOf="@+id/personNameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailText"
         app:srcCompat="@drawable/ic_account_user" />
 
     <EditText

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_endless_constellation__1_"
+    android:background="@drawable/gradientbackground"
     tools:context="fragments.Frag1"
     android:orientation="vertical" >
 
@@ -20,18 +20,18 @@
         android:layout_marginTop="88dp"
         android:layout_marginBottom="-88dp"
         android:text="Person"
-        android:textColor="#C1F8B0B0"
+        android:textColor="@color/grey"
         android:textSize="53dp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextTextPersonName15"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="275dp"
+        android:layout_height="65dp"
         android:layout_alignBottom="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-82dp"
-        android:background="#11000000"
+        android:background="@color/blue"
         android:drawableLeft="@drawable/ic_account_user"
         android:ems="10"
         android:hint="User Name"
@@ -42,13 +42,13 @@
 
     <EditText
         android:id="@+id/signInPasswordText"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="275dp"
+        android:layout_height="65dp"
         android:layout_alignBottom="@+id/editTextTextPersonName15"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:layout_marginBottom="-74dp"
-        android:background="#11000000"
+        android:background="@color/blue"
         android:drawableLeft="@drawable/ic_password"
         android:ems="10"
         android:hint="Password"
@@ -59,15 +59,15 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/signInPasswordText"
         android:layout_centerInParent="true"
         android:layout_marginBottom="-71dp"
-        android:background="#172196F3"
+        android:background="@drawable/mybluebutton"
         android:onClick="loginClick"
         android:text="Login"
-        android:textColor="#FFFF"
+        android:textColor="@color/grey"
         android:textSize="20dp"
         tools:ignore="OnClick" />
 

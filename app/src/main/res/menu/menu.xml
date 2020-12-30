@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="Menu"
         app:showAsAction="always"
+        android:icon="@drawable/ic_menu_blue_24dp"
         >
 
         <menu>
@@ -10,6 +11,7 @@
                 android:id="@+id/logoutMenu"
                 android:orderInCategory="300"
                 android:title="Logout"
+                android:icon="@drawable/ic_lock_open_blue_24dp"
                 app:showAsAction="collapseActionView">
 
             </item>

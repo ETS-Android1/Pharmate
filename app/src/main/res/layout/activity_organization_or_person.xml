@@ -4,16 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrganizationOrPerson"
-    android:background="@drawable/gradientbackground">
+    android:background="@drawable/gradientbackground"
+    tools:context=".OrganizationOrPerson">
+
+    <TextView
+        android:id="@+id/userTypeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:gravity="center"
+        android:text="User Type"
+        android:textColor="@color/grey"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="408dp"
+        android:layout_height="241dp"
+        android:fontFamily="@font/fugaz_one"
+        android:gravity="center"
+        android:text="I will use Pharmate as
+
+        a/an:"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053" />
 
     <Button
         android:id="@+id/Btnperson"
-        android:layout_width="244dp"
-        android:layout_height="101dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:background="@drawable/mybluebutton"
-        android:text="Person"
         android:onClick="personCreate"
+        android:text="Person"
         android:textColor="@color/design_default_color_background"
         android:textColorLink="@color/design_default_color_background"
         android:textSize="24sp"
@@ -24,16 +60,15 @@
 
     <Button
         android:id="@+id/Btnorganization"
-        android:layout_width="230dp"
-        android:layout_height="99dp"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
         android:background="@drawable/mybluebutton"
-        android:text="Organization"
         android:onClick="organizationCreate"
+        android:text="Organization"
         android:textColor="@color/design_default_color_background"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.699" />

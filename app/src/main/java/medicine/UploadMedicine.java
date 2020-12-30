@@ -1,6 +1,8 @@
 package medicine;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -158,7 +160,18 @@ public class UploadMedicine extends AppCompatActivity {
                             documentReference.set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(UploadMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(UploadMedicine.this);
+                                    alert.setTitle("Information");
+                                    alert.setMessage("Are you sure you want to add medication?");
+                                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Toast.makeText(UploadMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    });
+                                    alert.create().show();
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

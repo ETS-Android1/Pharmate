@@ -26,8 +26,9 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="408dp"
-        android:layout_height="241dp"
+        android:layout_marginTop="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/fugaz_one"
         android:gravity="center"
         android:text="I will use Pharmate as

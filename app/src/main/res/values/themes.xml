@@ -5,6 +5,10 @@
         <item name="colorPrimaryDark">#070E3E</item>
     </style>
 
+    <style name="ProgressBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/grey</item>
+    </style>
+
     <style name="Theme.Pharmate.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

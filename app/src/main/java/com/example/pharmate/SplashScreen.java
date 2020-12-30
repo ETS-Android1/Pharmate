@@ -3,10 +3,12 @@ package com.example.pharmate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
+    private ProgressBar pbar;
     public static int TIME_OUT = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,5 @@
 package fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,40 +83,22 @@ button2.setOnClickListener(new View.OnClickListener(){
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle("Information");
-                alert.setMessage("Are you sure you want to login?");
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                Toast.makeText(getActivity(), "Login Canceled", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+
                         if(firebaseAuth.getCurrentUser().isEmailVerified()){
                             Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
-
                             Intent _intent = new Intent(getActivity(), HomePage.class);
                             startActivity(_intent);
                             getActivity().finish();
                         }else{
-                            Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please Verify Your Email Address", Toast.LENGTH_LONG).show();
+
                         }
                     }
-
-                });
-                alert.create().show();
-
-            }
-
-
 
         }).addOnFailureListener(new OnFailureListener() {
             @Override
            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

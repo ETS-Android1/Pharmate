@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="organization.OrganizatonListPage"
     android:orientation="vertical"
-    android:background="@drawable/backgroundgradient">
+    android:background="@drawable/gradientbackground">
 
     <TextView
         android:id="@+id/textView2"
@@ -16,7 +16,7 @@
         android:layout_marginTop="0dp"
         android:text="Organization List"
         android:fontFamily="@font/fugaz_one"
-        android:textColor="#C1F8B0B0"
+        android:textColor="@color/grey"
         android:textSize="25dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="97dp"
@@ -43,9 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
+        android:background="@drawable/mybluebutton"
         android:onClick="listOrganizationClick"
         android:text="List"
-        android:textColor="@color/design_default_color_primary_dark" />
+        android:textColor="@color/grey" />
 
 
     <androidx.recyclerview.widget.RecyclerView

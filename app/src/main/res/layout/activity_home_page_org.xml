@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundgradient"
+    android:background="@drawable/gradientbackground"
     tools:context="homepage.HomePageOrg">
 
 
@@ -15,12 +15,13 @@
         android:fontFamily="@font/fugaz_one"
         android:text="Welcome to Pharmate"
         android:textAlignment="center"
-        android:textColor="#CFB8B8"
+        android:textColor="@color/grey"
         android:textColorHint="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -37,6 +38,7 @@
             android:layout_height="0dp"
             android:layout_marginEnd="41dp"
             android:layout_marginBottom="36dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/organization1"
@@ -47,6 +49,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_about" />
+
+            <TextView
+                android:id="@+id/textViewAbout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="About"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -55,6 +67,7 @@
             android:layout_height="0dp"
             android:layout_marginEnd="41dp"
             android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toTopOf="@+id/about1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/request1"
@@ -65,6 +78,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_user" />
+
+            <TextView
+                android:id="@+id/textViewProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Profile"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -74,6 +97,7 @@
             android:layout_marginTop="187dp"
             android:layout_marginEnd="41dp"
             android:layout_marginBottom="23dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toTopOf="@+id/profile1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/donate1"
@@ -85,6 +109,16 @@
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_search" />
 
+            <TextView
+                android:id="@+id/textViewSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Search"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -95,6 +129,7 @@
             android:layout_marginTop="189dp"
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="21dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toTopOf="@+id/request1"
             app:layout_constraintEnd_toStartOf="@+id/search1"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +141,16 @@
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_care" />
 
+            <TextView
+                android:id="@+id/textViewDonate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Donate"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -115,6 +160,7 @@
             android:layout_marginStart="46dp"
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="36dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/about1"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +171,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_bank" />
+
+            <TextView
+                android:id="@+id/textViewOrganization"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Organizations"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -134,6 +190,7 @@
             android:layout_marginStart="46dp"
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/blue"
             app:layout_constraintBottom_toTopOf="@+id/organization1"
             app:layout_constraintEnd_toStartOf="@+id/profile1"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +201,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 app:srcCompat="@drawable/ic_request" />
+
+            <TextView
+                android:id="@+id/textViewRquests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Requests"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/userNameText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deneme"
+            android:textColor="@color/grey"
+            android:textSize="20dp"
+            android:fontFamily="@font/fugaz_one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.139" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

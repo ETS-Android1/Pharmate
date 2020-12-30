@@ -5,26 +5,23 @@
     android:layout_height="match_parent"
     tools:context="medicine.RequestMedicineList"
     android:orientation="vertical"
-    android:background="@drawable/backgroundgradient">
+    android:background="@drawable/gradientbackground">
+
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="222dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="0dp"
-        android:text="Request List"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
         android:fontFamily="@font/fugaz_one"
-        android:textColor="#C1F8B0B0"
+        android:text="Requested Medicines"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
         android:textSize="25dp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicine_request_recyclerview"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

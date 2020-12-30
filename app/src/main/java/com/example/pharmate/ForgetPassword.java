@@ -1,5 +1,8 @@
 package com.example.pharmate;
 
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,22 +40,31 @@ public class ForgetPassword extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ForgetPassword.this,
-                                            "Password send to your email", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(ForgetPassword.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(ForgetPassword.this,
-                                            task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
 
+                                AlertDialog.Builder alert = new AlertDialog.Builder(ForgetPassword.this);
+                                alert.setTitle("Information");
+                                alert.setMessage("Do you want to change your password?");
+                                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(ForgetPassword.this,
+                                                    "Password send to your email", Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(ForgetPassword.this, MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(ForgetPassword.this,
+                                                    task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+
+                                });
+                                alert.create().show();
                             }
-
                         });
             }
-
         });
     }
 }

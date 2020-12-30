@@ -4,15 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
     tools:context="medicine.CallPhone">
-    <EditText
-        android:id="@+id/edit_text_number"
+
+    <TextView
+        android:id="@+id/callOrganization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:gravity="center"
+        android:text="Call Organization"
+        android:textSize="30sp"
+        android:textColor="@color/grey"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/edit_text_number"
+        android:layout_width="325sp"
+        android:layout_height="55sp"
+        android:layout_above="@+id/image_call"
+        android:layout_alignStart="@+id/image_call"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="147dp"
-        android:inputType="phone" />
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-119dp"
+        android:layout_marginTop="194dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="78dp"
+        android:background="@drawable/edittextstyle"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:inputType="phone"
+        android:textColor="@color/cyan"
+        android:textSize="22sp" />
+
     <ImageView
         android:id="@+id/image_call"
         android:layout_width="80dp"

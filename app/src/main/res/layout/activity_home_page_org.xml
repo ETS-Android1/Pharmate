@@ -6,143 +6,226 @@
     android:background="@drawable/gradientbackground"
     tools:context="homepage.HomePageOrg">
 
-    <View
-        android:id="@+id/view4"
+
+    <TextView
+        android:id="@+id/textView8"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="128dp"
-        android:background="@drawable/ic_group_17"
-        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
+        android:layout_height="97dp"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/fugaz_one"
+        android:text="Welcome to Pharmate"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textColorHint="#FFFFFF"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/donated"
-        android:layout_width="119dp"
-        android:layout_height="96dp"
-        android:background="@drawable/ic_care"
-        android:fontFamily="@font/paytone_one"
-        android:gravity="bottom|left"
-        android:onClick="goDonateMedicineClick"
-        android:text="Donate"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_primary_variant"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
-        app:layout_constraintEnd_toStartOf="@+id/profilee"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        tools:ignore="RtlCompat" />
 
-    <Button
-        android:id="@+id/aboutbutton"
-        android:layout_width="140dp"
-        android:layout_height="101dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/ic_about"
-        android:fontFamily="@font/paytone_one"
-        android:onClick="goAboutPageClick"
-        android:paddingTop="5sp"
-        android:text="About"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/requestbutton"
-        android:layout_width="140dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="240dp"
-        android:background="@drawable/ic_request"
-        android:fontFamily="@font/paytone_one"
-        android:gravity="left"
-        android:onClick="goRequestedMedicinePageClick"
-        android:paddingTop="5sp"
-        android:text="Request"
-        android:textAlignment="inherit"
-        android:textColor="@color/design_default_color_primary_variant"
-        android:textSize="18sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/profilee"
-        android:layout_width="125dp"
-        android:layout_height="88dp"
-        android:background="@drawable/ic_user"
-        android:fontFamily="@font/paytone_one"
-        android:gravity="bottom"
-        android:onClick="goOrganizationInformationPageClick"
-        android:text="Profile"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/requestbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        tools:ignore="RtlCompat" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/about1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginBottom="36dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/organization1"
+            app:layout_constraintTop_toBottomOf="@+id/profile1">
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="163dp"
-        android:layout_height="106dp"
-        android:background="@drawable/ic_bank"
-        android:fontFamily="@font/paytone_one"
-        android:gravity="bottom"
-        android:onClick="goOrganizationClick"
-        android:text="Organization"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_primary_variant"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/aboutbutton"
-        app:layout_constraintEnd_toStartOf="@+id/searchMedicine"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestbutton"
-        app:layout_constraintVertical_bias="0.416"
-        tools:ignore="RtlCompat" />
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_about" />
 
-    <Button
-        android:id="@+id/searchMedicine"
-        android:layout_width="136dp"
-        android:layout_height="106dp"
-        android:background="@drawable/ic_search"
-        android:fontFamily="@font/paytone_one"
-        android:gravity="bottom"
-        android:onClick="goSearchMedicineClick"
-        android:text="SEARCH"
-        android:textAlignment="center"
-        android:textColor="@color/design_default_color_primary_variant"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/aboutbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestbutton"
-        app:layout_constraintVertical_bias="0.344"
-        tools:ignore="RtlCompat" />
+            <TextView
+                android:id="@+id/textViewAbout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="About"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="235dp"
-        android:layout_height="116dp"
-        android:fontFamily="@font/fugaz_one"
-        android:gravity="top"
-        android:text="Welcome to Pharmate"
-        android:textColor="@color/blue"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view4"
-        app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.444" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profile1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/about1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/request1"
+            app:layout_constraintTop_toBottomOf="@+id/search1">
 
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_user" />
+
+            <TextView
+                android:id="@+id/textViewProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Profile"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/search1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="187dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginBottom="23dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/profile1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/donate1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_search" />
+
+            <TextView
+                android:id="@+id/textViewSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Search"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/donate1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="189dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="21dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/request1"
+            app:layout_constraintEnd_toStartOf="@+id/search1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_care" />
+
+            <TextView
+                android:id="@+id/textViewDonate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Donate"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/organization1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="36dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/about1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/request1">
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_bank" />
+
+            <TextView
+                android:id="@+id/textViewOrganization"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Organizations"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/request1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/blue"
+            app:layout_constraintBottom_toTopOf="@+id/organization1"
+            app:layout_constraintEnd_toStartOf="@+id/profile1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donate1">
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:srcCompat="@drawable/ic_request" />
+
+            <TextView
+                android:id="@+id/textViewRquests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Requests"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textColor="@color/grey"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/userNameText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deneme"
+            android:textColor="@color/grey"
+            android:textSize="20dp"
+            android:fontFamily="@font/fugaz_one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.139" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

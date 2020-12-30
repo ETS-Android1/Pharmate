@@ -1,73 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientbackground"
-    tools:context="organization.OrganizatonListPage">
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/paytone_one"
-        android:onClick="listOrganizationClick"
-        android:paddingTop="5sp"
-        android:text="List"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName16"
-        android:layout_width="325sp"
-        android:layout_height="55sp"
-        android:background="@drawable/edittextstyle"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:hint="Name Of Organization"
-        android:inputType="textPersonName"
-        android:textColor="@color/cyan"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100" />
+    tools:context="organization.OrganizatonListPage"
+    android:orientation="vertical"
+    android:background="@drawable/gradientbackground">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="240sp"
-        android:layout_height="42sp"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="0dp"
+        android:text="Organization List"
         android:fontFamily="@font/fugaz_one"
-        android:text="Organizations"
         android:textColor="@color/grey"
-        android:textSize="30sp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName16"
+        android:layout_width="289dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="25dp"
+        android:background="#11AA9E9E"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:ems="10"
+        android:hint="Name Organization"
+        android:inputType="textPersonName"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        android:textColor="#fff"
+        android:textColorHint="#F7F2F2"
+        android:textSize="16dp" />
+
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:background="@drawable/mybluebutton"
+        android:onClick="listOrganizationClick"
+        android:text="List"
+        android:textColor="@color/grey" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/org_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="490dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="529dp"
+        android:layout_marginBottom="7dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName16"
-        app:layout_constraintVertical_bias="0.150" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintVertical_bias="0.300" />
+
+
+</LinearLayout>

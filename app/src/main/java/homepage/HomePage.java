@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
@@ -21,11 +22,11 @@ import medicine.UploadMedicine;
 import organization.OrganizatonListPage;
 import users.PersonalInformation;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
-    Button signout,profile;
+    private CardView donateMed, searchMed, requestMed, listOrg,about,profile;
 
 
     @Override
@@ -34,49 +35,56 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         firebaseAuth = FirebaseAuth.getInstance();
 //        signout=findViewById(R.id.button4);
-        profile=findViewById(R.id.profilebutton);
+       donateMed=findViewById(R.id.donate);
+       searchMed=findViewById(R.id.search);
+       requestMed=findViewById(R.id.request);
+       listOrg=findViewById(R.id.organization);
+       about=findViewById(R.id.about);
+       profile=findViewById(R.id.profile);
 
-//        signout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                firebaseAuth.signOut();
-//                finish();
-//                startActivity(new Intent(HomePage.this, MainActivity.class));
-//            }
-//        });
+
+        donateMed.setOnClickListener((View.OnClickListener) this);
+        searchMed.setOnClickListener((View.OnClickListener) this);
+        requestMed.setOnClickListener((View.OnClickListener) this);
+        listOrg.setOnClickListener((View.OnClickListener) this);
+        about.setOnClickListener((View.OnClickListener) this);
+        profile.setOnClickListener((View.OnClickListener) this);
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent i;
 
-    public void goPersonalInformationPageClick(View v) {
-
-        Intent _intent = new Intent(this, PersonalInformation.class);
-        startActivity(_intent);
+        switch (view.getId()) {
+            case R.id.donate:
+                i = new Intent(this, UploadMedicine.class);
+                startActivity(i);
+                break;
+            case R.id.search:
+                i = new Intent(this, SearchMedicine.class);
+                startActivity(i);
+                break;
+            case R.id.request:
+                i = new Intent(this, RequestMedicineList.class);
+                startActivity(i);
+                break;
+            case R.id.organization:
+                i = new Intent(this, OrganizatonListPage.class);
+                startActivity(i);
+                break;
+            case R.id.about:
+                i = new Intent(this, AboutPage.class);
+                startActivity(i);
+                break;
+            case R.id.profile:
+                i = new Intent(this, PersonalInformation.class);
+                startActivity(i);
+                break;
+            default:
+                break;
+        }
     }
 
-    public void goDonateMedicinePageClick(View v) {
-        Intent _intent = new Intent(this, UploadMedicine.class);
-        startActivity(_intent);
-    }
-
-    public void goSearchMedicinePageClick(View v) {
-        Intent _intent = new Intent(this, SearchMedicine.class);
-        startActivity(_intent);
-    }
-
-    public void goOrganizationPageClick(View v) {
-        Intent _intent = new Intent(this, OrganizatonListPage.class);
-        startActivity(_intent);
-    }
-
-    public void goAboutPageClick(View v) {
-        Intent _intent = new Intent(this, AboutPage.class);
-        startActivity(_intent);
-    }
-
-    public void goRequestMedicinePageClick(View v) {
-        Intent _intent = new Intent(this, RequestMedicineList.class);
-        startActivity(_intent);
-    }
 
 //    public void goRequestMedicineList(View v) {
 //        Intent _intent = new Intent(this, RequestMedicineList.class);

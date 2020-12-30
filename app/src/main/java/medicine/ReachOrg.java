@@ -74,11 +74,6 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         longitude = intent.getDoubleExtra("longitude", 0);
         System.out.println("Lat" + latitude);
         System.out.println("Long" + longitude);
-
-
-//        userID = intent.getStringExtra("userID");
-//        System.out.println(userID);
-
     }
 
     public void informClick(View view) {

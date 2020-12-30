@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,19 +28,18 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
-import homepage.HomePage;
-import models.OrganizationClass;
-import users.PersonalInformation;
+import homepage.HomePageOrg;
 
 public class OrgInformationPage extends AppCompatActivity {
+    EditText OrgNameText, OrgContactText, OrgAddressText;
+    Button updateInfo;
+    String userId;
+    ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
-    EditText  OrgNameText,OrgContactText,OrgAddressText;
-    Button updateInfo;
-    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +49,12 @@ public class OrgInformationPage extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        OrgNameText=findViewById(R.id.OrgNameText);
-        OrgContactText=findViewById(R.id.OrgContactText);
-        OrgAddressText=findViewById(R.id.OrgAddressText);
-        updateInfo=findViewById(R.id.OrgSubmit);
+        OrgNameText = findViewById(R.id.OrgNameText);
+        OrgContactText = findViewById(R.id.OrgContactText);
+        OrgAddressText = findViewById(R.id.OrgAddressText);
+        updateInfo = findViewById(R.id.OrgSubmit);
+        progressBar = findViewById(R.id.orgInfoProgressBar);
+        progressBar.setVisibility(View.GONE);
 
         userId = firebaseAuth.getCurrentUser().getUid();
         DocumentReference documentReference = firebaseFirestore.collection("organization").document(userId);
@@ -67,42 +70,44 @@ public class OrgInformationPage extends AppCompatActivity {
 
     }
 
-    public void submitOrgInfoClick(View view) {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        String orgtext = OrgNameText.getText().toString();
-        String orgaddresstext = OrgAddressText.getText().toString();
-        String orgcontact = OrgContactText.getText().toString();
-
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(orgtext)
-                .build();
-
-        firebaseUser.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("Task Successful");
-                        }
-                    }
-                });
-
-        String email = firebaseUser.getEmail();
-        String id = firebaseUser.getUid();
-        OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, null);
-        HashMap<String, Object> postUserData = new HashMap<>();
-
-        postUserData.put("organizatonName", organizationClass.getOrganizationName());
-        postUserData.put("contact", organizationClass.getContact());
-        postUserData.put("city", organizationClass.getCity());
-        postUserData.put("email", organizationClass.getEmail());
-
-        firebaseFirestore.collection("organization").document(id).update(postUserData);
-
-
-    }
+//    public void submitOrgInfoClick(View view) {
+//        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//        String orgtext = OrgNameText.getText().toString();
+//        String orgaddresstext = OrgAddressText.getText().toString();
+//        String orgcontact = OrgContactText.getText().toString();
+//
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setDisplayName(orgtext)
+//                .build();
+//
+//        firebaseUser.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            System.out.println("Task Successful");
+//                        }
+//                    }
+//                });
+//
+//        String email = firebaseUser.getEmail();
+//        String id = firebaseUser.getUid();
+//        OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, null);
+//        HashMap<String, Object> postUserData = new HashMap<>();
+//
+//        postUserData.put("organizatonName", organizationClass.getOrganizationName());
+//        postUserData.put("contact", organizationClass.getContact());
+//        postUserData.put("city", organizationClass.getCity());
+//        postUserData.put("email", organizationClass.getEmail());
+//
+//        firebaseFirestore.collection("organization").document(id).update(postUserData);
+//
+//
+//    }
 
     public void UpdateOrgInfo(View view) {
+        updateInfo.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         String userEmail = firebaseUser.getEmail();
 
@@ -115,13 +120,33 @@ public class OrgInformationPage extends AppCompatActivity {
         postData.put("city", orgAdress);
         postData.put("contact", orgContact);
 
-        firebaseFirestore.collection("organization").document(userId).update(postData);
+        firebaseFirestore.collection("organization").document(userId).update(postData).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(OrgInformationPage.this, "Profile Updated Successfully ", Toast.LENGTH_LONG).show();
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(orgName)
+                            .build();
 
-        Intent intent = new Intent(OrgInformationPage.this, HomePage.class);
+                    firebaseUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        System.out.println("Task Successful");
+                                    }
+                                }
+                            });
+                    Intent intent = new Intent(OrgInformationPage.this, HomePageOrg.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(OrgInformationPage.this, "Something Went Wrong", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        startActivity(intent);
-        finish();
     }
 }

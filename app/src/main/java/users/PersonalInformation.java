@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,9 +29,12 @@ import androidx.core.content.ContextCompat;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.pharmate.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -42,7 +47,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.UUID;
 
 import homepage.HomePage;
 
@@ -58,6 +62,7 @@ public class PersonalInformation extends AppCompatActivity {
     ImageView picture;
     Bitmap selectedImage;
     String userId;
+    ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
@@ -75,7 +80,10 @@ public class PersonalInformation extends AppCompatActivity {
         storageReference = firebaseStorage.getReference("user");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.personalInfoProgressBar);
+        progressBar.setVisibility(View.GONE);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
 
 //
 //        //defining
@@ -134,10 +142,10 @@ public class PersonalInformation extends AppCompatActivity {
 
     public void updatePersonInfoClick(View view) {
         if (imageUri != null) {
-
-            //universal unique id
-            UUID uuid = UUID.randomUUID();
-            final String imageName = "images/" + userId + ".jpg";
+            update.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            String userDisplayName = firebaseAuth.getCurrentUser().getDisplayName();
+            final String imageName = "images/" + userId + userDisplayName + ".jpg";
             storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -161,16 +169,39 @@ public class PersonalInformation extends AppCompatActivity {
                     postData.put("birthDate", birthdate);
 
 
-                    firebaseFirestore.collection("user").document(userId).update(postData);
+                    firebaseFirestore.collection("user").document(userId).update(postData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(PersonalInformation.this, "Profile Updated Successfully ", Toast.LENGTH_LONG).show();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(Name + surName)
+                                        .build();
 
-                    Intent intent = new Intent(PersonalInformation.this, HomePage.class);
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    System.out.println("Task Successful");
+                                                }
+                                            }
+                                        });
+                                Intent intent = new Intent(PersonalInformation.this, HomePage.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(PersonalInformation.this, "Something Went Wrong", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                    startActivity(intent);
-                    finish();
                 }
             });
+        } else {
+            Toast.makeText(PersonalInformation.this, "Please Select an Image of Your ID", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -215,7 +246,6 @@ public class PersonalInformation extends AppCompatActivity {
 
 
         }
-
 
 
         super.onActivityResult(requestCode, resultCode, data);

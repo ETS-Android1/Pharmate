@@ -1,7 +1,5 @@
 package medicine;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,27 +22,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import homepage.HomePage;
 import models.MedicineClass;
 
 public class SearchMedicine extends AppCompatActivity {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth firebaseAuth;
-    ImageButton scantosearch;
-
-
-
-    private MedicineAdapter adapter;
-
-    EditText name;
     public static EditText resultsearcheview;
     public static EditText barcode;
-    Button searchButton,request;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ImageButton scantosearch;
+    EditText name;
+    Button searchButton, request;
     RecyclerView recyclerView;
+    private FirebaseAuth firebaseAuth;
+    private MedicineAdapter adapter;
     private CollectionReference medicineReference;
 
     @Override
@@ -52,15 +42,13 @@ public class SearchMedicine extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_medicine);
         barcode = findViewById(R.id.editTextTextPersonName14);
-        name=findViewById(R.id.editTextTextPersonName13);
+        name = findViewById(R.id.editTextTextPersonName13);
         searchButton = findViewById(R.id.button4);
         medicineReference = db.collection("medicine");
         recyclerView = findViewById(R.id.medicine_recycler_view);
         scantosearch = findViewById(R.id.imageButtonsearch);
-        request =findViewById(R.id.request);
+        request = findViewById(R.id.request);
         request.setVisibility(View.INVISIBLE);
-
-
 
 
         scantosearch.setOnClickListener(new View.OnClickListener() {
@@ -123,11 +111,8 @@ public class SearchMedicine extends AppCompatActivity {
                     intent.putExtra("barcodeNumber", medicineClass.getBarcodeNumber());
                     intent.putExtra("quantity", medicineClass.getQuantity());
                     intent.putExtra("expirationdate", medicineClass.getExpirationdate());
-
-//                    intent.putExtra("userID",firebaseAuth.getCurrentUser().getUid());
-
                     startActivity(intent);
-                    Toast.makeText(SearchMedicine.this, "Position" + position, Toast.LENGTH_LONG).show();
+
                 }
             });
         } else {
@@ -157,8 +142,9 @@ public class SearchMedicine extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         request.setVisibility(View.VISIBLE);
 
-        Toast.makeText(getApplicationContext(), "ilaç yok", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "There are no such a medicine", Toast.LENGTH_LONG).show();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -173,28 +159,16 @@ public class SearchMedicine extends AppCompatActivity {
     }
 
 
-
-
-
-
     public void searchMedicineClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Information");
-                alert.setMessage("Are you sure you want to look for medicine?");
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
-                            Toast.makeText(getApplicationContext(), "You can't do it on idle call", Toast.LENGTH_LONG).show();
-                        } else {
-                            setUpRecyclerViewSearch();
-                        }
-                    }
 
-                });
-                alert.create().show();
-            }
-  
+        if (barcode.getText().toString().trim().equals(null) || barcode.getText().toString().trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please enter a valid Barcode Number", Toast.LENGTH_LONG).show();
+        } else {
+            setUpRecyclerViewSearch();
+        }
+    }
+
+
     public void goRequest(View view) {
         Intent intent = new Intent(SearchMedicine.this, RequestMedicine.class);
         startActivity(intent);

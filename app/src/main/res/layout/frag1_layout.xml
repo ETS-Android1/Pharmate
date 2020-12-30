@@ -82,6 +82,21 @@
         android:text="Forgot Password ?"
         android:textColor="#FFF" />
 
+    <ProgressBar
+        android:id="@+id/frag1ProgressBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginBottom="94dp"
+        android:indeterminate="true"
+        android:max="100"
+        android:progress="0"
+        android:theme="@style/ProgressBarTheme" />
+
 
 </RelativeLayout>
 

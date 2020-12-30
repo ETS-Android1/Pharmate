@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class Frag2 extends Fragment {
     EditText mailSign, passwordSign;
     Button login;
     TextView forget;
+    ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,11 +37,15 @@ public class Frag2 extends Fragment {
         mailSign = view.findViewById(R.id.mailSign);
         passwordSign = view.findViewById(R.id.passwordSign);
         login = view.findViewById(R.id.login);
+        progressBar = view.findViewById(R.id.frag2ProgressBar);
+        progressBar.setVisibility(View.GONE);
         forget = view.findViewById(R.id.forgotpasswordd);
         firebaseAuth = FirebaseAuth.getInstance();
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 String email = mailSign.getText().toString();
                 String password = passwordSign.getText().toString();
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -48,6 +54,7 @@ public class Frag2 extends Fragment {
 
                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
 
                             Intent _intent = new Intent(getActivity(), HomePageOrg.class);
                             startActivity(_intent);

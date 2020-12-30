@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="users.PersonListPage"
+    android:orientation="vertical"
+    android:background="@drawable/gradientbackground">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="0dp"
+        android:text="Person List"
+        android:fontFamily="@font/fugaz_one"
+        android:textColor="@color/grey"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/persnName"
+        android:layout_width="289dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="25dp"
+        android:background="#11AA9E9E"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:ems="10"
+        android:hint="Name Organization"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textColorHint="#F7F2F2"
+        android:textSize="16dp" />
+
+
+    <Button
+        android:id="@+id/personlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:background="@drawable/mybluebutton"
+        android:onClick="listPersonClick"
+        android:text="List"
+        android:textColor="@color/grey" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/person_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="529dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName16"
+        app:layout_constraintVertical_bias="0.300" />
+
+
+</LinearLayout>

@@ -8,6 +8,10 @@ public class UserClass {
     GeoPoint location;
 
 
+    public UserClass() {
+    }
+
+
     public UserClass(String name, String surname, String email, String turkishId, String contact, String address, String birthdate, String photoURL, GeoPoint location) {
         this.name = name;
         this.surname = surname;

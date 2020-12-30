@@ -19,6 +19,7 @@ import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrgInformationPage;
 import organization.OrganizatonListPage;
+import users.PersonListPage;
 import users.PersonalInformation;
 
 public class HomePageOrg extends AppCompatActivity implements View.OnClickListener{
@@ -64,7 +65,7 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
                 startActivity(i);
                 break;
             case R.id.organization1:
-                i = new Intent(this, OrganizatonListPage.class);
+                i = new Intent(this, PersonListPage.class);
                 startActivity(i);
                 break;
             case R.id.about1:

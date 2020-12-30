@@ -115,6 +115,7 @@ public class SearchMedicine extends AppCompatActivity {
             adapter = new MedicineAdapter(options1);
             adapter.setOnItemClickListener(new MedicineAdapter.OnItemClickListener() {
                 @Override
+
                 public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                     MedicineClass medicineClass = documentSnapshot.toObject(MedicineClass.class);
                     String id = documentSnapshot.getId();

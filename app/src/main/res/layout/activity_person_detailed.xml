@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
+    tools:context="users.PersonDetailed">
+
+    <EditText
+        android:id="@+id/PersonSurname"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="33dp"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:inputType="textPersonName"
+        android:text="Surname"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PersonName" />
+
+    <EditText
+        android:id="@+id/Adress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="23dp"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:inputType="textPersonName"
+        android:text="Adress"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/informperson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+    <EditText
+        android:id="@+id/PersonName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/PersonSurname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="26dp"
+        android:ems="10"
+        android:fontFamily="@font/fugaz_one"
+        android:text="Phone"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/Adress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PersonSurname" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="52dp"
+        android:layout_height="61dp"
+        android:onClick="callClick"
+        app:layout_constraintBottom_toBottomOf="@+id/phone"
+        app:layout_constraintEnd_toEndOf="@+id/phone"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="@+id/phone"
+        app:layout_constraintTop_toTopOf="@+id/phone"
+        app:srcCompat="@drawable/ic_phone_call" />
+
+    <Button
+        android:id="@+id/informperson"
+        android:layout_width="155dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="99dp"
+        android:background="@drawable/mybluebutton"
+        android:fontFamily="@font/fugaz_one"
+        android:onClick="inform"
+        android:text="Inform"
+        android:textColor="@color/grey"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Adress" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

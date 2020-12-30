@@ -13,14 +13,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-
-import medicine.MedicineAdapter;
 import models.UserClass;
 
 
 public class PersonAdapter extends FirestoreRecyclerAdapter<UserClass, PersonAdapter.PersonHolder> {
 
-    private MedicineAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public PersonAdapter(@NonNull FirestoreRecyclerOptions<UserClass> options) {
         super(options);
@@ -41,10 +39,6 @@ public class PersonAdapter extends FirestoreRecyclerAdapter<UserClass, PersonAda
                 parent, false);
         return new PersonAdapter.PersonHolder(view);
     }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-    }
-
 
     class PersonHolder extends RecyclerView.ViewHolder {
 
@@ -73,10 +67,10 @@ public class PersonAdapter extends FirestoreRecyclerAdapter<UserClass, PersonAda
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
-    public void setOnItemClickListener(MedicineAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
 
-        }
+    }
 
     }
 

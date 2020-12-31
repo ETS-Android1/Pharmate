@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,34 +28,49 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import models.DonatedMedicines;
 import models.MedicineClass;
 
-public class UploadMedicine extends AppCompatActivity {
+public class UploadMedicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String TAG = "UploadMedicine";
     AwesomeValidation awesomeValidation;
     EditText barcodeNo, quantity, name;
     ProgressBar progressBar;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private DocumentReference documentReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private TextView expirationDate;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
+    private Spinner spinner;
+    public String organizationID;
+    public String organizationName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_medicine);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference organizationReference = firebaseFirestore.collection("organization");
+        List<String> organizationNames = new ArrayList<>();
+        List<String> organizationIDs = new ArrayList<>();
+        spinner = (Spinner) findViewById(R.id.spinner);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         // Instance
@@ -98,6 +116,100 @@ public class UploadMedicine extends AppCompatActivity {
         awesomeValidation.addValidation(UploadMedicine.this, R.id.nameOfMedicineText, "[a-zA-Z\\s]+", R.string.medicinenameerror);
         awesomeValidation.addValidation(UploadMedicine.this, R.id.barcodeNumberText, "[0-9]+", R.string.barcoderror);
         awesomeValidation.addValidation(UploadMedicine.this, R.id.amountText, "[0-9]+", R.string.amounterror);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(UploadMedicine.this,
+                android.R.layout.simple_spinner_item, organizationNames);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+
+        organizationReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String subject = document.getString("orgID");
+                        organizationNames.add(subject);
+//
+//                        DonatedMedicines donatedMedicines = new DonatedMedicines();
+//                        donatedMedicines.setUserID(userID);
+//                        donatedMedicines.setBarcodeNumber(barcodeNo.toString());
+//                        donatedMedicines.setQuantity(Integer.parseInt(quantity.toString()));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+        if (position == 0) {
+            System.out.println("Selected Item is " + parent.getSelectedItem());
+            String organizationName = parent.getSelectedItem().toString().split("-")[0];
+            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            System.out.println("ID" + organizationID);
+            System.out.println("name" + organizationName);
+        }
+        if (position == 1) {
+            System.out.println("Selected Item is " + parent.getSelectedItem());
+            String organizationName = parent.getSelectedItem().toString().split("-")[0];
+            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            System.out.println("ID" + organizationID);
+            System.out.println("name" + organizationName);
+        }
+        if (position == 2) {
+            System.out.println("Selected Item is " + parent.getSelectedItem());
+            String organizationName = parent.getSelectedItem().toString().split("-")[0];
+            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            System.out.println("ID" + organizationID);
+            System.out.println("name" + organizationName);
+        }
+        if (position == 3) {
+            System.out.println("Selected Item is " + parent.getSelectedItem());
+            String organizationName = parent.getSelectedItem().toString().split("-")[0];
+            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            System.out.println("ID" + organizationID);
+            System.out.println("name" + organizationName);
+        }
+        if (position == 4) {
+            System.out.println("Selected Item is " + parent.getSelectedItem());
+            String organizationName = parent.getSelectedItem().toString().split("-")[0];
+            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            System.out.println("ID" + organizationID);
+            System.out.println("name" + organizationName);
+        }
+//
+//        switch (position) {
+//            case 0:
+//
+//                System.out.println("Selected Item is " + parent.getSelectedItem());
+//                String organizationName = parent.getSelectedItem().toString().split("-")[0];
+//                String organizationID = parent.getSelectedItem().toString().split("-")[1];
+//                System.out.println("ID"+ organizationID);
+//                System.out.println("name"+ organizationName);
+//                break;
+//            case 1:
+//                System.out.println("Selected Item is " + parent.getSelectedItem());
+//                String organizationName = parent.getSelectedItem().toString().split("-")[0];
+//                String organizationID = parent.getSelectedItem().toString().split("-")[1];
+//                break;
+//            case 2:
+//                // Whatever you want to happen when the thrid item gets selected
+//                Log.v("item", (String) parent.getItemAtPosition(position));
+//                break;
+//
+//        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // TODO Auto-generated method stub
     }
 
     public void uploadMedicineClick(View view) {
@@ -119,17 +231,18 @@ public class UploadMedicine extends AppCompatActivity {
             System.out.println(displayName);
             String medicineName = name.getText().toString();
 
-
             DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
+//            DocumentReference organizationReference = firebaseFirestore.collection("organization").document(orgID).collection(barcodeNoText).document("donatedMedicine");
             documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        MedicineClass medicineClass = document.toObject(MedicineClass.class);
+//                        MedicineClass medicineClass = document.toObject(MedicineClass.class);
+                        DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
                         if (document.exists()) {
                             System.out.println("Dosya var");
-                            documentReference.update("quantity", medicineClass.getQuantity() + quantityText)
+                            documentReference.update("quantity", donatedMedicines.getQuantity() + quantityText)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -170,5 +283,4 @@ public class UploadMedicine extends AppCompatActivity {
             });
         }
     }
-
 }

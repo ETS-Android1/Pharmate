@@ -119,6 +119,17 @@
         app:layout_constraintTop_toTopOf="@+id/signInEmailText2"
         app:layout_constraintVertical_bias="0.500" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="325sp"
+        android:layout_height="120sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.687" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="83dp"
@@ -131,6 +142,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764" />
+        app:layout_constraintVertical_bias="0.975" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

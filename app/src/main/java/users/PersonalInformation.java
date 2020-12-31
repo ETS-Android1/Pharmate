@@ -2,7 +2,9 @@ package users;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -54,7 +56,7 @@ import static android.graphics.Color.TRANSPARENT;
 
 public class PersonalInformation extends AppCompatActivity {
     private static final String TAG = "PersonalInformation";
-    public Uri imageUri;
+    public static Uri imageUri;
     AwesomeValidation awesomeValidation;
     EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
     String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
@@ -63,6 +65,7 @@ public class PersonalInformation extends AppCompatActivity {
     Bitmap selectedImage;
     String userId;
     ProgressBar progressBar;
+    //SharedPreferences sharedPreferences;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
@@ -95,6 +98,10 @@ public class PersonalInformation extends AppCompatActivity {
         userAddress = findViewById(R.id.personAddressText);
         userBirthDate = findViewById(R.id.birthDateText);
         update = findViewById(R.id.button3);
+
+      //  sharedPreferences=this.getSharedPreferences("users", Context.MODE_PRIVATE);
+
+
         userBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

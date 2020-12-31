@@ -31,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import homepage.HomePageOrg;
+import homepage.HomePage;
 
 public class Frag2 extends Fragment {
     public boolean isOrg;
@@ -65,17 +65,23 @@ public class Frag2 extends Fragment {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        if (checkOrganizationMail(email, orgMails, userRef)) {
+                            if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                Intent _intent = new Intent(getActivity(), HomePage.class);
+                                startActivity(_intent);
+                                getActivity().finish();
+                            } else {
+                                Toast.makeText(getActivity(), "Please Verify Your Email Address", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
 
-                        if (firebaseAuth.getCurrentUser().isEmailVerified() && checkOrganizationMail(email, orgMails, userRef)) {
-                            Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-
-                            Intent _intent = new Intent(getActivity(), HomePageOrg.class);
-                            startActivity(_intent);
-                            getActivity().finish();
+                            }
                         } else {
-                            Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please Login From User Page", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
+
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {

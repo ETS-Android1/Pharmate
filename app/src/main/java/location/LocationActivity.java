@@ -30,6 +30,8 @@ public class LocationActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private OrgLocationOptionsAdapter adapter;
     private CollectionReference locationReference;
+    public String medicineName, barcodeNumber, receiverUserID;
+    public Integer medicineReceiveQuantity;
 
 
     @Override
@@ -38,6 +40,12 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
         recyclerView = findViewById(R.id.map_options_recyclerview);
         setUpRecyclerView();
+
+        Intent receiveMedicineIntent = getIntent();
+        medicineName = receiveMedicineIntent.getStringExtra("nameOfMedicine");
+        barcodeNumber = receiveMedicineIntent.getStringExtra("barcodeNumber");
+        medicineReceiveQuantity = Integer.valueOf(receiveMedicineIntent.getStringExtra("quantity"));
+        receiverUserID = receiveMedicineIntent.getStringExtra("userID");
 
     }
 
@@ -65,6 +73,10 @@ public class LocationActivity extends AppCompatActivity {
                 intent.putExtra("city", organizationClass.getCity());
                 intent.putExtra("latitude", latitude);
                 intent.putExtra("longitude", longitude);
+                intent.putExtra("medicineName", medicineName);
+                intent.putExtra("barcodeNumber", barcodeNumber);
+                intent.putExtra("quantity", medicineReceiveQuantity);
+                intent.putExtra("userID", receiverUserID);
                 startActivity(intent);
 
 

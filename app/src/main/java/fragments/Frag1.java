@@ -75,17 +75,23 @@ public class Frag1 extends Fragment {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        if (checkUserMail(emailText.getText().toString(), userMails, userRef)) {
+                            if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                Intent _intent = new Intent(getActivity(), HomePage.class);
+                                startActivity(_intent);
+                                getActivity().finish();
+                            } else {
+                                Toast.makeText(getActivity(), "Please Verify Your Email Address", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
 
-                        if (firebaseAuth.getCurrentUser().isEmailVerified() && checkUserMail(emailText.getText().toString(), userMails, userRef)) {
-                            Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                            Intent _intent = new Intent(getActivity(), HomePage.class);
-                            startActivity(_intent);
-                            getActivity().finish();
+                            }
                         } else {
-                            Toast.makeText(getActivity(), "Please Verify Your Email Address", Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(getActivity(), "OOPS! Something Went Wrong :(", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
+
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {

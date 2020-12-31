@@ -113,6 +113,7 @@ public class SearchMedicine extends AppCompatActivity {
                     intent.putExtra("expirationdate", medicineClass.getExpirationdate());
                     startActivity(intent);
 
+
                 }
             });
         } else {

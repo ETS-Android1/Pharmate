@@ -26,6 +26,7 @@ import homepage.HomePage;
 public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     public Double latitude;
     public Double longitude;
     EditText name, city, phone, email;
@@ -33,7 +34,6 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     ImageView icon;
     MapView mapView;
     LatLng orgLocation;
-    private final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
 
@@ -58,29 +58,34 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         email = findViewById(R.id.OrgMail);
 
         Intent intent = getIntent();
-       String nameorg = intent.getStringExtra("organizationName");
+        String nameorg = intent.getStringExtra("organizationName");
         name.setText(nameorg);
         name.setEnabled(false);
-       String cityname = intent.getStringExtra("city");
-       city.setText(cityname);
-       city.setEnabled(false);
+        String cityname = intent.getStringExtra("city");
+        city.setText(cityname);
+        city.setEnabled(false);
         String phonenum = intent.getStringExtra("contact");
-       phone.setText(phonenum);
-       phone.setEnabled(false);
-       String mail = intent.getStringExtra("email");
-       email.setText(mail);
-       email.setEnabled(false);
+        phone.setText(phonenum);
+        phone.setEnabled(false);
+        String mail = intent.getStringExtra("email");
+        email.setText(mail);
+        email.setEnabled(false);
         latitude = intent.getDoubleExtra("latitude", 0);
         longitude = intent.getDoubleExtra("longitude", 0);
         System.out.println("Lat" + latitude);
         System.out.println("Long" + longitude);
+
     }
 
     public void informClick(View view) {
+        updateMedicineInventory();
         Intent intent = new Intent(ReachOrg.this, HomePage.class);
         Toast.makeText(this, "The organization has been informed", Toast.LENGTH_LONG).show();
         startActivity(intent);
 
+    }
+
+    private void updateMedicineInventory() {
     }
 
     public void send(View view) {

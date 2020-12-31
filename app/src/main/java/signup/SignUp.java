@@ -65,14 +65,14 @@ public class SignUp extends AppCompatActivity {
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 
-        passwordText =findViewById(R.id.userSignUpPasswordText);
-        confirmPasswordText =findViewById(R.id.userSignUpConfirmPasswordText);
-        name =findViewById(R.id.userNameText);
+        passwordText = findViewById(R.id.userSignUpPasswordText);
+        confirmPasswordText = findViewById(R.id.userSignUpConfirmPasswordText);
+        name = findViewById(R.id.userNameText);
         emailText = findViewById(R.id.userSignUpEmailText);
-        userSurname =findViewById(R.id.userSurnameText);
-        userTurkishID =findViewById(R.id.userTurkishIdText);
-        userContact =findViewById(R.id.userContactText);
-        userAddress =findViewById(R.id.userAddressText);
+        userSurname = findViewById(R.id.userSurnameText);
+        userTurkishID = findViewById(R.id.userTurkishIdText);
+        userContact = findViewById(R.id.userContactText);
+        userAddress = findViewById(R.id.userAddressText);
         userBirthDate = findViewById(R.id.userBirthDateText);
         signUpClickButton = findViewById(R.id.signUpUserClickButton);
 
@@ -116,7 +116,6 @@ public class SignUp extends AppCompatActivity {
 
 
     }
-
 
 
     public void signUpUserClick(View view) {
@@ -170,6 +169,7 @@ public class SignUp extends AppCompatActivity {
 
                                                 postUserData.put("name", userClassToAdd.getName());
                                                 postUserData.put("surname", userClassToAdd.getSurname());
+                                                postUserData.put("userEmail", userClassToAdd.getEmail());
                                                 postUserData.put("turkishId", userClassToAdd.getTurkishId());
                                                 postUserData.put("contact", userClassToAdd.getContact());
                                                 postUserData.put("address", userClassToAdd.getAddress());

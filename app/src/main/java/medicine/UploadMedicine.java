@@ -51,6 +51,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     private static final String TAG = "UploadMedicine";
     public String organizationID;
     public String organizationName;
+    public List<String> organizationNames;
+    public List<String> orgIDs;
     AwesomeValidation awesomeValidation;
     EditText barcodeNo, quantity, name;
     ProgressBar progressBar;
@@ -70,7 +72,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_upload_medicine);
         firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference organizationReference = firebaseFirestore.collection("organization");
-        List<String> organizationNames = new ArrayList<>();
+        organizationNames = new ArrayList<>();
+        orgIDs = new ArrayList<>();
 
         // ID's
         spinner = findViewById(R.id.spinner);
@@ -131,15 +134,15 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-
         organizationReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String subject = document.getString("orgID");
-                        organizationNames.add(subject);
-
+                        String names = document.getString("organizationName");
+                        String ids = document.getString("orgID");
+                        organizationNames.add(names);
+                        orgIDs.add(ids);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -151,43 +154,17 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        if (position == 0) {
-            System.out.println("Selected Item is " + parent.getSelectedItem());
-            organizationName = parent.getSelectedItem().toString().split("-")[0];
-            organizationID = parent.getSelectedItem().toString().split("-")[1];
-            System.out.println("ID" + organizationID);
-            System.out.println("name" + organizationName);
-        }
-        if (position == 1) {
-            System.out.println("Selected Item is " + parent.getSelectedItem());
-            organizationName = parent.getSelectedItem().toString().split("-")[0];
-            organizationID = parent.getSelectedItem().toString().split("-")[1];
-            System.out.println("ID" + organizationID);
-            System.out.println("name" + organizationName);
-        }
-        if (position == 2) {
-            System.out.println("Selected Item is " + parent.getSelectedItem());
-            organizationName = parent.getSelectedItem().toString().split("-")[0];
-            organizationID = parent.getSelectedItem().toString().split("-")[1];
-            System.out.println("ID" + organizationID);
-            System.out.println("name" + organizationName);
-        }
-        if (position == 3) {
-            System.out.println("Selected Item is " + parent.getSelectedItem());
-            organizationName = parent.getSelectedItem().toString().split("-")[0];
-            organizationID = parent.getSelectedItem().toString().split("-")[1];
-            System.out.println("ID" + organizationID);
-            System.out.println("name" + organizationName);
-        }
-        if (position == 4) {
-            System.out.println("Selected Item is " + parent.getSelectedItem());
-            organizationName = parent.getSelectedItem().toString().split("-")[0];
-            organizationID = parent.getSelectedItem().toString().split("-")[1];
-            System.out.println("ID" + organizationID);
-            System.out.println("name" + organizationName);
-        }
 
+        for (int i = 0; i < organizationNames.size(); i++) {
+            if (position == i) {
+                organizationName = organizationNames.get(i);
+                organizationID = orgIDs.get(i);
+                System.out.println(organizationName);
+                System.out.println(organizationID);
+            }
+        }
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

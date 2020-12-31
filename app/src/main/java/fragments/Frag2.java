@@ -17,19 +17,30 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pharmate.ForgetPassword;
 import com.example.pharmate.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import homepage.HomePageOrg;
 
 public class Frag2 extends Fragment {
+    public boolean isOrg;
     EditText mailSign, passwordSign;
     Button login;
     TextView forget;
     ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag2_layout, container, false);
@@ -41,6 +52,9 @@ public class Frag2 extends Fragment {
         progressBar.setVisibility(View.GONE);
         forget = view.findViewById(R.id.forgotpasswordd);
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference userRef = firebaseFirestore.collection("organization");
+        List<String> orgMails = new ArrayList<>();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +66,7 @@ public class Frag2 extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
 
-                        if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        if (firebaseAuth.getCurrentUser().isEmailVerified() && checkOrganizationMail(email, orgMails, userRef)) {
                             Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
 
@@ -63,7 +77,6 @@ public class Frag2 extends Fragment {
                             Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
                         }
                     }
-
 
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -84,5 +97,22 @@ public class Frag2 extends Fragment {
             }
         });
         return view;
+    }
+
+    private boolean checkOrganizationMail(String orgMail, List<String> orgMails, CollectionReference ref) {
+        ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String subject = document.getString("userEmail");
+                        orgMails.add(subject);
+                        System.out.println(orgMails);
+                    }
+                    isOrg = orgMails.contains(orgMail);
+                }
+            }
+        });
+        return isOrg;
     }
 }

@@ -18,26 +18,40 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pharmate.ForgetPassword;
 import com.example.pharmate.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import homepage.HomePage;
 
 public class Frag1 extends Fragment {
+    public boolean isUser;
     EditText emailText, passwordText;
     Button button2;
     TextView forget;
     ImageView imageView;
     ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private CollectionReference userRef;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag1_layout, container, false);
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference userRef = firebaseFirestore.collection("user");
         emailText = view.findViewById(R.id.editTextTextPersonName15);
         passwordText = view.findViewById(R.id.signInPasswordText);
         imageView = view.findViewById(R.id.imageView3);
@@ -46,51 +60,23 @@ public class Frag1 extends Fragment {
         progressBar.setVisibility(View.GONE);
         forget = view.findViewById(R.id.forgotpassword);
         firebaseAuth = FirebaseAuth.getInstance();
+        List<String> userMails = new ArrayList<>();
+        // Getting User Email Addresses From Firestore and
+        // Check if the user logins from the correct screen
+
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                // alert.setTitle("Information");
-                // alert.setMessage("Are you sure you want to login?");
-                // alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                //   @Override
-                //   public void onClick(DialogInterface dialog, int i) {
-                //       Toast.makeText(getActivity(), "Login Canceled", Toast.LENGTH_SHORT).show();
-                //    }
-                // });
-                //alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
-                //  @Override
-                //  public void onClick(DialogInterface dialogInterface, int i) {
-                // if(firebaseAuth.getCurrentUser().isEmailVerified()){
-                //    Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
-                //   Intent _intent = new Intent(getActivity(), HomePage.class);
-                // startActivity(_intent);
-                //  }else{
-                //  Toast.makeText(getActivity(), "please verify your email address", Toast.LENGTH_SHORT).show();
-                // }
 
-                //  }
-                //}).addOnFailureListener(new OnFailureListener() {
-                //    @Override
-                //  public void onFailure(@NonNull Exception e) {
-                //      Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                //   }
-                //  });
-                //  }
-
-                // });
-
-                // alert.create().show();
                 progressBar.setVisibility(View.VISIBLE);
                 String email = emailText.getText().toString();
                 String password = passwordText.getText().toString();
-
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
 
-                        if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        if (firebaseAuth.getCurrentUser().isEmailVerified() && checkUserMail(emailText.getText().toString(), userMails, userRef)) {
                             Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                             Intent _intent = new Intent(getActivity(), HomePage.class);
@@ -124,20 +110,23 @@ public class Frag1 extends Fragment {
         return view;
 
 
-        // Getting current user
-        // if exists user will directly access for homepage
-        // else login register page
-        //  FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        //if (firebaseUser != null) {
-        // Intent _intent = new Intent(SignIn.this, HomePage.class);
-        //  startActivity(_intent);
-        //finish();
-        //   System.out.println(firebaseUser.getUid());
-
-        //}
-
     }
 
-
+    private boolean checkUserMail(String userMail, List<String> userMails, CollectionReference ref) {
+        ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String subject = document.getString("userEmail");
+                        userMails.add(subject);
+                        System.out.println(userMails);
+                    }
+                    isUser = userMails.contains(userMail);
+                }
+            }
+        });
+        return isUser;
+    }
 }
 

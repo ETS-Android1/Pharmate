@@ -106,15 +106,16 @@ public class SignUpOrg extends AppCompatActivity {
                                                 GeoPoint location = new GeoPoint(organizationLocation.latitude, organizationLocation.longitude);
 
                                                 OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, location);
-                                                HashMap<String, Object> postUserData = new HashMap<>();
+                                                HashMap<String, Object> postOrgData = new HashMap<>();
 
-                                                postUserData.put("organizationName", organizationClass.getOrganizationName());
-                                                postUserData.put("contact", organizationClass.getContact());
-                                                postUserData.put("city", organizationClass.getCity());
-                                                postUserData.put("location", organizationClass.getLocation());
-                                                postUserData.put("email", organizationClass.getEmail());
+                                                postOrgData.put("organizationName", organizationClass.getOrganizationName());
+                                                postOrgData.put("contact", organizationClass.getContact());
+                                                postOrgData.put("city", organizationClass.getCity());
+                                                postOrgData.put("location", organizationClass.getLocation());
+                                                postOrgData.put("email", organizationClass.getEmail());
+                                                postOrgData.put("orgID", id);
 
-                                                firebaseFirestore.collection("organization").document(id).set(postUserData);
+                                                firebaseFirestore.collection("organization").document(id).set(postOrgData);
                                                 Toast.makeText(SignUpOrg.this, "please check your email", Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(SignUpOrg.this, Choose.class);
                                                 startActivity(intent);

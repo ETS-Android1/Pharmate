@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -48,6 +49,8 @@ import models.MedicineClass;
 
 public class UploadMedicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String TAG = "UploadMedicine";
+    public String organizationID;
+    public String organizationName;
     AwesomeValidation awesomeValidation;
     EditText barcodeNo, quantity, name;
     ProgressBar progressBar;
@@ -59,8 +62,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     private TextView expirationDate;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
     private Spinner spinner;
-    public String organizationID;
-    public String organizationName;
+    private Button uploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,14 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference organizationReference = firebaseFirestore.collection("organization");
         List<String> organizationNames = new ArrayList<>();
-        List<String> organizationIDs = new ArrayList<>();
-        spinner = (Spinner) findViewById(R.id.spinner);
+
+        // ID's
+        spinner = findViewById(R.id.spinner);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        uploadButton = findViewById(R.id.uploadMedicineButton);
+
+
         // Instance
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -133,11 +139,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = document.getString("orgID");
                         organizationNames.add(subject);
-//
-//                        DonatedMedicines donatedMedicines = new DonatedMedicines();
-//                        donatedMedicines.setUserID(userID);
-//                        donatedMedicines.setBarcodeNumber(barcodeNo.toString());
-//                        donatedMedicines.setQuantity(Integer.parseInt(quantity.toString()));
+
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -151,60 +153,40 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         if (position == 0) {
             System.out.println("Selected Item is " + parent.getSelectedItem());
-            String organizationName = parent.getSelectedItem().toString().split("-")[0];
-            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            organizationName = parent.getSelectedItem().toString().split("-")[0];
+            organizationID = parent.getSelectedItem().toString().split("-")[1];
             System.out.println("ID" + organizationID);
             System.out.println("name" + organizationName);
         }
         if (position == 1) {
             System.out.println("Selected Item is " + parent.getSelectedItem());
-            String organizationName = parent.getSelectedItem().toString().split("-")[0];
-            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            organizationName = parent.getSelectedItem().toString().split("-")[0];
+            organizationID = parent.getSelectedItem().toString().split("-")[1];
             System.out.println("ID" + organizationID);
             System.out.println("name" + organizationName);
         }
         if (position == 2) {
             System.out.println("Selected Item is " + parent.getSelectedItem());
-            String organizationName = parent.getSelectedItem().toString().split("-")[0];
-            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            organizationName = parent.getSelectedItem().toString().split("-")[0];
+            organizationID = parent.getSelectedItem().toString().split("-")[1];
             System.out.println("ID" + organizationID);
             System.out.println("name" + organizationName);
         }
         if (position == 3) {
             System.out.println("Selected Item is " + parent.getSelectedItem());
-            String organizationName = parent.getSelectedItem().toString().split("-")[0];
-            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            organizationName = parent.getSelectedItem().toString().split("-")[0];
+            organizationID = parent.getSelectedItem().toString().split("-")[1];
             System.out.println("ID" + organizationID);
             System.out.println("name" + organizationName);
         }
         if (position == 4) {
             System.out.println("Selected Item is " + parent.getSelectedItem());
-            String organizationName = parent.getSelectedItem().toString().split("-")[0];
-            String organizationID = parent.getSelectedItem().toString().split("-")[1];
+            organizationName = parent.getSelectedItem().toString().split("-")[0];
+            organizationID = parent.getSelectedItem().toString().split("-")[1];
             System.out.println("ID" + organizationID);
             System.out.println("name" + organizationName);
         }
-//
-//        switch (position) {
-//            case 0:
-//
-//                System.out.println("Selected Item is " + parent.getSelectedItem());
-//                String organizationName = parent.getSelectedItem().toString().split("-")[0];
-//                String organizationID = parent.getSelectedItem().toString().split("-")[1];
-//                System.out.println("ID"+ organizationID);
-//                System.out.println("name"+ organizationName);
-//                break;
-//            case 1:
-//                System.out.println("Selected Item is " + parent.getSelectedItem());
-//                String organizationName = parent.getSelectedItem().toString().split("-")[0];
-//                String organizationID = parent.getSelectedItem().toString().split("-")[1];
-//                break;
-//            case 2:
-//                // Whatever you want to happen when the thrid item gets selected
-//                Log.v("item", (String) parent.getItemAtPosition(position));
-//                break;
-//
-//        }
+
     }
 
     @Override
@@ -213,7 +195,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void uploadMedicineClick(View view) {
-
+        uploadButton.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         if (awesomeValidation.validate()) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -231,56 +213,109 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
             System.out.println(displayName);
             String medicineName = name.getText().toString();
 
-            DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
-//            DocumentReference organizationReference = firebaseFirestore.collection("organization").document(orgID).collection(barcodeNoText).document("donatedMedicine");
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-//                        MedicineClass medicineClass = document.toObject(MedicineClass.class);
-                        DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
-                        if (document.exists()) {
-                            System.out.println("Dosya var");
-                            documentReference.update("quantity", donatedMedicines.getQuantity() + quantityText)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            System.out.println("Quantity has been updated");
-                                        }
-                                    });
+            Map<String, Object> orgMedicineMap = new HashMap<>();
+            Map<String, Object> medicineMap = new HashMap<>();
 
 
-                        } else {
+            updateMedicineInventory(userID, organizationID, barcodeNoText, quantityText, orgMedicineMap);
+            uploadMedicineToDB(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText, medicineMap);
 
-                            MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, null, quantityText, barcodeNoText, expirationDateText);
-
-                            Map<String, Object> medicine = new HashMap<>();
-
-                            medicine.put("nameOfMedicine", medicineClassToAdd.getNameOfMedicine());
-                            medicine.put("barcodeNumber", medicineClassToAdd.getBarcodeNumber());
-                            medicine.put("donatedBy", medicineClassToAdd.getDonatedBy());
-                            medicine.put("donatedTo", medicineClassToAdd.getDonatedTo());
-                            medicine.put("quantity", medicineClassToAdd.getQuantity());
-                            medicine.put("expirationdate", medicineClassToAdd.getExpirationdate());
-
-                            documentReference.set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(UploadMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-
-                    }
-                }
-            });
         }
     }
+
+    private void uploadMedicineToDB(String nameText, String userID, String organizationID, Integer quantityText, String barcodeNoText, String expirationDateText, Map<String, Object> medicineMap) {
+        DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    MedicineClass medicineClass = document.toObject(MedicineClass.class);
+                    if (document.exists()) {
+                        System.out.println("Dosya var");
+                        documentReference.update("quantity", medicineClass.getQuantity() + quantityText)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        System.out.println("Quantity has been updated");
+                                    }
+                                });
+                    } else {
+
+                        MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText);
+
+                        medicineMap.put("nameOfMedicine", medicineClassToAdd.getNameOfMedicine());
+                        medicineMap.put("barcodeNumber", medicineClassToAdd.getBarcodeNumber());
+                        medicineMap.put("donatedBy", medicineClassToAdd.getDonatedBy());
+                        medicineMap.put("lastDonationTo", medicineClassToAdd.getDonatedTo());
+                        medicineMap.put("quantity", medicineClassToAdd.getQuantity());
+                        medicineMap.put("expirationdate", medicineClassToAdd.getExpirationdate());
+
+                        documentReference.set(medicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UploadMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
+    }
+
+    private void updateMedicineInventory(String userid, String organizationID, String barcode, Integer quantity, Map<String, Object> organizationMedicines) {
+        DocumentReference organizationReference = firebaseFirestore
+                .collection("organization"
+                ).document(organizationID)
+                .collection("receivedMedicine").document(barcode);
+        organizationReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
+                    if (document.exists()) {
+                        System.out.println("Dosya var");
+                        documentReference.update("quantity", donatedMedicines.getQuantity() + quantity)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        System.out.println("Quantity has been updated");
+                                    }
+                                });
+                    } else {
+
+                        DonatedMedicines donatedMedicinesToAdd = new DonatedMedicines(barcode, userid, quantity);
+                        organizationMedicines.put("quantity", donatedMedicinesToAdd.getQuantity());
+                        organizationMedicines.put("lastDonatedBy", donatedMedicinesToAdd.getUserID());
+
+                        organizationReference.set(organizationMedicines).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+    }
+
 }

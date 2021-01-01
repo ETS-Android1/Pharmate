@@ -221,6 +221,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                 });
                     } else {
 
+                        fixStrings(nameText);
+                        fixStrings(barcodeNoText);
                         MedicineClass medicineClassToAdd = new MedicineClass(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText);
 
                         medicineMap.put("nameOfMedicine", medicineClassToAdd.getNameOfMedicine());
@@ -307,5 +309,9 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     public void onClick(DialogInterface dialoginterface, int i) {
                     }
                 }).show();
+    }
+
+    private void fixStrings(String a) {
+        a.trim().toUpperCase();
     }
 }

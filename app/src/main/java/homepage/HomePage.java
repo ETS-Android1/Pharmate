@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
+import com.example.pharmate.ResetPasswrd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -134,9 +135,20 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         switch (item.getItemId()) {
             case R.id.logoutMenu: {
                 Logout();
+                break;
+            }
+            case R.id.reset:{
+                resetPassword();
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void resetPassword() {
+      Intent intent=new Intent(HomePage.this, ResetPasswrd.class);
+      startActivity(intent);
+
     }
 
 

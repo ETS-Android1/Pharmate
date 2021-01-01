@@ -1,148 +1,145 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="medicine.ReachOrg"
-    android:background="@drawable/gradientbackground">
+    android:background="@drawable/gradientbackground"
+    tools:context="medicine.ReachOrg">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:paddingTop="30dp">
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/googleMap"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="411dp"
-        android:layout_height="318dp"
-        tools:context="location.LocationActivity"
-        tools:layout_editor_absoluteY="6dp" />
+        android:weightSum="8">
 
 
-    <EditText
-        android:id="@+id/OrgContact"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
-        android:fontFamily="@font/fugaz_one"
-        android:inputType="textPersonName"
-        android:text="Phone"
-        android:textColor="@color/grey"
-        tools:layout_editor_absoluteY="416dp" />
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/googleMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_weight="5"
+            tools:context="location.LocationActivity" />
 
-    <EditText
-        android:id="@+id/OrgCity"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
-        android:fontFamily="@font/fugaz_one"
-        android:inputType="textPersonName"
-        android:text="City"
-        android:textColor="@color/grey"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="571dp" />
+        <EditText
+            android:id="@+id/OrgName"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="0.5"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="330dp" />
 
-    <EditText
-        android:id="@+id/OrgName"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
-        android:fontFamily="@font/fugaz_one"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:textColor="@color/grey"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="330dp" />
+        <EditText
+            android:id="@+id/OrgCity"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="0.5"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:inputType="textPersonName"
+            android:text="City"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="571dp" />
 
-    <EditText
-        android:id="@+id/OrgMail"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
-        android:fontFamily="@font/fugaz_one"
-        android:text="Email"
-        android:textColor="@color/grey"
-        tools:layout_editor_absoluteY="496dp" />
         <EditText
             android:id="@+id/medicine"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_weight="0.5"
             android:ems="10"
             android:fontFamily="@font/fugaz_one"
             android:text="Medicine Name"
             android:textColor="@color/grey"
             tools:layout_editor_absoluteY="496dp" />
-        <EditText
-            android:id="@+id/barcodenum"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:ems="10"
-            android:fontFamily="@font/fugaz_one"
-                android:text="Barcode Number"
-            android:textColor="@color/grey"
-            tools:layout_editor_absoluteY="496dp" />
+
         <EditText
             android:id="@+id/quantity"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
+            android:layout_weight="0.5"
             android:ems="10"
             android:fontFamily="@font/fugaz_one"
             android:text="Quantity"
             android:textColor="@color/grey"
             tools:layout_editor_absoluteY="496dp" />
+
         <EditText
-            android:id="@+id/userId"
+            android:id="@+id/barcodenum"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_weight="0.5"
             android:ems="10"
             android:fontFamily="@font/fugaz_one"
-            android:text="UserId"
-            android:textColor="@color/grey"
-            tools:layout_editor_absoluteY="496dp" />
-        <EditText
-            android:id="@+id/orgid"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:ems="10"
-            android:fontFamily="@font/fugaz_one"
-            android:text="OrgId"
+            android:text="Barcode Number"
             android:textColor="@color/grey"
             tools:layout_editor_absoluteY="496dp" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:onClick="send"
-        app:srcCompat="@drawable/ic_envelope"
-        tools:layout_editor_absoluteX="340dp"
-        tools:layout_editor_absoluteY="502dp" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="46dp"
-        android:layout_height="47dp"
-        android:onClick="callClick"
-        app:srcCompat="@drawable/ic_phone_call"
-        tools:layout_editor_absoluteX="360dp"
-        tools:layout_editor_absoluteY="432dp" />
-
-    <Button
-        android:id="@+id/inform"
-        android:layout_width="155dp"
-        android:layout_height="53dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/mybluebutton"
-        android:fontFamily="@font/fugaz_one"
-        android:onClick="informClick"
-        android:text="Inform"
-        android:textColor="@color/grey"
-        android:textSize="20dp"
-        tools:layout_editor_absoluteX="128dp"
-        tools:layout_editor_absoluteY="657dp" />
+        <EditText
+            android:id="@+id/OrgContact"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="0.5"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:inputType="textPersonName"
+            android:text="Phone"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="416dp" />
 
 
-</LinearLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/OrgMail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="0.5"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:text="Email"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="46dp"
+            android:layout_height="47dp"
+            android:layout_weight="0.5"
+            android:onClick="send"
+            app:srcCompat="@drawable/ic_envelope"
+            android:layout_gravity="end" />
+
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="46dp"
+            android:layout_height="47dp"
+            android:layout_weight="0.5"
+            android:onClick="callClick"
+            app:srcCompat="@drawable/ic_phone_call"
+            tools:layout_editor_absoluteX="360dp"
+            tools:layout_editor_absoluteY="432dp"
+            android:layout_gravity="end"
+
+            />
+
+        <Button
+            android:id="@+id/inform"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="@drawable/mybluebutton"
+            android:fontFamily="@font/fugaz_one"
+            android:onClick="informClick"
+            android:text="Inform"
+            android:textColor="@color/grey"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="128dp"
+            tools:layout_editor_absoluteY="657dp" />
+
+
+    </LinearLayout>
+</ScrollView>

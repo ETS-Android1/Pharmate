@@ -217,6 +217,10 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         System.out.println("Quantity has been updated");
+                                        progressBar.setVisibility(View.GONE);
+                                        alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Failed");
+                                        Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
                                     }
                                 });
                     } else {
@@ -262,12 +266,12 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     if (document.exists()) {
 
                         System.out.println("Dosya var");
-                        assert donatedMedicines != null;
-                        documentReference.update("quantity", donatedMedicines.getQuantity() + quantity)
+                        organizationReference.update("quantity", donatedMedicines.getQuantity() + quantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         System.out.println("Quantity has been updated");
+                                        progressBar.setVisibility(View.GONE);
                                     }
                                 });
                     } else {

@@ -1,129 +1,148 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientbackground"
-    tools:context="medicine.ReachOrg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="medicine.ReachOrg"
+    android:background="@drawable/gradientbackground">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:paddingTop="30dp">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/googleMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/OrgName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context="location.LocationActivity" />
+        android:layout_width="411dp"
+        android:layout_height="318dp"
+        tools:context="location.LocationActivity"
+        tools:layout_editor_absoluteY="6dp" />
+
 
     <EditText
         android:id="@+id/OrgContact"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="7dp"
         android:ems="10"
-        android:textColor="@color/grey"
-        android:inputType="textPersonName"
         android:fontFamily="@font/fugaz_one"
+        android:inputType="textPersonName"
         android:text="Phone"
-        app:layout_constraintBottom_toTopOf="@+id/OrgMail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OrgName"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="@color/grey"
+        tools:layout_editor_absoluteY="416dp" />
 
     <EditText
         android:id="@+id/OrgCity"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginStart="2dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="@color/grey"
-        android:text="City"
         android:fontFamily="@font/fugaz_one"
-        app:layout_constraintBottom_toTopOf="@+id/inform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        android:inputType="textPersonName"
+        android:text="City"
+        android:textColor="@color/grey"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="571dp" />
 
     <EditText
         android:id="@+id/OrgName"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="17dp"
-        android:textColor="@color/grey"
         android:ems="10"
-        android:inputType="textPersonName"
         android:fontFamily="@font/fugaz_one"
+        android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/googleMap" />
+        android:textColor="@color/grey"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="330dp" />
 
     <EditText
         android:id="@+id/OrgMail"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="78dp"
-        android:layout_marginBottom="75dp"
         android:ems="10"
         android:fontFamily="@font/fugaz_one"
-        android:textColor="@color/grey"
         android:text="Email"
-        app:layout_constraintBottom_toBottomOf="@+id/OrgCity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OrgName"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="@color/grey"
+        tools:layout_editor_absoluteY="496dp" />
+        <EditText
+            android:id="@+id/medicine"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:text="Medicine Name"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
+        <EditText
+            android:id="@+id/barcodenum"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+                android:text="Barcode Number"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:text="Quantity"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
+        <EditText
+            android:id="@+id/userId"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:text="UserId"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
+        <EditText
+            android:id="@+id/orgid"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:fontFamily="@font/fugaz_one"
+            android:text="OrgId"
+            android:textColor="@color/grey"
+            tools:layout_editor_absoluteY="496dp" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="46dp"
         android:layout_height="47dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="17dp"
         android:onClick="send"
-        app:layout_constraintBottom_toTopOf="@+id/OrgCity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/ic_envelope" />
+        app:srcCompat="@drawable/ic_envelope"
+        tools:layout_editor_absoluteX="340dp"
+        tools:layout_editor_absoluteY="502dp" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="46dp"
         android:layout_height="47dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="17dp"
         android:onClick="callClick"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@+id/OrgContact"
-        app:layout_constraintTop_toBottomOf="@+id/OrgName"
-        app:srcCompat="@drawable/ic_phone_call" />
+        app:srcCompat="@drawable/ic_phone_call"
+        tools:layout_editor_absoluteX="360dp"
+        tools:layout_editor_absoluteY="432dp" />
 
     <Button
         android:id="@+id/inform"
         android:layout_width="155dp"
         android:layout_height="53dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/mybluebutton"
         android:fontFamily="@font/fugaz_one"
         android:onClick="informClick"
         android:text="Inform"
         android:textColor="@color/grey"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OrgCity" />
+        tools:layout_editor_absoluteX="128dp"
+        tools:layout_editor_absoluteY="657dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+    </ScrollView>

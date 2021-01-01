@@ -40,7 +40,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     public Double latitude;
     public Double longitude;
     public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
-    EditText name, city, phone, email;
+    EditText name, city, phone, email,medicinename,barcodenumber,quantitiy,orgId,userId;
     MapView mapView;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
@@ -69,13 +69,33 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         city = findViewById(R.id.OrgCity);
         phone = findViewById(R.id.OrgContact);
         email = findViewById(R.id.OrgMail);
+        medicinename=findViewById(R.id.medicine);
+        barcodenumber=findViewById(R.id.barcodenum);
+        quantitiy=findViewById(R.id.quantity);
+        userId=findViewById(R.id.userId);
+        orgId=findViewById(R.id.orgid);
+
 
         Intent intent = getIntent();
-        orgid = intent.getStringExtra("organizationID");
+        String medicineName=intent.getStringExtra("nameOfMedicine");
+        medicinename.setText(medicineName);
+        medicinename.setEnabled(false);
+        String  barcodeNumber = intent.getStringExtra("barcodeNumber");
+        barcodenumber.setText(barcodeNumber);
+        barcodenumber.setEnabled(false);
+        String receiverUserID = intent.getStringExtra("userID");
+        userId.setText(receiverUserID);
+        userId.setEnabled(false);
+        String orgid = intent.getStringExtra("organizationID");
+        orgId.setText(orgid);
+        orgId.setEnabled(false);
+        String medicineReceiveQuantity = intent.getStringExtra("quantity");
+        quantitiy.setText(medicineReceiveQuantity);
+        quantitiy.setEnabled(false);
         nameorg = intent.getStringExtra("organizationName");
-        receiverUserID = intent.getStringExtra("userID");
-        medicineReceiveQuantity = intent.getStringExtra("quantity");
-        barcodeNumber = intent.getStringExtra("barcodeNumber");
+        name.setText(nameorg);
+        name.setEnabled(false);
+        nameorg = intent.getStringExtra("organizationName");
         name.setText(nameorg);
         name.setEnabled(false);
         String cityname = intent.getStringExtra("city");

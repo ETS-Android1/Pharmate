@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.pharmate.MainActivity;
 import com.example.pharmate.R;
+import com.example.pharmate.ResetPasswrd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,6 +25,7 @@ import organization.OrganizatonListPage;
 
 public class HomePageOrg extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     private CardView donateMed, searchMed, requestMed, listOrg,about,profile;
 
@@ -116,8 +118,16 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
             case  R.id.logoutMenu:{
                 Logout();
             }
+            case R.id.reset:{
+                resetPassword();
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+    private void resetPassword() {
+        Intent intent=new Intent(HomePageOrg.this, ResetPasswrd.class);
+        startActivity(intent);
 
+    }
 }

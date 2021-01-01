@@ -1,6 +1,8 @@
 package medicine;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -231,13 +233,12 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                         documentReference.set(medicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(UploadMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!");
                             }
                         });
                     }
@@ -259,7 +260,9 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     DocumentSnapshot document = task.getResult();
                     DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
                     if (document.exists()) {
+
                         System.out.println("Dosya var");
+                        assert donatedMedicines != null;
                         documentReference.update("quantity", donatedMedicines.getQuantity() + quantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -272,11 +275,11 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                         DonatedMedicines donatedMedicinesToAdd = new DonatedMedicines(barcode, userid, quantity);
                         organizationMedicines.put("quantity", donatedMedicinesToAdd.getQuantity());
                         organizationMedicines.put("lastDonatedBy", donatedMedicinesToAdd.getUserID());
-
                         organizationReference.set(organizationMedicines).addOnSuccessListener(new OnSuccessListener<Void>() {
 
                             @Override
                             public void onSuccess(Void aVoid) {
+                                alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Successful");
                                 Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
@@ -286,6 +289,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!");
                             }
                         });
                     }
@@ -295,4 +299,13 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
     }
 
+    private void alertView(String alertMessage, String messageType) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(UploadMedicine.this);
+        dialog.setTitle(messageType)
+                .setMessage(alertMessage)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+                    }
+                }).show();
+    }
 }

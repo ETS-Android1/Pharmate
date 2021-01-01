@@ -156,7 +156,10 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                                 DocumentSnapshot document = task.getResult();
                                                                                 MedicineClass medicineClass = document.toObject(MedicineClass.class);
                                                                                 if (document.exists()) {
-                                                                                    System.out.println("Dosya var");
+                                                                                    System.out.println("Ilac Medicine Listesinde Var");
+                                                                                    System.out.println("Ilac ismi" + medicineClass.getNameOfMedicine());
+                                                                                    System.out.println("Ilac Quantity" + medicineClass.getQuantity());
+                                                                                    System.out.println(Integer.parseInt(medicineReceiveQuantity));
                                                                                     documentReference.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
                                                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                 @Override

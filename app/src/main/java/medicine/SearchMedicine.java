@@ -75,7 +75,8 @@ public class SearchMedicine extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                Query query = medicineReference.whereEqualTo("barcodeNumber", barcode.getText().toString().trim()).orderBy("barcodeNumber");
+                Query query = medicineReference
+                        .whereEqualTo("barcodeNumber", barcode.getText().toString().trim()).orderBy("barcodeNumber");
 
                 FirestoreRecyclerOptions<MedicineClass> options1 = new FirestoreRecyclerOptions.Builder<MedicineClass>()
                         .setQuery(query, MedicineClass.class)

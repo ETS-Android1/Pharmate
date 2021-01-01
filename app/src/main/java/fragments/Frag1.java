@@ -128,8 +128,9 @@ public class Frag1 extends Fragment {
                         String subject = document.getString("userEmail");
                         userMails.add(subject);
                         System.out.println(userMails);
+                        isUser = userMails.contains(userMail);
                     }
-                    isUser = userMails.contains(userMail);
+
                 }
             }
         });

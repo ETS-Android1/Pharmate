@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/OrgContact"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="7dp"
         android:ems="10"
@@ -37,7 +37,7 @@
 
     <EditText
         android:id="@+id/OrgCity"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="2dp"
         android:ems="10"
@@ -52,7 +52,7 @@
 
     <EditText
         android:id="@+id/OrgName"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="1dp"
@@ -70,7 +70,7 @@
 
     <EditText
         android:id="@+id/OrgMail"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="78dp"
         android:layout_marginBottom="75dp"

@@ -53,7 +53,7 @@ public class Frag2 extends Fragment {
         forget = view.findViewById(R.id.forgotpasswordd);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        CollectionReference userRef = firebaseFirestore.collection("organization");
+        CollectionReference orgRef = firebaseFirestore.collection("organization");
         List<String> orgMails = new ArrayList<>();
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class Frag2 extends Fragment {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        if (checkOrganizationMail(email, orgMails, userRef)) {
+                        if (checkOrganizationMail(mailSign.getText().toString(), orgMails, orgRef)) {
                             if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                 Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
@@ -111,11 +111,12 @@ public class Frag2 extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String subject = document.getString("userEmail");
+                        String subject = document.getString("email");
                         orgMails.add(subject);
                         System.out.println(orgMails);
+                        isOrg = orgMails.contains(orgMail);
                     }
-                    isOrg = orgMails.contains(orgMail);
+
                 }
             }
         });

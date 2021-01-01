@@ -4,14 +4,15 @@ import com.google.firebase.firestore.GeoPoint;
 
 public class OrganizationClass {
 
-    private String city, email, organizationName, contact;
+    private String orgID, city, email, organizationName, contact;
     GeoPoint location;
 
 
     public OrganizationClass() {
     }
 
-    public OrganizationClass(String city, String email, String organizationName, String contact, GeoPoint location) {
+    public OrganizationClass(String orgID, String city, String email, String organizationName, String contact, GeoPoint location) {
+        this.orgID = orgID;
         this.city = city;
         this.email = email;
         this.organizationName = organizationName;
@@ -19,6 +20,13 @@ public class OrganizationClass {
         this.location = location;
     }
 
+    public String getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(String orgID) {
+        this.orgID = orgID;
+    }
 
     public String getCity() {
         return city;

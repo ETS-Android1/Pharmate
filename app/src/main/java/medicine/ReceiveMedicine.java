@@ -14,7 +14,7 @@ import location.LocationActivity;
 
 public class ReceiveMedicine extends AppCompatActivity {
     EditText medicineName, barcode, amount, date;
-    String userID;
+    String userID, name, receiveBarcodenum, recQuantity;
     Button confirm;
 
 
@@ -30,14 +30,14 @@ public class ReceiveMedicine extends AppCompatActivity {
         confirm = findViewById(R.id.button5);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("nameOfMedicine");
+        name = intent.getStringExtra("nameOfMedicine");
         medicineName.setText(name);
         medicineName.setEnabled(false);
-        String barcodenum = intent.getStringExtra("barcodeNumber");
-        barcode.setText(barcodenum);
+        receiveBarcodenum = intent.getStringExtra("barcodeNumber");
+        barcode.setText(receiveBarcodenum);
         barcode.setEnabled(false);
-        String quantity = intent.getStringExtra("quantity");
-        amount.setText(quantity);
+
+
         String expdate = intent.getStringExtra("expirationdate");
         date.setText(expdate);
         date.setEnabled(false);
@@ -47,10 +47,11 @@ public class ReceiveMedicine extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recQuantity = amount.getText().toString();
                 Intent receiveOptionsIntent = new Intent(ReceiveMedicine.this, LocationActivity.class);
                 receiveOptionsIntent.putExtra("nameOfMedicine", name);
-                receiveOptionsIntent.putExtra("barcodeNumber", barcodenum);
-                receiveOptionsIntent.putExtra("quantity", quantity);
+                receiveOptionsIntent.putExtra("barcodeNumber", receiveBarcodenum);
+                receiveOptionsIntent.putExtra("quantity", recQuantity);
                 receiveOptionsIntent.putExtra("userID", userID);
                 startActivity(receiveOptionsIntent);
             }

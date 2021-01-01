@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,29 +17,40 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import homepage.HomePage;
+import models.DonatedMedicines;
+import models.MedicineClass;
+import models.ReceivedMedicines;
 
 public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
-    private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     public Double latitude;
     public Double longitude;
+    public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
     EditText name, city, phone, email;
-    String userID;
-    ImageView icon;
     MapView mapView;
-    LatLng orgLocation;
+    private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    private GoogleMap mMap;
+    private DocumentReference orgMedReference, donateMedicineRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reach_org);
+        Map<String, Object> updateMedicineMap;
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -50,6 +60,9 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         mapView.getMapAsync(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+//         DocumentReference orgMedReference = FirebaseFirestore
+//                .getInstance().document("sampleData/myData");
 
 
         name = findViewById(R.id.OrgName);
@@ -58,7 +71,11 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         email = findViewById(R.id.OrgMail);
 
         Intent intent = getIntent();
-        String nameorg = intent.getStringExtra("organizationName");
+        orgid = intent.getStringExtra("organizationID");
+        nameorg = intent.getStringExtra("organizationName");
+        receiverUserID = intent.getStringExtra("userID");
+        medicineReceiveQuantity = intent.getStringExtra("quantity");
+        barcodeNumber = intent.getStringExtra("barcodeNumber");
         name.setText(nameorg);
         name.setEnabled(false);
         String cityname = intent.getStringExtra("city");
@@ -75,17 +92,119 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         System.out.println("Lat" + latitude);
         System.out.println("Long" + longitude);
 
+
     }
 
     public void informClick(View view) {
-        updateMedicineInventory();
-        Intent intent = new Intent(ReachOrg.this, HomePage.class);
-        Toast.makeText(this, "The organization has been informed", Toast.LENGTH_LONG).show();
-        startActivity(intent);
 
+        try {
+            System.out.println("id" + orgid);
+            System.out.println("barcode" + barcodeNumber);
+            System.out.println("name" + nameorg);
+            System.out.println("quantity" + medicineReceiveQuantity);
+            DocumentReference orgMedReference = firebaseFirestore
+                    .collection("organization"
+                    ).document(orgid)
+                    .collection("receivedMedicine").document(barcodeNumber);
+            orgMedReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
+                        if (document.exists()) {
+                            System.out.println("Dosya var");
+                            orgMedReference.update("quantity", donatedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            System.out.println("Quantity has been updated");
+
+                                            DocumentReference donatedMedicineRef = firebaseFirestore
+                                                    .collection("organization")
+                                                    .document(orgid)
+                                                    .collection("donatedMedicine").document(barcodeNumber);
+
+                                            donatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot donatedMedicineSnap = task.getResult();
+                                                        ReceivedMedicines donatedToUsers = donatedMedicineSnap.toObject(ReceivedMedicines.class);
+                                                        if (donatedMedicineSnap.exists()) {
+                                                            System.out.println("Updating the Medicine Quantity.");
+
+                                                            donatedMedicineRef.update("quantity", donatedMedicines.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
+                                                        } else {
+
+                                                            HashMap<String, Object> receiveMedicineMap = new HashMap<>();
+                                                            ReceivedMedicines receivedMedicines = new ReceivedMedicines(receiverUserID, barcodeNumber, Integer.parseInt(medicineReceiveQuantity));
+                                                            receiveMedicineMap.put("quantity", receivedMedicines.getQuantity());
+                                                            receiveMedicineMap.put("lastDonatedBy", receivedMedicines.getUserID());
+
+
+                                                            donatedMedicineRef.set(receiveMedicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Toast.makeText(ReachOrg.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                                                    DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNumber);
+                                                                    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                DocumentSnapshot document = task.getResult();
+                                                                                MedicineClass medicineClass = document.toObject(MedicineClass.class);
+                                                                                if (document.exists()) {
+                                                                                    System.out.println("Dosya var");
+                                                                                    documentReference.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
+                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                                    System.out.println("Quantity has been updated");
+                                                                                                }
+                                                                                            });
+                                                                                } else {
+                                                                                    System.out.println("ELSE");
+                                                                                }
+
+                                                                            }
+                                                                        }
+                                                                    });
+
+                                                                }
+
+                                                            }).addOnFailureListener(new OnFailureListener() {
+
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(ReachOrg.this, "Insufficient Stocks", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
+            Intent intent = new Intent(ReachOrg.this, HomePage.class);
+            Toast.makeText(this, "The organization has been informed", Toast.LENGTH_LONG).show();
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void updateMedicineInventory() {
+    private void updateInventory(DocumentReference orgMedReference, DocumentReference donatedMedicineRef, String receiverID, String organizationID, String barcodeNumber, Integer quantity, Map<String, Object> receiveMedicineMap) {
+
+
     }
 
     public void send(View view) {

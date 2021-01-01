@@ -105,7 +105,7 @@ public class SignUpOrg extends AppCompatActivity {
                                                 LatLng organizationLocation = getLocation();
                                                 GeoPoint location = new GeoPoint(organizationLocation.latitude, organizationLocation.longitude);
 
-                                                OrganizationClass organizationClass = new OrganizationClass(orgaddresstext, email, orgtext, orgcontact, location);
+                                                OrganizationClass organizationClass = new OrganizationClass(id, orgaddresstext, email, orgtext, orgcontact, location);
                                                 HashMap<String, Object> postOrgData = new HashMap<>();
 
                                                 postOrgData.put("organizationName", organizationClass.getOrganizationName());
@@ -113,7 +113,7 @@ public class SignUpOrg extends AppCompatActivity {
                                                 postOrgData.put("city", organizationClass.getCity());
                                                 postOrgData.put("location", organizationClass.getLocation());
                                                 postOrgData.put("email", organizationClass.getEmail());
-                                                postOrgData.put("orgID", id);
+                                                postOrgData.put("orgID", organizationClass.getOrgID());
 
                                                 firebaseFirestore.collection("organization").document(id).set(postOrgData);
                                                 Toast.makeText(SignUpOrg.this, "please check your email", Toast.LENGTH_LONG).show();

@@ -30,8 +30,7 @@ public class LocationActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private OrgLocationOptionsAdapter adapter;
     private CollectionReference locationReference;
-    public String medicineName, barcodeNumber, receiverUserID;
-    public Integer medicineReceiveQuantity;
+    public String medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
 
 
     @Override
@@ -44,7 +43,7 @@ public class LocationActivity extends AppCompatActivity {
         Intent receiveMedicineIntent = getIntent();
         medicineName = receiveMedicineIntent.getStringExtra("nameOfMedicine");
         barcodeNumber = receiveMedicineIntent.getStringExtra("barcodeNumber");
-        medicineReceiveQuantity = Integer.valueOf(receiveMedicineIntent.getStringExtra("quantity"));
+        medicineReceiveQuantity = receiveMedicineIntent.getStringExtra("quantity");
         receiverUserID = receiveMedicineIntent.getStringExtra("userID");
 
     }
@@ -65,6 +64,8 @@ public class LocationActivity extends AppCompatActivity {
                 GeoPoint location = organizationClass.getLocation();
                 Double latitude = location.getLatitude();
                 Double longitude = location.getLongitude();
+                System.out.println("orgIDLocation" + organizationClass.getOrgID());
+                receiverUserID = organizationClass.getOrgID();
 
                 Intent intent = new Intent(LocationActivity.this, ReachOrg.class);
                 intent.putExtra("organizationName", organizationClass.getOrganizationName());
@@ -77,6 +78,7 @@ public class LocationActivity extends AppCompatActivity {
                 intent.putExtra("barcodeNumber", barcodeNumber);
                 intent.putExtra("quantity", medicineReceiveQuantity);
                 intent.putExtra("userID", receiverUserID);
+                intent.putExtra("organizationID", receiverUserID);
                 startActivity(intent);
 
 

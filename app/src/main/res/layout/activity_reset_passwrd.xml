@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="391dp"
+        android:layout_height="164dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="76dp"
+        android:layout_marginBottom="44dp"
+        android:text="Update Password"
+        android:textColor="@color/grey"
+        android:textSize="48dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/currentpassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/currentpassword"
+        android:layout_width="307dp"
+        android:layout_height="72dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/blue"
+        android:drawableLeft="@drawable/ic_password"
+        android:ems="10"
+        android:hint="Current Password"
+        android:inputType="textPersonName"
+        android:textColor="#fff"
+        android:textColorHint="#ffff"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/newpassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <EditText
+        android:id="@+id/newpassword"
+        android:layout_width="303dp"
+        android:layout_height="78dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="61dp"
+        android:background="@color/blue"
+        android:drawableLeft="@drawable/ic_password"
+        android:ems="10"
+        android:hint="New Password"
+        android:inputType="textPassword"
+        android:password="true"
+        android:textColor="#fff"
+        android:textColorHint="#ffff"
+        app:layout_constraintBottom_toTopOf="@+id/updatepassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentpassword" />
+
+    <Button
+        android:id="@+id/updatepassword"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="149dp"
+        android:background="@drawable/mybluebutton"
+        android:text="Update"
+        android:textColor="@color/grey"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newpassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

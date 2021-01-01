@@ -15,7 +15,21 @@
                 app:showAsAction="collapseActionView">
 
             </item>
+
+            <item
+                android:id="@+id/reset"
+                android:orderInCategory="300"
+                android:title="Reset Password"
+                android:icon="@drawable/ic_lock_open_blue_24dp"
+                app:showAsAction="collapseActionView">
+
+            </item>
+
+
+
         </menu>
+
+
 
 
 

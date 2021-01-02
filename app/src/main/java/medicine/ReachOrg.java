@@ -80,10 +80,10 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
         Intent intent = getIntent();
         medicineName = intent.getStringExtra("nameOfMedicine");
-        medicinename.setText(medicineName);
+        medicinename.setText("Medicine Name: " + medicineName);
         medicinename.setEnabled(false);
         barcodeNumber = intent.getStringExtra("barcodeNumber");
-        barcodenumber.setText(barcodeNumber);
+        barcodenumber.setText("Barcode: " + barcodeNumber);
         barcodenumber.setEnabled(false);
         receiverUserID = intent.getStringExtra("userID");
 //        userId.setText(receiverUserID);
@@ -92,11 +92,8 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 //        orgId.setText(orgid);
 //        orgId.setEnabled(false);
         medicineReceiveQuantity = intent.getStringExtra("quantity");
-        quantitiy.setText(medicineReceiveQuantity);
+        quantitiy.setText("Quantity: " + medicineReceiveQuantity);
         quantitiy.setEnabled(false);
-        nameorg = intent.getStringExtra("organizationName");
-        name.setText(nameorg);
-        name.setEnabled(false);
         nameorg = intent.getStringExtra("organizationName");
         name.setText(nameorg);
         name.setEnabled(false);
@@ -104,10 +101,10 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         city.setText(cityname);
         city.setEnabled(false);
         String phonenum = intent.getStringExtra("contact");
-        phone.setText(phonenum);
+        phone.setText("Contact: " + phonenum);
         phone.setEnabled(false);
         String mail = intent.getStringExtra("email");
-        email.setText(mail);
+        email.setText("Email: " + mail);
         email.setEnabled(false);
         latitude = intent.getDoubleExtra("latitude", 0);
         longitude = intent.getDoubleExtra("longitude", 0);

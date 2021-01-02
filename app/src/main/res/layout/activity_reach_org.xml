@@ -32,7 +32,8 @@
             android:text="Name"
             android:textColor="@color/grey"
             tools:layout_editor_absoluteX="2dp"
-            tools:layout_editor_absoluteY="330dp" />
+            tools:layout_editor_absoluteY="330dp"
+            android:drawableRight="@color/fui_bgEmail" />
 
         <EditText
             android:id="@+id/OrgCity"
@@ -90,7 +91,10 @@
             android:inputType="textPersonName"
             android:text="Phone"
             android:textColor="@color/grey"
-            tools:layout_editor_absoluteY="416dp" />
+            android:drawableEnd="@drawable/ic_phone_call"
+
+
+            />
 
 
         <EditText
@@ -102,30 +106,9 @@
             android:fontFamily="@font/fugaz_one"
             android:text="Email"
             android:textColor="@color/grey"
-            tools:layout_editor_absoluteY="496dp" />
+            tools:layout_editor_absoluteY="496dp"
+            android:drawableEnd="@drawable/ic_envelope" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="46dp"
-            android:layout_height="47dp"
-            android:layout_weight="0.5"
-            android:onClick="send"
-            app:srcCompat="@drawable/ic_envelope"
-            android:layout_gravity="end" />
-
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="46dp"
-            android:layout_height="47dp"
-            android:layout_weight="0.5"
-            android:onClick="callClick"
-            app:srcCompat="@drawable/ic_phone_call"
-            tools:layout_editor_absoluteX="360dp"
-            tools:layout_editor_absoluteY="432dp"
-            android:layout_gravity="end"
-
-            />
 
         <Button
             android:id="@+id/inform"

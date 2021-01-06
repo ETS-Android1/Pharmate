@@ -1,5 +1,7 @@
 package medicine;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +42,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     public Double latitude;
     public Double longitude;
     public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
-    EditText name, city, phone, email;
+    EditText name, city, phone, email, medicinename, barcodenumber, quantitiy, orgId, userId;
     MapView mapView;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
@@ -69,23 +71,40 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         city = findViewById(R.id.OrgCity);
         phone = findViewById(R.id.OrgContact);
         email = findViewById(R.id.OrgMail);
+        medicinename = findViewById(R.id.medicine);
+        barcodenumber = findViewById(R.id.barcodenum);
+        quantitiy = findViewById(R.id.quantity);
+//        userId=findViewById(R.id.userId);
+//        orgId=findViewById(R.id.orgid);
+
 
         Intent intent = getIntent();
-        orgid = intent.getStringExtra("organizationID");
-        nameorg = intent.getStringExtra("organizationName");
-        receiverUserID = intent.getStringExtra("userID");
-        medicineReceiveQuantity = intent.getStringExtra("quantity");
+        medicineName = intent.getStringExtra("nameOfMedicine");
+        medicinename.setText("Medicine Name: " + medicineName);
+        medicinename.setEnabled(false);
         barcodeNumber = intent.getStringExtra("barcodeNumber");
+        barcodenumber.setText("Barcode: " + barcodeNumber);
+        barcodenumber.setEnabled(false);
+        receiverUserID = intent.getStringExtra("userID");
+//        userId.setText(receiverUserID);
+//        userId.setEnabled(false);
+        orgid = intent.getStringExtra("organizationID");
+//        orgId.setText(orgid);
+//        orgId.setEnabled(false);
+        medicineReceiveQuantity = intent.getStringExtra("quantity");
+        quantitiy.setText("Quantity: " + medicineReceiveQuantity);
+        quantitiy.setEnabled(false);
+        nameorg = intent.getStringExtra("organizationName");
         name.setText(nameorg);
         name.setEnabled(false);
         String cityname = intent.getStringExtra("city");
         city.setText(cityname);
         city.setEnabled(false);
         String phonenum = intent.getStringExtra("contact");
-        phone.setText(phonenum);
+        phone.setText("Contact: " + phonenum);
         phone.setEnabled(false);
         String mail = intent.getStringExtra("email");
-        email.setText(mail);
+        email.setText("Email: " + mail);
         email.setEnabled(false);
         latitude = intent.getDoubleExtra("latitude", 0);
         longitude = intent.getDoubleExtra("longitude", 0);
@@ -111,30 +130,31 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
+                        ReceivedMedicines receivedMedicines = document.toObject(ReceivedMedicines.class);
                         if (document.exists()) {
                             System.out.println("Dosya var");
-                            orgMedReference.update("quantity", donatedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            System.out.println("Quantity has been updated");
+                            if (receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity) >= 0) {
+                                orgMedReference.update("quantity", receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                System.out.println("Ilac Bagislandi ve Sayisi Guncellendi");
 
-                                            DocumentReference donatedMedicineRef = firebaseFirestore
-                                                    .collection("organization")
-                                                    .document(orgid)
-                                                    .collection("donatedMedicine").document(barcodeNumber);
+                                                DocumentReference donatedMedicineRef = firebaseFirestore
+                                                        .collection("organization")
+                                                        .document(orgid)
+                                                        .collection("donatedMedicine").document(barcodeNumber);
 
                                             donatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                     if (task.isSuccessful()) {
                                                         DocumentSnapshot donatedMedicineSnap = task.getResult();
-                                                        ReceivedMedicines donatedToUsers = donatedMedicineSnap.toObject(ReceivedMedicines.class);
+                                                        DonatedMedicines donatedToUsers = donatedMedicineSnap.toObject(DonatedMedicines.class);
                                                         if (donatedMedicineSnap.exists()) {
                                                             System.out.println("Updating the Medicine Quantity.");
 
-                                                            donatedMedicineRef.update("quantity", donatedMedicines.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
+                                                            donatedMedicineRef.update("quantity", donatedToUsers.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
                                                         } else {
 
                                                             HashMap<String, Object> receiveMedicineMap = new HashMap<>();
@@ -148,8 +168,8 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
                                                                     Toast.makeText(ReachOrg.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
-                                                                    DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNumber);
-                                                                    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    DocumentReference medicineUpdateRef = firebaseFirestore.collection("medicine").document(barcodeNumber);
+                                                                    medicineUpdateRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                                             if (task.isSuccessful()) {
@@ -160,11 +180,11 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                                     System.out.println("Ilac ismi" + medicineClass.getNameOfMedicine());
                                                                                     System.out.println("Ilac Quantity" + medicineClass.getQuantity());
                                                                                     System.out.println(Integer.parseInt(medicineReceiveQuantity));
-                                                                                    documentReference.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
+                                                                                    medicineUpdateRef.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
                                                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                 @Override
                                                                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                                                                    System.out.println("Quantity has been updated");
+                                                                                                    System.out.println("Ilac Medicine Listesinden de Azaltildi");
                                                                                                 }
                                                                                             });
                                                                                 } else {
@@ -189,8 +209,12 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                 }
                                             });
 
-                                        }
-                                    });
+                                            }
+                                        });
+                            } else {
+                                Intent intent = new Intent(ReachOrg.this, HomePage.class);
+                                alertView("Insufficient Stocks. Please Try Again Later", "Donation Successful", intent);
+                            }
                         } else {
                             Toast.makeText(ReachOrg.this, "Insufficient Stocks", Toast.LENGTH_LONG).show();
                         }
@@ -198,8 +222,8 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 }
             });
             Intent intent = new Intent(ReachOrg.this, HomePage.class);
-            Toast.makeText(this, "The organization has been informed", Toast.LENGTH_LONG).show();
-            startActivity(intent);
+            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
+
         } catch (Exception e) {
             Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -284,5 +308,16 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         mapView.onLowMemory();
     }
 
+    private void alertView(String alertMessage, String messageType, Intent intent) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ReachOrg.this);
+        dialog.setTitle(messageType)
+                .setMessage(alertMessage)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+                        startActivity(intent);
+                        finish();
+                    }
+                }).show();
+    }
 
 }

@@ -82,15 +82,10 @@ public class SearchMedicine extends AppCompatActivity {
                         .setQuery(query, MedicineClass.class)
                         .build();
                 adapter.updateOptions(options1);
-
-
             }
         });
-
         setUpRecyclerView();
-
     }
-
 
     private void setUpRecyclerView() {
 

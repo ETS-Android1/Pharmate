@@ -39,6 +39,8 @@ import models.ReceivedMedicines;
 public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
     private final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    public MarkerOptions markerOptions;
+    public CameraPosition cameraMapPosition;
     public Double latitude;
     public Double longitude;
     public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
@@ -60,6 +62,14 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         mapView = findViewById(R.id.googleMap);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
+
+//                CameraPosition cameraPosition = new CameraPosition
+//                .Builder().target(new LatLng(latitude, longitude))
+//                .zoom(15)
+//                .build();
+//        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//        googleMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(longitude, longitude)));
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -110,6 +120,11 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         longitude = intent.getDoubleExtra("longitude", 0);
         System.out.println("Lat" + latitude);
         System.out.println("Long" + longitude);
+        cameraMapPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude))
+                .zoom(15)
+                .build();
+        markerOptions = new MarkerOptions().position(new LatLng(latitude, longitude));
+//
 
 
     }
@@ -250,13 +265,9 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        CameraPosition cameraPosition = new CameraPosition
-                .Builder().target(new LatLng(latitude, longitude))
-                .zoom(15)
-                .build();
+        CameraPosition cameraPosition = cameraMapPosition;
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(longitude, -longitude)));
+        googleMap.addMarker(markerOptions);
     }
 
     @Override

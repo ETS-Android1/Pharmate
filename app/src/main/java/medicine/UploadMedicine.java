@@ -91,7 +91,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         firebaseAuth = FirebaseAuth.getInstance();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-//        //defining textFields
+        //defining textFields
 
         name = findViewById(R.id.nameOfMedicineText);
         barcodeNo = findViewById(R.id.barcodeNumberText);

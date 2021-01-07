@@ -2,9 +2,7 @@ package users;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -154,8 +152,10 @@ public class PersonalInformation extends AppCompatActivity {
             String userDisplayName = firebaseAuth.getCurrentUser().getDisplayName();
             final String imageName = "images/" + userId + userDisplayName + ".jpg";
             storageReference.child(imageName).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    StorageReference imageRef = FirebaseStorage.getInstance().getReference(imageName);
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     String userEmail = firebaseUser.getEmail();
 

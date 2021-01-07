@@ -23,6 +23,7 @@ import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrganizatonListPage;
 import users.PersonalInformation;
+import static users.PersonalInformation.imageUri;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
@@ -82,11 +83,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 startActivity(i);
                 break;
             case R.id.search:
-//                if(imageUri==null) {
-                    Toast.makeText(this,"Please upload image ",Toast.LENGTH_LONG).show();
-//                }else{
-                i = new Intent(this, SearchMedicine.class);
-                startActivity(i);
+                if (imageUri == null) {
+                    Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
+                } else {
+                    i = new Intent(this, SearchMedicine.class);
+                    startActivity(i);
+                }
                 break;
             case R.id.request:
                 i = new Intent(this, RequestMedicineList.class);

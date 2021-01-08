@@ -2,22 +2,16 @@ package models;
 
 public class RequestClass {
 
-    private String medicineName, barcode, requestedBy;
+    private String medicineName, barcode;
     private Integer quantity;
 
     public RequestClass() {
     }
 
+
     public RequestClass(String medicineName, String barcode, Integer quantity) {
         this.medicineName = medicineName;
         this.barcode = barcode;
-        this.quantity = quantity;
-    }
-
-    public RequestClass(String medicineName, String barcode, String requestedBy, Integer quantity) {
-        this.medicineName = medicineName;
-        this.barcode = barcode;
-        this.requestedBy = requestedBy;
         this.quantity = quantity;
     }
 
@@ -35,14 +29,6 @@ public class RequestClass {
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
-    }
-
-    public String getRequestedBy() {
-        return requestedBy;
-    }
-
-    public void setRequestedBy(String requestedBy) {
-        this.requestedBy = requestedBy;
     }
 
     public Integer getQuantity() {

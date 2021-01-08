@@ -64,7 +64,11 @@ public class RequestMedicine extends AppCompatActivity {
         String barcode = barcodenum.getText().toString();
         Integer amountText = Integer.parseInt(String.valueOf(amount.getText()));
 
-        DocumentReference documentReference = firebaseFirestore.collection("requestedMedicine").document(barcode);
+        DocumentReference documentReference = firebaseFirestore
+                .collection("user")
+                .document(userID)
+                .collection("requestedMedicine")
+                .document(barcode);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -73,7 +77,7 @@ public class RequestMedicine extends AppCompatActivity {
                     RequestClass requestClass = document.toObject(RequestClass.class);
                     if (document.exists()) {
                         System.out.println("Dosya var");
-                        documentReference.update("quantity", requestClass.getQuantity() +amountText )
+                        documentReference.update("quantity", requestClass.getQuantity() + amountText)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -84,12 +88,12 @@ public class RequestMedicine extends AppCompatActivity {
 
                     } else {
 
-                        RequestClass requestClassToAdd = new RequestClass(medicinename, userID, barcode, amountText);
+                        RequestClass requestClassToAdd = new RequestClass(medicinename, barcode, amountText);
 
                         Map<String, Object> medicine = new HashMap<>();
 
                         medicine.put("medicineName", requestClassToAdd.getMedicineName());
-                        medicine.put("requestedBy", userID);
+                        medicine.put("barcode", requestClassToAdd.getBarcode());
                         medicine.put("quantity", requestClassToAdd.getQuantity());
 
 
@@ -98,8 +102,8 @@ public class RequestMedicine extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 AlertDialog.Builder alert = new AlertDialog.Builder(RequestMedicine.this);
                                 alert.setTitle("Information");
-                                alert.setMessage("Are you sure you want to add medication?");
-                                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+                                alert.setMessage(requestClassToAdd.getMedicineName() + " will be requested. You will be notified when it's available on the inventory.");
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         Toast.makeText(RequestMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();

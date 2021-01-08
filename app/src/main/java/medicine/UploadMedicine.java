@@ -37,6 +37,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -46,8 +47,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.Data;
 import models.DonatedMedicines;
 import models.MedicineClass;
+import models.RequestClass;
+import models.Token;
+import notifications.Client;
+import notifications.MyResponse;
+import notifications.NotificationSender;
+import notifications.NotificationService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class UploadMedicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String TAG = "UploadMedicine";
@@ -67,6 +79,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
     private Spinner spinner;
     private Button uploadButton;
+    private NotificationService notificationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +89,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         CollectionReference organizationReference = firebaseFirestore.collection("organization");
         organizationNames = new ArrayList<>();
         orgIDs = new ArrayList<>();
+        notificationService = Client.getClient("https://fcm.googleapis.com/").create(NotificationService.class);
 
         // ID's
         spinner = findViewById(R.id.spinner);
@@ -199,8 +213,10 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
             updateMedicineInventory(userID, organizationID, barcodeNoText, quantityText, orgMedicineMap);
             uploadMedicineToDB(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText, medicineMap);
 
+
         }
     }
+
 
     private void uploadMedicineToDB(String nameText, String userID, String organizationID, Integer quantityText, String barcodeNoText, String expirationDateText, Map<String, Object> medicineMap) {
         DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
@@ -216,9 +232,52 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        // Requested medicine'i check et, notification gonder.
+                                        DocumentReference notificationRef = firebaseFirestore
+                                                .collection("user"
+                                                ).document("HzLKlWtdmufJF5HJIcPt4hbdyJ02")
+                                                .collection("requestedMedicine").document(barcodeNoText);
+                                        notificationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    RequestClass requestClass = document.toObject(RequestClass.class);
+                                                    System.out.println("REQUEST CLASS " + requestClass.getBarcode());
+                                                    if (document.exists()) {
+                                                        System.out.println("Request var");
+                                                        if (requestClass.getBarcode().equals(barcodeNoText)) {
+                                                            String requestedMedicine = requestClass.getMedicineName();
+                                                            Integer requestQuantity = requestClass.getQuantity();
+
+                                                            DocumentReference tokenRef = firebaseFirestore.collection("Tokens").document("HzLKlWtdmufJF5HJIcPt4hbdyJ02");
+                                                            tokenRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        DocumentSnapshot document = task.getResult();
+                                                                        Token tokenClass = document.toObject(Token.class);
+                                                                        String userToken = tokenClass.getToken();
+                                                                        System.out.println("USER TOKEN IS" + userToken);
+                                                                        sendNotifications(userToken, "Deneme Title", "Deneme Body");
+                                                                    } else {
+                                                                        System.out.println("TASK NOT SUCCESSFUL");
+                                                                    }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            System.out.println("REQUEST CLASS BOS!");
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        UpdateToken();
+
                                         System.out.println("Quantity has been updated");
                                         progressBar.setVisibility(View.GONE);
-                                        alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Failed");
+                                        alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Successful");
                                         Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
                                     }
@@ -254,6 +313,38 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
+    public void sendNotifications(String usertoken, String title, String message) {
+        Data data = new Data(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        notificationService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().success != 1) {
+                        Toast.makeText(UploadMedicine.this, "Failed ", Toast.LENGTH_LONG);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void UpdateToken() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+        Token token = new Token(refreshToken);
+        DocumentReference updateTokenRef = firebaseFirestore
+                .collection("Tokens")
+                .document(firebaseUser.getUid());
+        updateTokenRef.set(token);
+
+    }
+
     private void updateMedicineInventory(String userid, String organizationID, String barcode, Integer quantity, Map<String, Object> organizationMedicines) {
         DocumentReference organizationReference = firebaseFirestore
                 .collection("organization"
@@ -267,7 +358,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
                     if (document.exists()) {
 
-                        System.out.println("Dosya var");
+                        System.out.println("Ilac Halihazirda var quantity arttiriliyor");
                         organizationReference.update("quantity", donatedMedicines.getQuantity() + quantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

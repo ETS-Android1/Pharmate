@@ -83,7 +83,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 startActivity(i);
                 break;
             case R.id.search:
-                if (imageUri == null) {
+               if (imageUri == null) {
                     Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
                 } else {
                     i = new Intent(this, SearchMedicine.class);

@@ -50,7 +50,6 @@ import java.util.Map;
 import models.Data;
 import models.DonatedMedicines;
 import models.MedicineClass;
-import models.RequestClass;
 import models.Token;
 import notifications.Client;
 import notifications.MyResponse;
@@ -220,6 +219,11 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
     private void uploadMedicineToDB(String nameText, String userID, String organizationID, Integer quantityText, String barcodeNoText, String expirationDateText, Map<String, Object> medicineMap) {
         DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
+        DocumentReference userDonatedMedicineRef = firebaseFirestore
+                .collection("user")
+                .document(userID)
+                .collection("donatedMedicine")
+                .document(barcodeNoText);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -232,54 +236,38 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        // Requested medicine'i check et, notification gonder.
-                                        DocumentReference notificationRef = firebaseFirestore
-                                                .collection("user"
-                                                ).document("HzLKlWtdmufJF5HJIcPt4hbdyJ02")
-                                                .collection("requestedMedicine").document(barcodeNoText);
-                                        notificationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        System.out.println("Quantity has been updated");
+                                        progressBar.setVisibility(View.GONE);
+                                        alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful");
+                                        Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
+
+                                        userDonatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     DocumentSnapshot document = task.getResult();
-                                                    RequestClass requestClass = document.toObject(RequestClass.class);
-                                                    System.out.println("REQUEST CLASS " + requestClass.getBarcode());
+                                                    MedicineClass userDonatedMedicineClass = document.toObject(MedicineClass.class);
                                                     if (document.exists()) {
-                                                        System.out.println("Request var");
-                                                        if (requestClass.getBarcode().equals(barcodeNoText)) {
-                                                            String requestedMedicine = requestClass.getMedicineName();
-                                                            Integer requestQuantity = requestClass.getQuantity();
-
-                                                            DocumentReference tokenRef = firebaseFirestore.collection("Tokens").document("HzLKlWtdmufJF5HJIcPt4hbdyJ02");
-                                                            tokenRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        DocumentSnapshot document = task.getResult();
-                                                                        Token tokenClass = document.toObject(Token.class);
-                                                                        String userToken = tokenClass.getToken();
-                                                                        System.out.println("USER TOKEN IS" + userToken);
-                                                                        sendNotifications(userToken, "Deneme Title", "Deneme Body");
-                                                                    } else {
-                                                                        System.out.println("TASK NOT SUCCESSFUL");
+                                                        System.out.println("Ilac ayni user tarafindan daha once de bagislanmis, quantity arttiriliyor");
+                                                        documentReference.update("quantity", userDonatedMedicineClass.getQuantity() + quantityText)
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        System.out.println("User'in halihazirda bagisladigi ilaclarin sayisi guncellendi PART1");
                                                                     }
-                                                                }
-                                                            });
-                                                        } else {
-                                                            System.out.println("REQUEST CLASS BOS!");
-                                                        }
-
+                                                                });
+                                                    } else {
+                                                        System.out.println("UserDonatedMedicineRef can not found");
+                                                        System.out.println("Creating field in the User Collection ");
+                                                        userDonatedMedicineRef.set(medicineMap);
                                                     }
+                                                } else {
+                                                    System.out.println("Task is unreachable");
                                                 }
                                             }
                                         });
-                                        UpdateToken();
 
-                                        System.out.println("Quantity has been updated");
-                                        progressBar.setVisibility(View.GONE);
-                                        alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Successful");
-                                        Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
-                                        progressBar.setVisibility(View.GONE);
                                     }
                                 });
                     } else {
@@ -299,6 +287,81 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                             @Override
                             public void onSuccess(Void aVoid) {
                                 progressBar.setVisibility(View.GONE);
+                                // ADDING MEDICINE TO THE USERS DONATED MEDICINE COLLECTION
+
+
+                                userDonatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            MedicineClass userDonatedMedicineClass = document.toObject(MedicineClass.class);
+                                            if (document.exists()) {
+                                                System.out.println("Ilac ayni user tarafindan daha once de bagislanmis, quantity arttiriliyor");
+                                                documentReference.update("quantity", userDonatedMedicineClass.getQuantity() + quantityText)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                System.out.println("User'in halihazirda bagisladigi ilaclarin sayisi guncellendi PART2");
+                                                                alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful");
+
+                                                            }
+                                                        });
+                                            } else {
+                                                System.out.println("UserDonatedMedicineRef can not found");
+                                                System.out.println("Creating field in the User Collection ");
+                                                userDonatedMedicineRef.set(medicineMap);
+                                            }
+                                        } else {
+                                            System.out.println("Task is unreachable");
+                                        }
+                                    }
+                                });
+
+
+//                                // Requested medicine'i check et, notification gonder.
+//
+//                                DocumentReference notificationRef = firebaseFirestore
+//                                        .collection("user"
+//                                        ).document(targetMedicineUserID)
+//                                        .collection("requestedMedicine").document(barcodeNoText);
+//                                notificationRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                        if (task.isSuccessful()) {
+//                                            DocumentSnapshot document = task.getResult();
+//                                            RequestClass requestClass = document.toObject(RequestClass.class);
+//                                            System.out.println("REQUEST CLASS " + requestClass.getBarcode());
+//                                            if (document.exists()) {
+//                                                System.out.println("Request var");
+//                                                if (requestClass.getBarcode().equals(barcodeNoText)) {
+//                                                    String requestedMedicine = requestClass.getMedicineName();
+//                                                    Integer requestQuantity = requestClass.getQuantity();
+//
+//                                                    DocumentReference tokenRef = firebaseFirestore.collection("Tokens").document("HzLKlWtdmufJF5HJIcPt4hbdyJ02");
+//                                                    tokenRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                                        @Override
+//                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                                            if (task.isSuccessful()) {
+//                                                                DocumentSnapshot document = task.getResult();
+//                                                                Token tokenClass = document.toObject(Token.class);
+//                                                                String userToken = tokenClass.getToken();
+//                                                                System.out.println("USER TOKEN IS" + userToken);
+//                                                                sendNotifications(userToken, "Deneme Title", "Deneme Body");
+//                                                            } else {
+//                                                                System.out.println("TASK NOT SUCCESSFUL");
+//                                                            }
+//                                                        }
+//                                                    });
+//                                                } else {
+//                                                    System.out.println("REQUEST CLASS BOS!");
+//                                                }
+//
+//                                            }
+//                                        }
+//                                    }
+//                                });
+                                UpdateToken();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -358,12 +421,12 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                     DonatedMedicines donatedMedicines = document.toObject(DonatedMedicines.class);
                     if (document.exists()) {
 
-                        System.out.println("Ilac Halihazirda var quantity arttiriliyor");
+                        System.out.println("Ayni Ilac Daha Once de Bu Organizasyona Bagislandigi Icin Halihazirda var. Quantity arttiriliyor");
                         organizationReference.update("quantity", donatedMedicines.getQuantity() + quantity)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        System.out.println("Quantity has been updated");
+                                        System.out.println("Ilacin Organization Envanterindeki Quantity'si Arttiriliyor");
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 });

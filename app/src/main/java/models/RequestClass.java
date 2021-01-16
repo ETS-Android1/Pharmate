@@ -2,7 +2,7 @@ package models;
 
 public class RequestClass {
 
-    private String medicineName, barcode;
+    private String medicineName, barcode, targerUserID;
     private Integer quantity;
 
     public RequestClass() {
@@ -13,6 +13,21 @@ public class RequestClass {
         this.medicineName = medicineName;
         this.barcode = barcode;
         this.quantity = quantity;
+    }
+
+    public RequestClass(String medicineName, String barcode, String targerUserID, Integer quantity) {
+        this.medicineName = medicineName;
+        this.barcode = barcode;
+        this.targerUserID = targerUserID;
+        this.quantity = quantity;
+    }
+
+    public String getTargerUserID() {
+        return targerUserID;
+    }
+
+    public void setTargerUserID(String targerUserID) {
+        this.targerUserID = targerUserID;
     }
 
     public String getMedicineName() {

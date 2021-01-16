@@ -76,28 +76,38 @@ public class RequestMedicine extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     RequestClass requestClass = document.toObject(RequestClass.class);
                     if (document.exists()) {
-                        System.out.println("Dosya var");
+                        System.out.println("Bu User icin Ayni Barkod Numarali Request Mevcut");
                         documentReference.update("quantity", requestClass.getQuantity() + amountText)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        System.out.println("Quantity has been updated");
+                                        System.out.println("Bu Requestin Quantity'si Arttirildi");
                                     }
                                 });
 
 
                     } else {
 
-                        RequestClass requestClassToAdd = new RequestClass(medicinename, barcode, amountText);
+                        RequestClass requestClassToAdd = new RequestClass(medicinename, barcode, userID, amountText);
 
-                        Map<String, Object> medicine = new HashMap<>();
+                        Map<String, Object> requestedMedicineInfo = new HashMap<>();
 
-                        medicine.put("medicineName", requestClassToAdd.getMedicineName());
-                        medicine.put("barcode", requestClassToAdd.getBarcode());
-                        medicine.put("quantity", requestClassToAdd.getQuantity());
+                        requestedMedicineInfo.put("medicineName", requestClassToAdd.getMedicineName());
+                        requestedMedicineInfo.put("barcode", requestClassToAdd.getBarcode());
+                        requestedMedicineInfo.put("quantity", requestClassToAdd.getQuantity());
+                        requestedMedicineInfo.put("requestedBy", requestClassToAdd.getTargerUserID());
 
-
-                        documentReference.set(medicine).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        // sending targetUSERID and BARCODE NUMBER to the UPLOAD MEDICINE activity with shared preferences
+//                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+//                        SharedPreferences.Editor editor = pref.edit();
+//
+//                        editor.putString("requestedMedicineName", requestClassToAdd.getMedicineName()); // Storing string
+//                        editor.putString("requestedMedicineBarcode", requestClassToAdd.getBarcode()); //
+//                        editor.putString("requestedBy", requestClassToAdd.getTargerUserID()); //
+//                        editor.putInt("quantity", requestClassToAdd.getQuantity()); // Storing integer
+//
+//                        editor.commit(); // commit changes
+                        documentReference.set(requestedMedicineInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 AlertDialog.Builder alert = new AlertDialog.Builder(RequestMedicine.this);

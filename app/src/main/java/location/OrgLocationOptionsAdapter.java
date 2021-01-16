@@ -28,10 +28,7 @@ public class OrgLocationOptionsAdapter extends FirestoreRecyclerAdapter<Organiza
     protected void onBindViewHolder(@NonNull OrgLocationOptionsAdapter.OrganizationLocationHolder holder, int position, @NonNull OrganizationClass model) {
 
         holder.textViewManager.setText(model.getOrganizationName());
-        System.out.println("OrgName" + model.getOrganizationName());
         holder.textViewCity.setText(model.getCity());
-        System.out.println("City" + model.getCity());
-
     }
 
     @NonNull

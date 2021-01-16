@@ -63,7 +63,7 @@ public class Frag1 extends Fragment {
         List<String> userMails = new ArrayList<>();
         // Getting User Email Addresses From Firestore and
         // Check if the user logins from the correct screen
-
+        checkUserMail("", userMails, userRef);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -43,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -55,6 +56,7 @@ import static android.graphics.Color.TRANSPARENT;
 public class PersonalInformation extends AppCompatActivity {
     private static final String TAG = "PersonalInformation";
     public static Uri imageUri;
+    public static String profilePictureURL;
     AwesomeValidation awesomeValidation;
     EditText name, userSurname, userTurkishID, userContact, userAddress, userBirthDate;
     String nameperson, surnameperson, turkisIdperson, contactperson, birthdateperson, addressperson;
@@ -71,7 +73,6 @@ public class PersonalInformation extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private DatePickerDialog.OnDateSetListener nOnDateSetListener;
 
-    // KULLANICININ BU FORMU DOLDURDUĞUNU UYGULAMA BOYUNCA KONTROL EDİLMESİ GEREKİYOR.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +98,7 @@ public class PersonalInformation extends AppCompatActivity {
         userBirthDate = findViewById(R.id.birthDateText);
         update = findViewById(R.id.button3);
 
-      //  sharedPreferences=this.getSharedPreferences("users", Context.MODE_PRIVATE);
+        //  sharedPreferences=this.getSharedPreferences("users", Context.MODE_PRIVATE);
 
 
         userBirthDate.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +139,15 @@ public class PersonalInformation extends AppCompatActivity {
                 userContact.setText(value.getString("contact"));
                 userAddress.setText(value.getString("address"));
                 userBirthDate.setText(value.getString("birthDate"));
+                profilePictureURL = value.getString("idURL");
+
+
+                if (!profilePictureURL.isEmpty()) {
+                    Picasso.get().load(profilePictureURL).into(picture);
+                } else {
+                    picture.setImageResource(R.drawable.ic_account_user);
+                }
+
 
             }
         });
@@ -155,9 +165,16 @@ public class PersonalInformation extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    StorageReference imageRef = FirebaseStorage.getInstance().getReference(imageName);
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     String userEmail = firebaseUser.getEmail();
+
+                    // Task Uri
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isSuccessful()) ;
+                    Uri downloadImageUri = uriTask.getResult();
+                    if (uriTask.isSuccessful()) {
+                        System.out.println(downloadImageUri);
+                    }
 
                     String Name = name.getText().toString();
                     String surName = userSurname.getText().toString();
@@ -174,6 +191,8 @@ public class PersonalInformation extends AppCompatActivity {
                     postData.put("contact", contact);
                     postData.put("address", address);
                     postData.put("birthDate", birthdate);
+                    assert downloadImageUri != null;
+                    postData.put("idURL", downloadImageUri.toString());
 
 
                     firebaseFirestore.collection("user").document(userId).update(postData).addOnCompleteListener(new OnCompleteListener<Void>() {

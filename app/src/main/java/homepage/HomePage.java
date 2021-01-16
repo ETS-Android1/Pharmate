@@ -22,15 +22,15 @@ import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
 import organization.OrganizatonListPage;
-import users.PersonalInformation;
-import static users.PersonalInformation.imageUri;
+import users.UserProfilePage;
+
+import static users.PersonalInformation.profilePictureURL;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
-    private FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private CardView donateMed, searchMed, requestMed, listOrg, about, profile;
-
 
 
     @Override
@@ -50,24 +50,20 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         System.out.println(userName);
 
         if (userName != null) {
-            TextView userText = (TextView) findViewById(R.id.userNameText1);
+            TextView userText = findViewById(R.id.userNameText1);
             userText.setText(userName);
         } else {
-            TextView userText = (TextView) findViewById(R.id.userNameText1);
+            TextView userText = findViewById(R.id.userNameText1);
             userText.setText("User");
         }
 
 
-
-
-
-
-        donateMed.setOnClickListener((View.OnClickListener) this);
-        searchMed.setOnClickListener((View.OnClickListener) this);
-        requestMed.setOnClickListener((View.OnClickListener) this);
-        listOrg.setOnClickListener((View.OnClickListener) this);
-        about.setOnClickListener((View.OnClickListener) this);
-        profile.setOnClickListener((View.OnClickListener) this);
+        donateMed.setOnClickListener(this);
+        searchMed.setOnClickListener(this);
+        requestMed.setOnClickListener(this);
+        listOrg.setOnClickListener(this);
+        about.setOnClickListener(this);
+        profile.setOnClickListener(this);
     }
 
     @Override
@@ -76,14 +72,16 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
         switch (view.getId()) {
             case R.id.donate:
-//                if(imageUri==null){
-                    Toast.makeText(this,"Please upload image ",Toast.LENGTH_LONG).show();
-//                }else{
-                i = new Intent(this, UploadMedicine.class);
-                startActivity(i);
-                break;
+                if (profilePictureURL.equals("")) {
+                    Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
+                } else {
+                    i = new Intent(this, UploadMedicine.class);
+                    startActivity(i);
+                    break;
+                }
+
             case R.id.search:
-               if (imageUri == null) {
+                if (profilePictureURL.equals("")) {
                     Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
                 } else {
                     i = new Intent(this, SearchMedicine.class);
@@ -103,7 +101,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 startActivity(i);
                 break;
             case R.id.profile:
-                i = new Intent(this, PersonalInformation.class);
+                i = new Intent(this, UserProfilePage.class);
                 startActivity(i);
                 break;
             default:
@@ -139,7 +137,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 Logout();
                 break;
             }
-            case R.id.reset:{
+            case R.id.reset: {
                 resetPassword();
                 break;
             }
@@ -148,8 +146,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void resetPassword() {
-      Intent intent=new Intent(HomePage.this, ResetPasswrd.class);
-      startActivity(intent);
+        Intent intent = new Intent(HomePage.this, ResetPasswrd.class);
+        startActivity(intent);
 
     }
 

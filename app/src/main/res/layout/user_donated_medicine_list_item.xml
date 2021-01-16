@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardCornerRadius="15dp"
     app:cardBackgroundColor="@color/blue"
-    app:cardUseCompatPadding="true"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="15dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,32 +20,32 @@
             android:id="@+id/request_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:textColor="#ffffff"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:maxLines="1"
-            android:layout_toStartOf="@id/request_quantity"
             android:layout_alignParentStart="true"
-            android:ellipsize="end" />
+            android:layout_toStartOf="@id/request_quantity"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/request_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/request_title"
             android:layout_alignParentStart="true"
             android:text="Description"
-            android:textColor="#ffffff"
-            android:layout_below="@id/request_title" />
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/request_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="#ffffff"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:text="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 

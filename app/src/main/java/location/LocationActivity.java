@@ -26,12 +26,11 @@ public class LocationActivity extends AppCompatActivity {
 
     private final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     public LatLng latlng;
+    public String medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
     private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
     private OrgLocationOptionsAdapter adapter;
-    private CollectionReference locationReference;
-    public String medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
-
+    private CollectionReference locationReference, medicineInventoryRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

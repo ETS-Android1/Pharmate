@@ -1,4 +1,4 @@
-package medicine;
+package users;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +13,20 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import models.RequestClass;
+import models.UserReceivedMedicineClass;
 
-
-public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<RequestClass, RequestMedicineListAdapter.RequestHolder> {
+public class UserReceivedMedicineAdapter extends FirestoreRecyclerAdapter<UserReceivedMedicineClass, UserReceivedMedicineAdapter.UserReceivedMedicineHolder> {
     private OnItemClickListener listener;
 
-    public RequestMedicineListAdapter(@NonNull FirestoreRecyclerOptions<RequestClass> options) {
+    public UserReceivedMedicineAdapter(@NonNull FirestoreRecyclerOptions<UserReceivedMedicineClass> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull RequestHolder holder, int position, @NonNull RequestClass model) {
+    protected void onBindViewHolder(@NonNull UserReceivedMedicineAdapter.UserReceivedMedicineHolder holder, int position, @NonNull UserReceivedMedicineClass model) {
 
-        holder.textViewRequestName.setText(model.getMedicineName());
-        holder.textViewBarcodeNumber.setText(model.getBarcode());
+        holder.textViewRequestName.setText(model.getNameOfMedicine());
+        holder.textViewBarcodeNumber.setText(model.getBarcodeNumber());
         holder.textViewQuantity.setText(String.valueOf(model.getQuantity()));
 
 
@@ -35,28 +34,20 @@ public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<Request
 
     @NonNull
     @Override
-    public RequestHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.medicinerequest_list_item,
+    public UserReceivedMedicineHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_donated_medicine_list_item,
                 parent, false);
-        return new RequestHolder(view);
+        return new UserReceivedMedicineAdapter.UserReceivedMedicineHolder(view);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(DocumentSnapshot documentSnapshot, int position);
-    }
-
-    class RequestHolder extends RecyclerView.ViewHolder {
+    class UserReceivedMedicineHolder extends RecyclerView.ViewHolder {
 
         TextView textViewRequestName;
         TextView textViewBarcodeNumber;
         TextView textViewQuantity;
 
 
-        public RequestHolder(@NonNull View itemView) {
+        public UserReceivedMedicineHolder(@NonNull View itemView) {
             super(itemView);
             textViewRequestName = itemView.findViewById(R.id.request_title);
             textViewBarcodeNumber = itemView.findViewById(R.id.request_description);
@@ -74,5 +65,12 @@ public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<Request
             });
         }
     }
-}
 
+    public interface OnItemClickListener {
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+}

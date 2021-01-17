@@ -50,6 +50,7 @@ import java.util.Map;
 import models.Data;
 import models.DonatedMedicines;
 import models.MedicineClass;
+import models.OrganizationDonatedMedicineClass;
 import models.Token;
 import notifications.Client;
 import notifications.MyResponse;
@@ -209,7 +210,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
             Map<String, Object> medicineMap = new HashMap<>();
 
 
-            updateMedicineInventory(userID, organizationID, barcodeNoText, quantityText, orgMedicineMap);
+            updateMedicineInventory(nameText, userID, organizationID, barcodeNoText, quantityText, expirationDateText, orgMedicineMap);
             uploadMedicineToDB(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText, medicineMap);
 
 
@@ -218,6 +219,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
 
     private void uploadMedicineToDB(String nameText, String userID, String organizationID, Integer quantityText, String barcodeNoText, String expirationDateText, Map<String, Object> medicineMap) {
+
+
         DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
         DocumentReference userDonatedMedicineRef = firebaseFirestore
                 .collection("user")
@@ -288,7 +291,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                             public void onSuccess(Void aVoid) {
                                 progressBar.setVisibility(View.GONE);
                                 // ADDING MEDICINE TO THE USERS DONATED MEDICINE COLLECTION
-
+                                String userToken = "flkmDq1_StWKAKLU0EHySj:APA91bGfljn5EZBcXe0lNAFZwa5wsrdAOXZhiI_fgl_Q7jGTAUROjgiasQG-NBKVttqlQq0H65S9JFDAEFMlfPAMNq76qFlymvlTBapdqhVuq6xOb6bKY3V2H4pV922Df_lGeZlSKqXC";
+                                sendNotifications(userToken, "Deneme Title", "Deneme Body");
 
                                 userDonatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
@@ -408,7 +412,9 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    private void updateMedicineInventory(String userid, String organizationID, String barcode, Integer quantity, Map<String, Object> organizationMedicines) {
+    private void updateMedicineInventory(String medicineName, String userid, String organizationID, String barcode, Integer quantity, String expirationDate, Map<String, Object> organizationMedicines) {
+        String userToken = "flkmDq1_StWKAKLU0EHySj:APA91bGfljn5EZBcXe0lNAFZwa5wsrdAOXZhiI_fgl_Q7jGTAUROjgiasQG-NBKVttqlQq0H65S9JFDAEFMlfPAMNq76qFlymvlTBapdqhVuq6xOb6bKY3V2H4pV922Df_lGeZlSKqXC";
+        sendNotifications(userToken, "Deneme Title", "Deneme Body");
         DocumentReference organizationReference = firebaseFirestore
                 .collection("organization"
                 ).document(organizationID)
@@ -431,10 +437,18 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                     }
                                 });
                     } else {
+                        OrganizationDonatedMedicineClass orgDonatedMed = new OrganizationDonatedMedicineClass(medicineName, barcode, organizationID, userid, expirationDate, quantity);
+                        organizationMedicines.put("quantity", orgDonatedMed.getQuantity());
+                        organizationMedicines.put("nameOfMedicine", orgDonatedMed.getNameOfMedicine());
+                        organizationMedicines.put("barcodeNumber", orgDonatedMed.getBarcodeNumber());
+                        organizationMedicines.put("expirationdate", orgDonatedMed.getExpirationdate());
+                        organizationMedicines.put("donatedBy", orgDonatedMed.getDonatedBy());
+                        organizationMedicines.put("lastDonationTo", orgDonatedMed.getlastDonationTo());
 
-                        DonatedMedicines donatedMedicinesToAdd = new DonatedMedicines(barcode, userid, quantity);
-                        organizationMedicines.put("quantity", donatedMedicinesToAdd.getQuantity());
-                        organizationMedicines.put("lastDonatedBy", donatedMedicinesToAdd.getUserID());
+
+//                        DonatedMedicines donatedMedicinesToAdd = new DonatedMedicines(barcode, userid, quantity);
+
+
                         organizationReference.set(organizationMedicines).addOnSuccessListener(new OnSuccessListener<Void>() {
 
                             @Override

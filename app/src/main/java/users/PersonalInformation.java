@@ -139,12 +139,13 @@ public class PersonalInformation extends AppCompatActivity {
                 userContact.setText(value.getString("contact"));
                 userAddress.setText(value.getString("address"));
                 userBirthDate.setText(value.getString("birthDate"));
-                profilePictureURL = value.getString("idURL");
+                profilePictureURL = value.getString("photoURL");
 
 
                 if (!profilePictureURL.isEmpty()) {
                     Picasso.get().load(profilePictureURL).into(picture);
                 } else {
+                    profilePictureURL = "";
                     picture.setImageResource(R.drawable.ic_account_user);
                 }
 

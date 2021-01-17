@@ -44,6 +44,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     public Double latitude;
     public Double longitude;
     public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
+    public Integer inventoryQuantity;
     EditText name, city, phone, email, medicinename, barcodenumber, quantitiy, orgId, userId;
     MapView mapView;
     private FirebaseFirestore firebaseFirestore;
@@ -63,18 +64,9 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-//                CameraPosition cameraPosition = new CameraPosition
-//                .Builder().target(new LatLng(latitude, longitude))
-//                .zoom(15)
-//                .build();
-//        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//        googleMap.addMarker(new MarkerOptions()
-//                .position(new LatLng(longitude, longitude)));
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-//         DocumentReference orgMedReference = FirebaseFirestore
-//                .getInstance().document("sampleData/myData");
+
 
 
         name = findViewById(R.id.OrgName);
@@ -89,7 +81,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
 
         Intent intent = getIntent();
-        medicineName = intent.getStringExtra("nameOfMedicine");
+        medicineName = intent.getStringExtra("medicineName");
         medicinename.setText("Medicine Name: " + medicineName);
         medicinename.setEnabled(false);
         barcodeNumber = intent.getStringExtra("barcodeNumber");
@@ -124,11 +116,31 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 .zoom(15)
                 .build();
         markerOptions = new MarkerOptions().position(new LatLng(latitude, longitude));
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNum = phone.getText().toString();
+                Intent intent = new Intent(ReachOrg.this, CallPhone.class);
+                intent.putExtra("contact", phoneNum);
+                startActivity(intent);
+
+            }
+        });
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mail = email.getText().toString();
+                Intent intent = new Intent(ReachOrg.this, SendEmail.class);
+                intent.putExtra("email", mail);
+                startActivity(intent);
+
+            }
+        });
 //
 
 
     }
-
     public void informClick(View view) {
 
         try {
@@ -147,13 +159,13 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                         DocumentSnapshot document = task.getResult();
                         ReceivedMedicines receivedMedicines = document.toObject(ReceivedMedicines.class);
                         if (document.exists()) {
-                            System.out.println("Dosya var");
+                            System.out.println("Istenilen Ilac Envanterde Mevcut");
                             if (receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity) >= 0) {
                                 orgMedReference.update("quantity", receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                System.out.println("Ilac Bagislandi ve Sayisi Guncellendi");
+                                                System.out.println("Ilac Basariyla Bagislandi ve Envanter Guncellendi");
 
                                                 DocumentReference donatedMedicineRef = firebaseFirestore
                                                         .collection("organization")
@@ -167,11 +179,11 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                         DocumentSnapshot donatedMedicineSnap = task.getResult();
                                                         DonatedMedicines donatedToUsers = donatedMedicineSnap.toObject(DonatedMedicines.class);
                                                         if (donatedMedicineSnap.exists()) {
-                                                            System.out.println("Updating the Medicine Quantity.");
+                                                            System.out.println("Bu Ilac Daha Once de Bagislanmis. Bagis miktari kadar sayi arttiriliyor.");
 
                                                             donatedMedicineRef.update("quantity", donatedToUsers.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
                                                         } else {
-
+                                                            System.out.println("Bu ilac ilk defa bagislaniyor. Veritabanina ekleniyor");
                                                             HashMap<String, Object> receiveMedicineMap = new HashMap<>();
                                                             ReceivedMedicines receivedMedicines = new ReceivedMedicines(receiverUserID, barcodeNumber, Integer.parseInt(medicineReceiveQuantity));
                                                             receiveMedicineMap.put("quantity", receivedMedicines.getQuantity());
@@ -228,7 +240,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                         });
                             } else {
                                 Intent intent = new Intent(ReachOrg.this, HomePage.class);
-                                alertView("Insufficient Stocks. Please Try Again Later", "Donation Successful", intent);
+                                alertView("Insufficient Stocks. Please Try Again Later", "Donation Failed", intent);
                             }
                         } else {
                             Toast.makeText(ReachOrg.this, "Insufficient Stocks", Toast.LENGTH_LONG).show();

@@ -1,4 +1,4 @@
-package users;
+package organization;
 
 import android.os.Bundle;
 
@@ -15,20 +15,20 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import models.UserReceivedMedicineClass;
+import models.OrganizationReceivedMedicineClass;
 
-public class UserReceivedMedicines extends AppCompatActivity {
+public class OrganizationReceivedMedicines extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private UserReceivedMedicineAdapter receivedMedicineAdapter;
+    private OrganizationReceivedMedicineAdapter receivedMedicineAdapter;
     RecyclerView recyclerView;
-    private CollectionReference userReceivedMedicineRef;
-    private DocumentReference userReceivedMedicinesRef;
+    private CollectionReference orgReceivedMedicineRef;
+    private DocumentReference orgReceivedMedicinesRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_received_medicines);
-        recyclerView = findViewById(R.id.receivedMedicineListRecyclerView);
+        setContentView(R.layout.activity_organization_received_medicines);
+        recyclerView = findViewById(R.id.orgReceivedMedicineListRecyclerView);
         setUpRecyclerView();
     }
 
@@ -39,17 +39,17 @@ public class UserReceivedMedicines extends AppCompatActivity {
 
         System.out.println(userID);
 
-        CollectionReference userReceivedMedicineRef = db
-                .collection("user"
+        CollectionReference orgReceivedMedicineRef = db
+                .collection("organization"
                 ).document(userID)
                 .collection("receivedMedicine");
-        Query requestListQuery = userReceivedMedicineRef.whereNotEqualTo("barcodeNumber", "");
+        Query requestListQuery = orgReceivedMedicineRef.whereNotEqualTo("barcodeNumber", "");
 
-        FirestoreRecyclerOptions<UserReceivedMedicineClass> options1 = new FirestoreRecyclerOptions.Builder<UserReceivedMedicineClass>()
-                .setQuery(requestListQuery, UserReceivedMedicineClass.class)
+        FirestoreRecyclerOptions<OrganizationReceivedMedicineClass> options = new FirestoreRecyclerOptions.Builder<OrganizationReceivedMedicineClass>()
+                .setQuery(requestListQuery, OrganizationReceivedMedicineClass.class)
                 .build();
 
-        receivedMedicineAdapter = new UserReceivedMedicineAdapter(options1);
+        receivedMedicineAdapter = new OrganizationReceivedMedicineAdapter(options);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

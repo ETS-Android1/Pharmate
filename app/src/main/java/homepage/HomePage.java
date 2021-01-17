@@ -72,13 +72,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
         switch (view.getId()) {
             case R.id.donate:
-                if (profilePictureURL.equals("")) {
-                    Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
-                } else {
                     i = new Intent(this, UploadMedicine.class);
                     startActivity(i);
                     break;
-                }
 
             case R.id.search:
                 if (profilePictureURL.equals("")) {

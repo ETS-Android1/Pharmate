@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import medicine.RequestMedicineList;
 import medicine.SearchMedicine;
 import medicine.UploadMedicine;
-import organization.OrgInformationPage;
+import organization.OrganizationProfilePage;
 import organization.OrganizatonListPage;
 
 public class HomePageOrg extends AppCompatActivity implements View.OnClickListener{
@@ -86,7 +86,7 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
                 startActivity(i);
                 break;
             case R.id.profile1:
-                i = new Intent(this, OrgInformationPage.class);
+                i = new Intent(this, OrganizationProfilePage.class);
                 startActivity(i);
                 break;
             default:

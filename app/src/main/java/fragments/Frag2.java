@@ -31,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import homepage.HomePage;
+import homepage.HomePageOrg;
 
 public class Frag2 extends Fragment {
     public boolean isOrg;
@@ -69,7 +69,7 @@ public class Frag2 extends Fragment {
                             if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                 Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
-                                Intent _intent = new Intent(getActivity(), HomePage.class);
+                                Intent _intent = new Intent(getActivity(), HomePageOrg.class);
                                 startActivity(_intent);
                                 getActivity().finish();
                             } else {

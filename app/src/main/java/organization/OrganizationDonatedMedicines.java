@@ -1,4 +1,4 @@
-package users;
+package organization;
 
 import android.os.Bundle;
 
@@ -11,24 +11,21 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import models.UserReceivedMedicineClass;
+import models.OrganizationDonatedMedicineClass;
 
-public class UserReceivedMedicines extends AppCompatActivity {
+public class OrganizationDonatedMedicines extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private UserReceivedMedicineAdapter receivedMedicineAdapter;
+    private OrganizationDonatedMedicineAdapter donatedMedicineAdapter;
     RecyclerView recyclerView;
-    private CollectionReference userReceivedMedicineRef;
-    private DocumentReference userReceivedMedicinesRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_received_medicines);
-        recyclerView = findViewById(R.id.receivedMedicineListRecyclerView);
+        setContentView(R.layout.activity_organization_donated_medicines);
+        recyclerView = findViewById(R.id.orgDonatedMedicineListRecyclerView);
         setUpRecyclerView();
     }
 
@@ -39,33 +36,33 @@ public class UserReceivedMedicines extends AppCompatActivity {
 
         System.out.println(userID);
 
-        CollectionReference userReceivedMedicineRef = db
-                .collection("user"
+        CollectionReference orgDonatedMedicinesRef = db
+                .collection("organization"
                 ).document(userID)
-                .collection("receivedMedicine");
-        Query requestListQuery = userReceivedMedicineRef.whereNotEqualTo("barcodeNumber", "");
+                .collection("donatedMedicine");
+        Query requestListQuery = orgDonatedMedicinesRef.whereNotEqualTo("barcodeNumber", "");
 
-        FirestoreRecyclerOptions<UserReceivedMedicineClass> options1 = new FirestoreRecyclerOptions.Builder<UserReceivedMedicineClass>()
-                .setQuery(requestListQuery, UserReceivedMedicineClass.class)
+        FirestoreRecyclerOptions<OrganizationDonatedMedicineClass> options = new FirestoreRecyclerOptions.Builder<OrganizationDonatedMedicineClass>()
+                .setQuery(requestListQuery, OrganizationDonatedMedicineClass.class)
                 .build();
 
-        receivedMedicineAdapter = new UserReceivedMedicineAdapter(options1);
+        donatedMedicineAdapter = new OrganizationDonatedMedicineAdapter(options);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(receivedMedicineAdapter);
+        recyclerView.setAdapter(donatedMedicineAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        receivedMedicineAdapter.startListening();
+        donatedMedicineAdapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        receivedMedicineAdapter.stopListening();
+        donatedMedicineAdapter.stopListening();
 
     }
 }

@@ -161,7 +161,7 @@ public class SignUp extends AppCompatActivity {
                                                 String id = firebaseUser.getUid();
                                                 LatLng userLocation = getLocation();
                                                 GeoPoint geoPoint = new GeoPoint(userLocation.latitude, userLocation.longitude);
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, null, geoPoint);
+                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, "", geoPoint);
 
 
                                                 HashMap<String, Object> postUserData = new HashMap<>();
@@ -175,6 +175,7 @@ public class SignUp extends AppCompatActivity {
                                                 postUserData.put("address", userClassToAdd.getAddress());
                                                 postUserData.put("birthDate", userClassToAdd.getBirthdate());
                                                 postUserData.put("location", userClassToAdd.getLocation());
+                                                postUserData.put("photoURL", userClassToAdd.getPhotoURL());
 
                                                 firebaseFirestore.collection("user").document(id).set(postUserData);
                                                 Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();

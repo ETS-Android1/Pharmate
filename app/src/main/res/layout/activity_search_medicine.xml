@@ -24,7 +24,7 @@
         android:id="@+id/imageButtonsearch"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="350dp"
+        android:layout_marginLeft="320dp"
         android:layout_marginTop="25dp"
         android:background="@color/blue"
         app:srcCompat="@drawable/ic_camera_alt_black_24dp"

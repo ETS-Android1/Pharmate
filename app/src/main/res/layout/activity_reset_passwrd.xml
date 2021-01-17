@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="391dp"
-        android:layout_height="164dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="76dp"
@@ -24,8 +24,8 @@
 
     <EditText
         android:id="@+id/currentpassword"
-        android:layout_width="307dp"
-        android:layout_height="72dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="68dp"
@@ -45,8 +45,8 @@
 
     <EditText
         android:id="@+id/newpassword"
-        android:layout_width="303dp"
-        android:layout_height="78dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="68dp"

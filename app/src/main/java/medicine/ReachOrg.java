@@ -173,7 +173,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
                                                                     @Override
                                                                     public void onSuccess(Void aVoid) {
-                                                                        Toast.makeText(ReachOrg.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                                                        Intent intent = new Intent(ReachOrg.this, HomePage.class);
                                                                         DocumentReference medicineUpdateRef = firebaseFirestore.collection("medicine").document(barcodeNumber);
                                                                         medicineUpdateRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                             @Override
@@ -190,6 +190,8 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                                     @Override
                                                                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                                                                        Intent intent = new Intent(ReachOrg.this, HomePage.class);
+                                                                                                        alertView("Donation Successful. Organization will reach you as soon as possible.", "Donation Successful", intent);
                                                                                                         System.out.println("Ilac Medicine Listesinden de Azaltildi");
                                                                                                     }
                                                                                                 });
@@ -230,7 +232,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 }
             });
             Intent intent = new Intent(ReachOrg.this, HomePage.class);
-//            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
+            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
 
         } catch (Exception e) {
             Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();

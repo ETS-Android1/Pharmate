@@ -101,7 +101,8 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(HomePageOrg.this, MainActivity.class));
-        Toast.makeText(HomePageOrg.this,"LOGOUT SUCCESSFUL", Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomePageOrg.this, "LOGOUT SUCCESSFUL", Toast.LENGTH_SHORT).show();
+        finish();
 
     }
 
@@ -117,6 +118,7 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
         switch (item.getItemId()){
             case  R.id.logoutMenu:{
                 Logout();
+                break;
             }
             case R.id.reset:{
                 resetPassword();

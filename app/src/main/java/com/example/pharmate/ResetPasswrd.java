@@ -65,6 +65,7 @@ public class ResetPasswrd extends AppCompatActivity {
                         Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                         Toast.makeText(getApplicationContext(),"Password updated...",Toast.LENGTH_LONG).show();
                         startActivity(intent);
+                        finish();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {

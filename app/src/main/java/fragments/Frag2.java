@@ -78,7 +78,7 @@ public class Frag2 extends Fragment {
 
                             }
                         } else {
-                            Toast.makeText(getActivity(), "Please Login From User Page", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "OOPS! Something Went Wrong :( Please Check Your Network Connection", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                         }
 

@@ -88,7 +88,7 @@ public class Frag1 extends Fragment {
 
                             }
                         } else {
-                            Toast.makeText(getActivity(), "OOPS! Something Went Wrong :(", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "OOPS! Something Went Wrong :( Please Check Your Network Connection", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
                         }
 

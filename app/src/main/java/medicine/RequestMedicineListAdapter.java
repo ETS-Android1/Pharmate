@@ -26,8 +26,8 @@ public class RequestMedicineListAdapter extends FirestoreRecyclerAdapter<Request
     @Override
     protected void onBindViewHolder(@NonNull RequestHolder holder, int position, @NonNull RequestClass model) {
 
-        holder.textViewRequestName.setText(model.getMedicineName());
-        holder.textViewBarcodeNumber.setText(model.getBarcode());
+        holder.textViewRequestName.setText(model.getNameOfMedicine());
+        holder.textViewBarcodeNumber.setText(model.getBarcodeNumber());
         holder.textViewQuantity.setText(String.valueOf(model.getQuantity()));
 
 

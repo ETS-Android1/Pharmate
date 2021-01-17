@@ -145,7 +145,6 @@ public class PersonalInformation extends AppCompatActivity {
                 if (!profilePictureURL.isEmpty()) {
                     Picasso.get().load(profilePictureURL).into(picture);
                 } else {
-                    profilePictureURL = "";
                     picture.setImageResource(R.drawable.ic_account_user);
                 }
 
@@ -193,7 +192,7 @@ public class PersonalInformation extends AppCompatActivity {
                     postData.put("address", address);
                     postData.put("birthDate", birthdate);
                     assert downloadImageUri != null;
-                    postData.put("idURL", downloadImageUri.toString());
+                    postData.put("photoURL", downloadImageUri.toString());
 
 
                     firebaseFirestore.collection("user").document(userId).update(postData).addOnCompleteListener(new OnCompleteListener<Void>() {

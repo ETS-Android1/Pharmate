@@ -37,16 +37,19 @@ public class RequestMedicineList extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         String userID = firebaseUser.getUid();
         System.out.println(userID);
-        requestListReference = db.collection("requestedMedicine");
-        Query requestListQuery = requestListReference.whereEqualTo("requestedBy", userID);
 
-        FirestoreRecyclerOptions<RequestClass> options1 = new FirestoreRecyclerOptions.Builder<RequestClass>()
+        Query requestListQuery = db
+                .collection("user"
+                ).document(userID)
+                .collection("requestedMedicine");
+
+        FirestoreRecyclerOptions<RequestClass> options = new FirestoreRecyclerOptions.Builder<RequestClass>()
                 .setQuery(requestListQuery, RequestClass.class)
                 .build();
 
-        requestMedicineListAdapter = new RequestMedicineListAdapter(options1);
+        requestMedicineListAdapter = new RequestMedicineListAdapter(options);
 
-        recyclerView.setHasFixedSize(true);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(requestMedicineListAdapter);
     }

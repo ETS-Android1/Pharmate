@@ -2,6 +2,7 @@ package medicine;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,17 +28,16 @@ import com.google.firebase.storage.StorageReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import homepage.HomePage;
 import models.RequestClass;
 
 public class RequestMedicine extends AppCompatActivity {
+    EditText medicineName, barcodenum, amount;
+    Button requesting;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-
-
-    EditText medicineName,barcodenum,amount;
-    Button requesting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,10 @@ public class RequestMedicine extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        medicineName=findViewById(R.id.medicinename);
-        barcodenum=findViewById(R.id.barcode);
-        amount=findViewById(R.id.amount);
-        requesting=findViewById(R.id.requesting);
+        medicineName = findViewById(R.id.medicinename);
+        barcodenum = findViewById(R.id.barcode);
+        amount = findViewById(R.id.amount);
+        requesting = findViewById(R.id.requesting);
 
     }
 
@@ -88,35 +88,24 @@ public class RequestMedicine extends AppCompatActivity {
 
                     } else {
 
-                        RequestClass requestClassToAdd = new RequestClass(medicinename, barcode, userID, amountText);
+                        RequestClass requestClassToAdd = new RequestClass(medicinename, barcode, amountText);
 
                         Map<String, Object> requestedMedicineInfo = new HashMap<>();
 
-                        requestedMedicineInfo.put("medicineName", requestClassToAdd.getMedicineName());
-                        requestedMedicineInfo.put("barcode", requestClassToAdd.getBarcode());
+                        requestedMedicineInfo.put("nameOfMedicine", requestClassToAdd.getNameOfMedicine());
+                        requestedMedicineInfo.put("barcodeNumber", requestClassToAdd.getBarcodeNumber());
                         requestedMedicineInfo.put("quantity", requestClassToAdd.getQuantity());
-                        requestedMedicineInfo.put("requestedBy", requestClassToAdd.getTargerUserID());
 
-//                        // sending targetUSERID and BARCODE NUMBER to the UPLOAD MEDICINE activity with shared preferences
-//                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-//                        SharedPreferences.Editor editor = pref.edit();
-//
-//                        editor.putString("requestedMedicineName", requestClassToAdd.getMedicineName()); // Storing string
-//                        editor.putString("requestedMedicineBarcode", requestClassToAdd.getBarcode()); //
-//                        editor.putString("requestedBy", requestClassToAdd.getTargerUserID()); //
-//                        editor.putInt("quantity", requestClassToAdd.getQuantity()); // Storing integer
-//
-//                        editor.commit(); // commit changes
+
                         documentReference.set(requestedMedicineInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 AlertDialog.Builder alert = new AlertDialog.Builder(RequestMedicine.this);
                                 alert.setTitle("Information");
-                                alert.setMessage(requestClassToAdd.getMedicineName() + " will be requested. You will be notified when it's available on the inventory.");
+                                alert.setMessage(requestClassToAdd.getNameOfMedicine() + " will be requested. You will be notified when it's available on the inventory.");
                                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        Toast.makeText(RequestMedicine.this, "Medicine added to firestore", Toast.LENGTH_SHORT).show();
                                     }
 
                                 });
@@ -133,9 +122,10 @@ public class RequestMedicine extends AppCompatActivity {
                 }
             }
         });
+        Intent intent = new Intent(RequestMedicine.this, HomePage.class);
+        startActivity(intent);
+        finish();
     }
-
-
 
 
 }

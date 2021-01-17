@@ -3,6 +3,7 @@ package medicine;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -68,7 +69,6 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
-
         name = findViewById(R.id.OrgName);
         city = findViewById(R.id.OrgCity);
         phone = findViewById(R.id.OrgContact);
@@ -117,30 +117,9 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 .build();
         markerOptions = new MarkerOptions().position(new LatLng(latitude, longitude));
 
-        phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phoneNum = phone.getText().toString();
-                Intent intent = new Intent(ReachOrg.this, CallPhone.class);
-                intent.putExtra("contact", phoneNum);
-                startActivity(intent);
-
-            }
-        });
-        email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mail = email.getText().toString();
-                Intent intent = new Intent(ReachOrg.this, SendEmail.class);
-                intent.putExtra("email", mail);
-                startActivity(intent);
-
-            }
-        });
-//
-
 
     }
+
     public void informClick(View view) {
 
         try {
@@ -172,84 +151,86 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                         .document(orgid)
                                                         .collection("donatedMedicine").document(barcodeNumber);
 
-                                            donatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        DocumentSnapshot donatedMedicineSnap = task.getResult();
-                                                        DonatedMedicines donatedToUsers = donatedMedicineSnap.toObject(DonatedMedicines.class);
-                                                        if (donatedMedicineSnap.exists()) {
-                                                            System.out.println("Bu Ilac Daha Once de Bagislanmis. Bagis miktari kadar sayi arttiriliyor.");
+                                                donatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot donatedMedicineSnap = task.getResult();
+                                                            DonatedMedicines donatedToUsers = donatedMedicineSnap.toObject(DonatedMedicines.class);
+                                                            if (donatedMedicineSnap.exists()) {
+                                                                System.out.println("Bu Ilac Daha Once de Bagislanmis. Bagis miktari kadar sayi arttiriliyor.");
 
-                                                            donatedMedicineRef.update("quantity", donatedToUsers.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
-                                                        } else {
-                                                            System.out.println("Bu ilac ilk defa bagislaniyor. Veritabanina ekleniyor");
-                                                            HashMap<String, Object> receiveMedicineMap = new HashMap<>();
-                                                            ReceivedMedicines receivedMedicines = new ReceivedMedicines(receiverUserID, barcodeNumber, Integer.parseInt(medicineReceiveQuantity));
-                                                            receiveMedicineMap.put("quantity", receivedMedicines.getQuantity());
-                                                            receiveMedicineMap.put("lastDonatedBy", receivedMedicines.getUserID());
+                                                                donatedMedicineRef.update("quantity", donatedToUsers.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
+                                                            } else {
+                                                                System.out.println("Bu ilac ilk defa bagislaniyor. Veritabanina ekleniyor");
+                                                                HashMap<String, Object> receiveMedicineMap = new HashMap<>();
+                                                                ReceivedMedicines receivedMedicines = new ReceivedMedicines(receiverUserID, barcodeNumber, Integer.parseInt(medicineReceiveQuantity));
+                                                                receiveMedicineMap.put("quantity", receivedMedicines.getQuantity());
+                                                                receiveMedicineMap.put("lastDonatedBy", receivedMedicines.getUserID());
 
 
-                                                            donatedMedicineRef.set(receiveMedicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                donatedMedicineRef.set(receiveMedicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
 
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Toast.makeText(ReachOrg.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
-                                                                    DocumentReference medicineUpdateRef = firebaseFirestore.collection("medicine").document(barcodeNumber);
-                                                                    medicineUpdateRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                            if (task.isSuccessful()) {
-                                                                                DocumentSnapshot document = task.getResult();
-                                                                                MedicineClass medicineClass = document.toObject(MedicineClass.class);
-                                                                                if (document.exists()) {
-                                                                                    System.out.println("Ilac Medicine Listesinde Var");
-                                                                                    System.out.println("Ilac ismi" + medicineClass.getNameOfMedicine());
-                                                                                    System.out.println("Ilac Quantity" + medicineClass.getQuantity());
-                                                                                    System.out.println(Integer.parseInt(medicineReceiveQuantity));
-                                                                                    medicineUpdateRef.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
-                                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                                                @Override
-                                                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                                                    System.out.println("Ilac Medicine Listesinden de Azaltildi");
-                                                                                                }
-                                                                                            });
-                                                                                } else {
-                                                                                    System.out.println("ELSE");
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        Toast.makeText(ReachOrg.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                                                        DocumentReference medicineUpdateRef = firebaseFirestore.collection("medicine").document(barcodeNumber);
+                                                                        medicineUpdateRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                    MedicineClass medicineClass = document.toObject(MedicineClass.class);
+                                                                                    if (document.exists()) {
+                                                                                        System.out.println("Ilac Medicine Listesinde Var");
+                                                                                        System.out.println("Ilac ismi" + medicineClass.getNameOfMedicine());
+                                                                                        System.out.println("Ilac Quantity" + medicineClass.getQuantity());
+                                                                                        System.out.println(Integer.parseInt(medicineReceiveQuantity));
+                                                                                        medicineUpdateRef.update("quantity", medicineClass.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
+                                                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                    @Override
+                                                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                                                        System.out.println("Ilac Medicine Listesinden de Azaltildi");
+                                                                                                    }
+                                                                                                });
+                                                                                    } else {
+                                                                                        System.out.println("ELSE");
+                                                                                    }
+
                                                                                 }
-
                                                                             }
-                                                                        }
-                                                                    });
+                                                                        });
 
-                                                                }
+                                                                    }
 
-                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                }).addOnFailureListener(new OnFailureListener() {
 
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                                                }
-                                                            });
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                                    }
+                                                                });
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            });
+                                                });
 
                                             }
                                         });
                             } else {
                                 Intent intent = new Intent(ReachOrg.this, HomePage.class);
-                                alertView("Insufficient Stocks. Please Try Again Later", "Donation Failed", intent);
+                                alertView("Insufficient Stocks. Please try again from a different organization", "Donation Failed", intent);
                             }
                         } else {
+                            Intent intent = new Intent(ReachOrg.this, HomePage.class);
+                            alertView("Insufficient Stocks. Please try again from a different organization", "Donation Failed", intent);
                             Toast.makeText(ReachOrg.this, "Insufficient Stocks", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
             });
             Intent intent = new Intent(ReachOrg.this, HomePage.class);
-            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
+//            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
 
         } catch (Exception e) {
             Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -261,10 +242,17 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    public void send(View view) {
+    public void send(View view, String medicineName, Integer quantity) {
+        String message = "The Organization has been informed. They will reach you as soon as they can "
+                + "for your request of " + "Medicine Name/n" +
+                medicineName + " " + quantity;
+        String subject = "Pharmate Medicine Request";
+
         String mail = email.getText().toString();
-        Intent intent = new Intent(ReachOrg.this, SendEmail.class);
-        intent.putExtra("email", mail);
+        Intent intent = new Intent(Intent.ACTION_VIEW
+                , Uri.parse("mailto:" + mail));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
         startActivity(intent);
     }
 

@@ -3,6 +3,7 @@ package location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,46 +49,50 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        locationReference = firebaseFirestore.collection("organization");
-        Query getLocations = locationReference;
-        FirestoreRecyclerOptions<OrganizationClass> options = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
-                .setQuery(getLocations, OrganizationClass.class)
-                .build();
-        adapter = new OrgLocationOptionsAdapter(options);
-        adapter.setOnItemClickListener(new OrgLocationOptionsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+        try {
+            locationReference = firebaseFirestore.collection("organization");
+            Query getLocations = locationReference;
+            FirestoreRecyclerOptions<OrganizationClass> options = new FirestoreRecyclerOptions.Builder<OrganizationClass>()
+                    .setQuery(getLocations, OrganizationClass.class)
+                    .build();
+            adapter = new OrgLocationOptionsAdapter(options);
+            adapter.setOnItemClickListener(new OrgLocationOptionsAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                OrganizationClass organizationClass = documentSnapshot.toObject(OrganizationClass.class);
-                String id = documentSnapshot.getId();
-                GeoPoint location = organizationClass.getLocation();
-                Double latitude = location.getLatitude();
-                Double longitude = location.getLongitude();
-                System.out.println("orgIDLocation" + organizationClass.getOrgID());
-                receiverUserID = organizationClass.getOrgID();
+                    OrganizationClass organizationClass = documentSnapshot.toObject(OrganizationClass.class);
+                    String id = documentSnapshot.getId();
+                    GeoPoint location = organizationClass.getLocation();
+                    Double latitude = location.getLatitude();
+                    Double longitude = location.getLongitude();
+                    System.out.println("orgIDLocation" + organizationClass.getOrgID());
+                    receiverUserID = organizationClass.getOrgID();
 
-                Intent intent = new Intent(LocationActivity.this, ReachOrg.class);
-                intent.putExtra("organizationName", organizationClass.getOrganizationName());
-                intent.putExtra("contact", organizationClass.getContact());
-                intent.putExtra("email", organizationClass.getEmail());
-                intent.putExtra("city", organizationClass.getCity());
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("medicineName", medicineName);
-                intent.putExtra("barcodeNumber", barcodeNumber);
-                intent.putExtra("quantity", medicineReceiveQuantity);
-                intent.putExtra("userID", receiverUserID);
-                intent.putExtra("organizationID", receiverUserID);
-                startActivity(intent);
+                    Intent intent = new Intent(LocationActivity.this, ReachOrg.class);
+                    intent.putExtra("organizationName", organizationClass.getOrganizationName());
+                    intent.putExtra("contact", organizationClass.getContact());
+                    intent.putExtra("email", organizationClass.getEmail());
+                    intent.putExtra("city", organizationClass.getCity());
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("longitude", longitude);
+                    intent.putExtra("medicineName", medicineName);
+                    intent.putExtra("barcodeNumber", barcodeNumber);
+                    intent.putExtra("quantity", medicineReceiveQuantity);
+                    intent.putExtra("userID", receiverUserID);
+                    intent.putExtra("organizationID", receiverUserID);
+                    startActivity(intent);
 
 
-            }
-        });
+                }
+            });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
 
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

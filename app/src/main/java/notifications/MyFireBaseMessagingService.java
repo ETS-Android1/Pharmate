@@ -1,6 +1,7 @@
 package notifications;
 
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 
@@ -26,8 +27,16 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.ic_baseline_check_24)
                         .setContentTitle(title)
                         .setContentText(message);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel("10001", "NOTIFICATION_CHANNEL_NAME", importance);
+            builder.setChannelId("10001");
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        notificationManager.notify(0, builder.build());
     }
 
 }

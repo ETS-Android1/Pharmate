@@ -119,85 +119,89 @@ public class SignUp extends AppCompatActivity {
 
 
     public void signUpUserClick(View view) {
-        if (awesomeValidation.validate()) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            String nameText = name.getText().toString();
-            String userSurnameText = userSurname.getText().toString();
-            String userTurkishIDText = userTurkishID.getText().toString();
-            String userAddressText = userAddress.getText().toString();
-            String userContactText = userContact.getText().toString();
-            String userBirthDayText = userBirthDate.getText().toString();
-            String email = emailText.getText().toString();
-            String password = passwordText.getText().toString();
+        try {
+            if (awesomeValidation.validate()) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                String nameText = name.getText().toString();
+                String userSurnameText = userSurname.getText().toString();
+                String userTurkishIDText = userTurkishID.getText().toString();
+                String userAddressText = userAddress.getText().toString();
+                String userContactText = userContact.getText().toString();
+                String userBirthDayText = userBirthDate.getText().toString();
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
 
-            // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
+                // bir ust satirda kullanicidan aldigimiz sifreyi asagidaki firebase'e gondermeden once
 
-            // validation islemlerini yapacagiz
+                // validation islemlerini yapacagiz
 
 
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            firebaseAuth.getCurrentUser().sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                        .setDisplayName(nameText + userSurnameText)
-                                                        .build();
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                firebaseAuth.getCurrentUser().sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                            .setDisplayName(nameText + userSurnameText)
+                                                            .build();
 
-                                                firebaseUser.updateProfile(profileUpdates)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    System.out.println("Task Successful");
+                                                    firebaseUser.updateProfile(profileUpdates)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        System.out.println("Task Successful");
+                                                                    }
                                                                 }
-                                                            }
-                                                        });
+                                                            });
 
-                                                String id = firebaseUser.getUid();
-                                                LatLng userLocation = getLocation();
-                                                GeoPoint geoPoint = new GeoPoint(userLocation.latitude, userLocation.longitude);
-                                                UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, "", geoPoint);
-
-
-                                                HashMap<String, Object> postUserData = new HashMap<>();
+                                                    String id = firebaseUser.getUid();
+                                                    LatLng userLocation = getLocation();
+                                                    GeoPoint geoPoint = new GeoPoint(userLocation.latitude, userLocation.longitude);
+                                                    UserClass userClassToAdd = new UserClass(nameText, userSurnameText, email, userTurkishIDText, userContactText, userAddressText, userBirthDayText, "", geoPoint);
 
 
-                                                postUserData.put("name", userClassToAdd.getName());
-                                                postUserData.put("surname", userClassToAdd.getSurname());
-                                                postUserData.put("userEmail", userClassToAdd.getEmail());
-                                                postUserData.put("turkishId", userClassToAdd.getTurkishId());
-                                                postUserData.put("contact", userClassToAdd.getContact());
-                                                postUserData.put("address", userClassToAdd.getAddress());
-                                                postUserData.put("birthDate", userClassToAdd.getBirthdate());
-                                                postUserData.put("location", userClassToAdd.getLocation());
-                                                postUserData.put("photoURL", userClassToAdd.getPhotoURL());
+                                                    HashMap<String, Object> postUserData = new HashMap<>();
 
-                                                firebaseFirestore.collection("user").document(id).set(postUserData);
-                                                Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();
-                                                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                                                startActivity(intent);
-                                            } else {
-                                                Toast.makeText(SignUp.this, task.getException().getMessage(),
-                                                        Toast.LENGTH_LONG).show();
+
+                                                    postUserData.put("name", userClassToAdd.getName());
+                                                    postUserData.put("surname", userClassToAdd.getSurname());
+                                                    postUserData.put("userEmail", userClassToAdd.getEmail());
+                                                    postUserData.put("turkishId", userClassToAdd.getTurkishId());
+                                                    postUserData.put("contact", userClassToAdd.getContact());
+                                                    postUserData.put("address", userClassToAdd.getAddress());
+                                                    postUserData.put("birthDate", userClassToAdd.getBirthdate());
+                                                    postUserData.put("location", userClassToAdd.getLocation());
+                                                    postUserData.put("photoURL", userClassToAdd.getPhotoURL());
+
+                                                    firebaseFirestore.collection("user").document(id).set(postUserData);
+                                                    Toast.makeText(SignUp.this, "please check your email", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                } else {
+                                                    Toast.makeText(SignUp.this, task.getException().getMessage(),
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+
                                             }
-
-                                        }
-                                    });
+                                        });
 
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SignUp.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignUp.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

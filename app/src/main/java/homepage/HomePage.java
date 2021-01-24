@@ -68,40 +68,44 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        Intent i;
+        try {
+            Intent i;
 
-        switch (view.getId()) {
-            case R.id.donate:
+            switch (view.getId()) {
+                case R.id.donate:
                     i = new Intent(this, UploadMedicine.class);
                     startActivity(i);
                     break;
 
-            case R.id.search:
-                if (profilePictureURL.equals("")) {
-                    Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
-                } else {
-                    i = new Intent(this, SearchMedicine.class);
+                case R.id.search:
+                    if (profilePictureURL.equals("")) {
+                        Toast.makeText(this, "Please upload image ", Toast.LENGTH_LONG).show();
+                    } else {
+                        i = new Intent(this, SearchMedicine.class);
+                        startActivity(i);
+                    }
+                    break;
+                case R.id.request:
+                    i = new Intent(this, RequestMedicineList.class);
                     startActivity(i);
-                }
-                break;
-            case R.id.request:
-                i = new Intent(this, RequestMedicineList.class);
-                startActivity(i);
-                break;
-            case R.id.organization:
-                i = new Intent(this, OrganizatonListPage.class);
-                startActivity(i);
-                break;
-            case R.id.about:
-                i = new Intent(this, AboutPage.class);
-                startActivity(i);
-                break;
-            case R.id.profile:
-                i = new Intent(this, UserProfilePage.class);
-                startActivity(i);
-                break;
-            default:
-                break;
+                    break;
+                case R.id.organization:
+                    i = new Intent(this, OrganizatonListPage.class);
+                    startActivity(i);
+                    break;
+                case R.id.about:
+                    i = new Intent(this, AboutPage.class);
+                    startActivity(i);
+                    break;
+                case R.id.profile:
+                    i = new Intent(this, UserProfilePage.class);
+                    startActivity(i);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

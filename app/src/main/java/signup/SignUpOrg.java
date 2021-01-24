@@ -71,74 +71,79 @@ public class SignUpOrg extends AppCompatActivity {
     }
 
     public void signUp(View view) {
-        if (awesomeValidation.validate()) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            String orgtext = OrgNameText.getText().toString();
-            String orgaddresstext = OrgAddressText.getText().toString();
-            String orgcontact = OrgContactText.getText().toString();
-            String email = emailText.getText().toString();
-            String password = passwordText.getText().toString();
+        try {
+            if (awesomeValidation.validate()) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                String orgtext = OrgNameText.getText().toString();
+                String orgaddresstext = OrgAddressText.getText().toString();
+                String orgcontact = OrgContactText.getText().toString();
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
 
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            firebaseAuth.getCurrentUser().sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                        .setDisplayName(orgtext)
-                                                        .build();
-                                                firebaseUser.updateProfile(profileUpdates)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    System.out.println("Task Successful");
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                firebaseAuth.getCurrentUser().sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                            .setDisplayName(orgtext)
+                                                            .build();
+                                                    firebaseUser.updateProfile(profileUpdates)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        System.out.println("Task Successful");
+                                                                    }
                                                                 }
-                                                            }
-                                                        });
+                                                            });
 
-                                                String id = firebaseUser.getUid();
-                                                LatLng organizationLocation = getLocation();
-                                                GeoPoint location = new GeoPoint(organizationLocation.latitude, organizationLocation.longitude);
+                                                    String id = firebaseUser.getUid();
+                                                    LatLng organizationLocation = getLocation();
+                                                    GeoPoint location = new GeoPoint(organizationLocation.latitude, organizationLocation.longitude);
 
-                                                OrganizationClass organizationClass = new OrganizationClass(id, orgaddresstext, email, orgtext, orgcontact, location);
-                                                HashMap<String, Object> postOrgData = new HashMap<>();
+                                                    OrganizationClass organizationClass = new OrganizationClass(id, orgaddresstext, email, orgtext, orgcontact, location);
+                                                    HashMap<String, Object> postOrgData = new HashMap<>();
 
-                                                postOrgData.put("organizationName", organizationClass.getOrganizationName());
-                                                postOrgData.put("contact", organizationClass.getContact());
-                                                postOrgData.put("city", organizationClass.getCity());
-                                                postOrgData.put("location", organizationClass.getLocation());
-                                                postOrgData.put("email", organizationClass.getEmail());
-                                                postOrgData.put("orgID", organizationClass.getOrgID());
+                                                    postOrgData.put("organizationName", organizationClass.getOrganizationName());
+                                                    postOrgData.put("contact", organizationClass.getContact());
+                                                    postOrgData.put("city", organizationClass.getCity());
+                                                    postOrgData.put("location", organizationClass.getLocation());
+                                                    postOrgData.put("email", organizationClass.getEmail());
+                                                    postOrgData.put("orgID", organizationClass.getOrgID());
 
-                                                firebaseFirestore.collection("organization").document(id).set(postOrgData);
-                                                Toast.makeText(SignUpOrg.this, "please check your email", Toast.LENGTH_LONG).show();
-                                                Intent intent = new Intent(SignUpOrg.this, Choose.class);
-                                                startActivity(intent);
-                                            } else {
-                                                Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
-                                                        Toast.LENGTH_LONG).show();
+                                                    firebaseFirestore.collection("organization").document(id).set(postOrgData);
+                                                    Toast.makeText(SignUpOrg.this, "please check your email", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(SignUpOrg.this, Choose.class);
+                                                    startActivity(intent);
+                                                } else {
+                                                    Toast.makeText(SignUpOrg.this, task.getException().getMessage(),
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+
                                             }
-
-                                        }
-                                    });
+                                        });
 
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(SignUpOrg.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignUpOrg.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
 
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public LatLng getLocation() {
         locationTracker = new LocationTracker(SignUpOrg.this);

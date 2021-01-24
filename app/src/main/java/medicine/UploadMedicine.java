@@ -3,6 +3,7 @@ package medicine;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import homepage.HomePage;
 import models.Data;
 import models.DonatedMedicines;
 import models.MedicineClass;
@@ -214,12 +216,12 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
             uploadMedicineToDB(nameText, userID, organizationID, quantityText, barcodeNoText, expirationDateText, medicineMap);
 
 
+
         }
     }
 
 
     private void uploadMedicineToDB(String nameText, String userID, String organizationID, Integer quantityText, String barcodeNoText, String expirationDateText, Map<String, Object> medicineMap) {
-
 
         DocumentReference documentReference = firebaseFirestore.collection("medicine").document(barcodeNoText);
         DocumentReference userDonatedMedicineRef = firebaseFirestore
@@ -241,8 +243,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                     public void onComplete(@NonNull Task<Void> task) {
                                         System.out.println("Quantity has been updated");
                                         progressBar.setVisibility(View.GONE);
-                                        alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful");
-                                        Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                        alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful", intent);
                                         progressBar.setVisibility(View.GONE);
 
                                         userDonatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -306,8 +308,9 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
-                                                                System.out.println("User'in halihazirda bagisladigi ilaclarin sayisi guncellendi PART2");
-                                                                alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful");
+                                                                Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                                                startActivity(intent);
+                                                                finish();
 
                                                             }
                                                         });
@@ -370,7 +373,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!");
+                                Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!", intent);
                             }
                         });
                     }
@@ -387,9 +391,15 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                 if (response.code() == 200) {
+                    System.out.println("Body Success");
                     if (response.body().success != 1) {
                         Toast.makeText(UploadMedicine.this, "Failed ", Toast.LENGTH_LONG);
+
+                    } else {
+                        System.out.println("Body Success");
                     }
+                } else {
+                    System.out.println("notification failed");
                 }
             }
 
@@ -453,9 +463,10 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
                             @Override
                             public void onSuccess(Void aVoid) {
-                                alertView("Your Medicine Has Been Successfully Added to Inventory Of Organization.", "Donation Successful");
-                                Toast.makeText(UploadMedicine.this, "Medicine added to Inventory", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
+                                Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                startActivity(intent);
+                                finish();
                             }
 
                         }).addOnFailureListener(new OnFailureListener() {
@@ -463,8 +474,11 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(UploadMedicine.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!");
+                                Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                alertView("OOPS! Something Went Wrong. Please Try Again Later.", "Error!!", intent);
+
                             }
+
                         });
                     }
                 }
@@ -473,12 +487,14 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    private void alertView(String alertMessage, String messageType) {
+    private void alertView(String alertMessage, String messageType, Intent intent) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(UploadMedicine.this);
         dialog.setTitle(messageType)
                 .setMessage(alertMessage)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialoginterface, int i) {
+                        startActivity(intent);
+                        finish();
                     }
                 }).show();
     }

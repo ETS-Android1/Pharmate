@@ -232,7 +232,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                 }
             });
             Intent intent = new Intent(ReachOrg.this, HomePage.class);
-            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
+//            alertView("Your medicine is being prepared. For more information please contact with Organization.", "Donation Successful", intent);
 
         } catch (Exception e) {
             Toast.makeText(ReachOrg.this, "Error !" + e.getMessage(), Toast.LENGTH_LONG).show();

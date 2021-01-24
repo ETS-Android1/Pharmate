@@ -62,38 +62,41 @@ public class HomePageOrg extends AppCompatActivity implements View.OnClickListen
     }
     @Override
     public void onClick(View view) {
-        Intent i;
+        try {
+            Intent i;
 
-        switch (view.getId()) {
-            case R.id.donate1:
-                i = new Intent(this, UploadMedicine.class);
-                startActivity(i);
-                break;
-            case R.id.search1:
-                i = new Intent(this, SearchMedicine.class);
-                startActivity(i);
-                break;
-            case R.id.request1:
-                i = new Intent(this, RequestMedicineList.class);
-                startActivity(i);
-                break;
-            case R.id.organization1:
-                i = new Intent(this, OrganizatonListPage.class);
-                startActivity(i);
-                break;
-            case R.id.about1:
-                i = new Intent(this, AboutPage.class);
-                startActivity(i);
-                break;
-            case R.id.profile1:
-                i = new Intent(this, OrganizationProfilePage.class);
-                startActivity(i);
-                break;
-            default:
-                break;
+            switch (view.getId()) {
+                case R.id.donate1:
+                    i = new Intent(this, UploadMedicine.class);
+                    startActivity(i);
+                    break;
+                case R.id.search1:
+                    i = new Intent(this, SearchMedicine.class);
+                    startActivity(i);
+                    break;
+                case R.id.request1:
+                    i = new Intent(this, RequestMedicineList.class);
+                    startActivity(i);
+                    break;
+                case R.id.organization1:
+                    i = new Intent(this, OrganizatonListPage.class);
+                    startActivity(i);
+                    break;
+                case R.id.about1:
+                    i = new Intent(this, AboutPage.class);
+                    startActivity(i);
+                    break;
+                case R.id.profile1:
+                    i = new Intent(this, OrganizationProfilePage.class);
+                    startActivity(i);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getLocalizedMessage().toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     private void Logout()

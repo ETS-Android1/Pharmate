@@ -33,9 +33,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import homepage.HomePage;
+import models.Data;
 import models.DonatedMedicines;
 import models.MedicineClass;
 import models.ReceivedMedicines;
+import models.Token;
+import notifications.Client;
+import notifications.MyResponse;
+import notifications.NotificationSender;
+import notifications.NotificationService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -44,6 +53,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     public CameraPosition cameraMapPosition;
     public Double latitude;
     public Double longitude;
+    public String orgToken;
     public String orgid, nameorg, medicineName, barcodeNumber, receiverUserID, medicineReceiveQuantity;
     public Integer inventoryQuantity;
     EditText name, city, phone, email, medicinename, barcodenumber, quantitiy, orgId, userId;
@@ -51,11 +61,13 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private DocumentReference orgMedReference, donateMedicineRef;
+    private NotificationService notificationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reach_org);
+        notificationService = Client.getClient("https://fcm.googleapis.com/").create(NotificationService.class);
         Map<String, Object> updateMedicineMap;
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -131,6 +143,26 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                     .collection("organization"
                     ).document(orgid)
                     .collection("receivedMedicine").document(barcodeNumber);
+
+            // get organization token
+            DocumentReference tokenRef = firebaseFirestore.collection("Tokens").document(
+                    "D6VDyVfD2Ug2qcWtXzUiaUn52Pw1");
+            tokenRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        Token token = document.toObject(Token.class);
+                        if (document.exists()) {
+                            orgToken = token.getToken();
+                        } else {
+                            Toast.makeText(ReachOrg.this, "Token Not Available", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+
+
             orgMedReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -140,16 +172,20 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                         if (document.exists()) {
                             System.out.println("Istenilen Ilac Envanterde Mevcut");
                             if (receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity) >= 0) {
+
                                 orgMedReference.update("quantity", receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity))
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 System.out.println("Ilac Basariyla Bagislandi ve Envanter Guncellendi");
-
+                                                DocumentReference medicineUpdateRef = firebaseFirestore.collection("medicine").document(barcodeNumber);
+                                                medicineUpdateRef.update("quantity", receivedMedicines.getQuantity() - Integer.parseInt(medicineReceiveQuantity));
                                                 DocumentReference donatedMedicineRef = firebaseFirestore
                                                         .collection("organization")
                                                         .document(orgid)
                                                         .collection("donatedMedicine").document(barcodeNumber);
+                                                Intent intent = new Intent(ReachOrg.this, HomePage.class);
+                                                alertView("The Organization wil reach  you as soon as they can.", "Donation Successful", intent);
 
                                                 donatedMedicineRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
@@ -161,13 +197,13 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                 System.out.println("Bu Ilac Daha Once de Bagislanmis. Bagis miktari kadar sayi arttiriliyor.");
 
                                                                 donatedMedicineRef.update("quantity", donatedToUsers.getQuantity() + Integer.parseInt(medicineReceiveQuantity));
+                                                                sendNotifications(orgToken, "Medicine Donated", "A Medicine has been donated from your organization. Please contact with the user.");
                                                             } else {
                                                                 System.out.println("Bu ilac ilk defa bagislaniyor. Veritabanina ekleniyor");
                                                                 HashMap<String, Object> receiveMedicineMap = new HashMap<>();
                                                                 ReceivedMedicines receivedMedicines = new ReceivedMedicines(receiverUserID, barcodeNumber, Integer.parseInt(medicineReceiveQuantity));
                                                                 receiveMedicineMap.put("quantity", receivedMedicines.getQuantity());
                                                                 receiveMedicineMap.put("lastDonatedBy", receivedMedicines.getUserID());
-
 
                                                                 donatedMedicineRef.set(receiveMedicineMap).addOnSuccessListener(new OnSuccessListener<Void>() {
 
@@ -193,6 +229,7 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                                                                                                         Intent intent = new Intent(ReachOrg.this, HomePage.class);
                                                                                                         alertView("Donation Successful. Organization will reach you as soon as possible.", "Donation Successful", intent);
                                                                                                         System.out.println("Ilac Medicine Listesinden de Azaltildi");
+                                                                                                        sendNotifications(orgToken, "Medicine Donated", "A Medicine has been donated from your organization. Please contact with the user.");
                                                                                                     }
                                                                                                 });
                                                                                     } else {
@@ -332,5 +369,32 @@ public class ReachOrg extends AppCompatActivity implements OnMapReadyCallback {
                     }
                 }).show();
     }
+
+    public void sendNotifications(String usertoken, String title, String message) {
+        Data data = new Data(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        notificationService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200) {
+                    System.out.println("Body Success");
+                    if (response.body().success != 1) {
+                        Toast.makeText(ReachOrg.this, "Failed ", Toast.LENGTH_LONG);
+
+                    } else {
+                        System.out.println("Body Success");
+                    }
+                } else {
+                    System.out.println("notification failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
 
 }

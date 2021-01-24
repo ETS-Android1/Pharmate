@@ -266,6 +266,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                                                         System.out.println("UserDonatedMedicineRef can not found");
                                                         System.out.println("Creating field in the User Collection ");
                                                         userDonatedMedicineRef.set(medicineMap);
+                                                        Intent intent = new Intent(UploadMedicine.this, HomePage.class);
+                                                        alertView("The medicine is already on the inventory. Quantity will be updated.", "Donation Successful", intent);
                                                     }
                                                 } else {
                                                     System.out.println("Task is unreachable");
@@ -410,7 +412,6 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
-
     private void UpdateToken() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
@@ -423,8 +424,8 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void updateMedicineInventory(String medicineName, String userid, String organizationID, String barcode, Integer quantity, String expirationDate, Map<String, Object> organizationMedicines) {
-        String userToken = "flkmDq1_StWKAKLU0EHySj:APA91bGfljn5EZBcXe0lNAFZwa5wsrdAOXZhiI_fgl_Q7jGTAUROjgiasQG-NBKVttqlQq0H65S9JFDAEFMlfPAMNq76qFlymvlTBapdqhVuq6xOb6bKY3V2H4pV922Df_lGeZlSKqXC";
-        sendNotifications(userToken, "Deneme Title", "Deneme Body");
+//        String userToken = "flkmDq1_StWKAKLU0EHySj:APA91bGfljn5EZBcXe0lNAFZwa5wsrdAOXZhiI_fgl_Q7jGTAUROjgiasQG-NBKVttqlQq0H65S9JFDAEFMlfPAMNq76qFlymvlTBapdqhVuq6xOb6bKY3V2H4pV922Df_lGeZlSKqXC";
+//        sendNotifications(userToken, "Deneme Title", "Deneme Body");
         DocumentReference organizationReference = firebaseFirestore
                 .collection("organization"
                 ).document(organizationID)
@@ -455,9 +456,7 @@ public class UploadMedicine extends AppCompatActivity implements AdapterView.OnI
                         organizationMedicines.put("donatedBy", orgDonatedMed.getDonatedBy());
                         organizationMedicines.put("lastDonationTo", orgDonatedMed.getlastDonationTo());
 
-
 //                        DonatedMedicines donatedMedicinesToAdd = new DonatedMedicines(barcode, userid, quantity);
-
 
                         organizationReference.set(organizationMedicines).addOnSuccessListener(new OnSuccessListener<Void>() {
 
